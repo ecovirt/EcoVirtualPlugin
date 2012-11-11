@@ -511,7 +511,7 @@ hubDbox=function ()
     dialogSuffix(rows = 8, columns = 2, focus = nsVarSlider)
 }
 
-hubDbox()
+#hubDbox()
 
 
 
