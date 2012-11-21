@@ -508,6 +508,7 @@ hubDbox=function ()
         fg = "blue"), sticky = "w")
     tkgrid(tklabel(top, text = "Number of Species  "), nsVarSlider, sticky = "e")
     tkgrid(tklabel(top, text = "Individuals per species  "), jiVarSlider, sticky = "e")
+    tkgrid(tklabel(top, text = "Cicles per Simulation "), cicloSlider, sticky = "e")
     tkgrid(tklabel(top, text = "Number of dead per cicle  "), dEntry, sticky = "e")
     tkgrid(tklabel(top, text = "Imigration  "), migBox, sticky = "e")
     tkgrid(tklabel(top, text = "Imigration and Speciation   "), spBox, sticky = "s")
@@ -516,6 +517,7 @@ hubDbox=function ()
     tkgrid.configure(entryDsname, sticky = "sw")
     tkgrid.configure(nsVarSlider, sticky = "sw")
     tkgrid.configure(jiVarSlider, sticky = "sw")
+    tkgrid.configure(cicloSlider, sticky = "sw")
     tkgrid.configure(dEntry, sticky = "sw")
     tkgrid.configure(migBox, sticky = "sw")
     tkgrid.configure(spBox, sticky = "sw")
@@ -546,7 +548,7 @@ hubDbox2=function ()
         variable = cicloVar, resolution = 1000, orient = "horizontal")
     mig1Var <- tclVar(0)
     mig1Slider <- tkscale(top, from = 0.0001, to = 1, showvalue = TRUE, 
-        variable = mig1Var, resolution = -1e-4, orient = "horizontal")
+        variable = mig1Var, resolution = 1e-4, orient = "horizontal")
     animaVar <- tclVar("1")
     animaBox <- tkcheckbutton(top, variable = animaVar)
     onOK <- function() {
@@ -622,12 +624,12 @@ hubDbox3=function()
     cicloVar <- tclVar(1000)
     cicloSlider <- tkscale(top, from = 1e3, to = 1e5, showvalue = TRUE, 
         variable = cicloVar, resolution = 1000, orient = "horizontal")
-    mig1Var <- tclVar(0)
-    mig1Slider <- tkscale(top, from = 0.0001, to = 1, showvalue = TRUE, 
-        variable = mig1Var, resolution = -1e-4, orient = "horizontal")
-    nuVar <- tclVar(0)
-    nuSlider <- tkscale(top, from = 0.0001, to = 1, showvalue = TRUE, 
-        variable = nuVar, resolution = -1e-4, orient = "horizontal")
+    mig1Var <- tclVar(0.0001)
+    mig1Slider <- tkscale(top, from = 0, to = 1, showvalue = TRUE, 
+        variable = mig1Var, resolution = 1e-4, orient = "horizontal")
+    nuVar <- tclVar(0.0001)
+    nuSlider <- tkscale(top, from = 0, to = 1, showvalue = TRUE, 
+        variable = nuVar, resolution = 1e-4, orient = "horizontal")
     animaVar <- tclVar("1")
     animaBox <- tkcheckbutton(top, variable = animaVar)
     onOK <- function() {
