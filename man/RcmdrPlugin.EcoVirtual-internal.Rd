@@ -14,6 +14,16 @@
 \alias{comcompDbox}
 \alias{regnichoDbox}
 \alias{sucmatrixDbox}
+\alias{ColExtDbox}
+\alias{arquipDbox}
+\alias{bioGeoIslDbox}
+\alias{extGameDbox}
+\alias{gr.abund}
+\alias{hubDbox}
+\alias{hubDbox2}
+\alias{hubDbox3}
+\alias{randWalkDbox}
+
 \description{Internal RcmdrEcoVirtualPlugin objects.}
 \details{These are not to be called by the user.}
 \keyword{internal}
