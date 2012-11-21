@@ -156,7 +156,7 @@ tkgrid(buttonsFrame, sticky="w", columnspan=2)
 bioGeoIslDbox= function () 
 {
     env <- environment()
-    initializeDialog(title = gettextRcmdr("Island Biogeography Model"))
+    initializeDialog(title = gettextRcmdr("Island Biogeographical Model"))
     dsname <- tclVar("Do_Not_Save")
     entryDsname <- tkentry(top, width = "20", textvariable = dsname)
     PVar <- tclVar("100")
@@ -345,9 +345,10 @@ randWalkDbox=function ()
     midEntry <- tkentry(top, width = "3", textvariable = midVar)
     cantoVar <- tclVar("0")
     cantoBox <- tkcheckbutton(top, variable = cantoVar)
-    tfVar <- tclVar(1e5)
-    tfVarSlider <- tkscale(top, from = 1e3, to = 1e7, showvalue = TRUE, 
-        variable = tfVar, resolution = 1e3, orient = "horizontal")
+    tfVar <- tclVar("1e5")
+    tfVarSlider <- tkentry(top, width = "9", textvariable = tfVar)
+    #tkscale(top, from = 1e3, to = 1e6, showvalue = TRUE, 
+    #    variable = tfVar, resolution = 1e3, orient = "horizontal")
     onOK <- function() {
 #        closeDialog()
         tf <- round(as.numeric(tclvalue(tfVar)))
@@ -395,52 +396,6 @@ randWalkDbox=function ()
 #### Zero Sum Game DBox
 ############################
 extGameDbox=function() 
-{
-    require(EcoVirtual)
-    initializeDialog(title = gettextRcmdr("Zero Sum Game"))
-    dsname <- tclVar("Do_Not_Save")
-    entryDsname <- tkentry(top, width = "20", textvariable = dsname)
-    mVar <- tclVar(20)
-    mVarSlider <- tkscale(top, from = 10, to = 100, showvalue = TRUE, 
-        variable = mVar, resolution = 1, orient = "horizontal")
-    apVar <- tclVar(1)
-    apVarSlider <- tkscale(top, from = 1, to = 10, showvalue = TRUE, 
-        variable = apVar, resolution = 1, orient = "horizontal")
-    mtVar<-tclVar("1")
-    mtEntry <- tkentry(top, width = "1", textvariable = mtVar)
-    onOK <- function() {
-        closeDialog()
-        m <- as.numeric(tclvalue(mVar))
-        ap <- as.numeric(tclvalue(apVar))
-        mt <- as.numeric(tclvalue(mtVar))
-        dsnameValue <- trim.blanks(tclvalue(dsname))
-##extGame <- function(aposta=1,total=100, tmax=5
-        if (dsnameValue == "Do_Not_Save" | dsnameValue == "") {
-            command <- paste("extGame(aposta = ", ap, ", total = ", 
-                m, ", tmax = ", mt,")", sep = "")
-        }
-        else {
-            command <- paste(dsnameValue, "<-extGame(aposta = ", ap, ", total = ", m, ", tmax = ", mt,")", sep = "")
-        }
-        doItAndPrint(command)
-        tkfocus(CommanderWindow())
-    }
-    OKCancelHelp(helpSubject = "neutModel")
-    tkgrid(tklabel(top, text = "Enter name for data set: "), 
-        entryDsname, sticky = "e")
-    tkgrid(tklabel(top, text = "Game Parameters", 
-        fg = "blue"), sticky = "w")
-    tkgrid(tklabel(top, text = "Total amount  "), mVarSlider , sticky = "e")
-    tkgrid(tklabel(top, text = "bet size  "), apVarSlider , sticky = "e")
-    tkgrid(tklabel(top, text = "Maximum game time  "), mtEntry, sticky = "e")
- 
-    tkgrid.configure(entryDsname, sticky = "sw")
-    tkgrid.configure(mVarSlider, sticky = "sw")
-    tkgrid.configure(apVarSlider, sticky = "sw")
-    tkgrid.configure(mtEntry, sticky = "sw")
-    tkgrid(buttonsFrame, columnspan = 2, sticky = "w")
-    dialogSuffix(rows = 5, columns = 2, focus = nsEntry)
-}extGameDbox=function() 
 {
     require(EcoVirtual)
     initializeDialog(title = gettextRcmdr("Zero Sum Game"))
@@ -556,8 +511,8 @@ hubDbox=function ()
     tkgrid(tklabel(top, text = "Individuals per species  "), jiVarSlider, sticky = "e")
     tkgrid(tklabel(top, text = "Cicles per Simulation "), cicloSlider, sticky = "e")
     tkgrid(tklabel(top, text = "Number of dead per cicle  "), dEntry, sticky = "e")
-    tkgrid(tklabel(top, text = "Imigration  "), migBox, sticky = "e")
-    tkgrid(tklabel(top, text = "Imigration and Speciation   "), spBox, sticky = "s")
+    tkgrid(tklabel(top, text = "Immigration  "), migBox, sticky = "e")
+    tkgrid(tklabel(top, text = "Immigration and Speciation   "), spBox, sticky = "s")
     tkgrid(tklabel(top, text = "Show simulation frames "), animaBox, sticky = "s")
 
     tkgrid.configure(entryDsname, sticky = "sw")
@@ -629,7 +584,7 @@ hubDbox2=function ()
     tkgrid(tklabel(top, text = "Individuals per species  "), jiVarSlider, sticky = "e")
     tkgrid(tklabel(top, text = "Number of dead per cicle  "), dEntry, sticky = "e")
     tkgrid(tklabel(top, text = "Cicles per Simulation "), cicloSlider, sticky = "e")
-    tkgrid(tklabel(top, text = "Imigration rate  "), mig1Slider, sticky = "e")
+    tkgrid(tklabel(top, text = "Immigration rate  "), mig1Slider, sticky = "e")
     tkgrid(tklabel(top, text = "Show simulation frames "), animaBox, sticky = "s")
     tkgrid.configure(entryDsname, sticky = "sw")
     tkgrid.configure(nsVarSlider, sticky = "sw")
@@ -713,7 +668,7 @@ hubDbox3=function()
         fg = "blue"), sticky = "w")
     tkgrid(tklabel(top, text = "Number of Species (Metacommunity)  "), SmSlider, sticky = "e")
     tkgrid(tklabel(top, text = "Individuals per species (Metacommunity)  "), jmSlider, sticky = "e")
-    tkgrid(tklabel(top, text = "Imigration rate  "), mig1Slider, sticky = "e")
+    tkgrid(tklabel(top, text = "Immigration rate  "), mig1Slider, sticky = "e")
     tkgrid(tklabel(top, text = "Speciation rate  "), nuSlider, sticky = "e")
     tkgrid(tklabel(top, text = "Local Community Parameters", 
         fg = "blue"), sticky = "w")
@@ -721,9 +676,7 @@ hubDbox3=function()
     tkgrid(tklabel(top, text = "Individuals per species (local)  "), jiVarSlider, sticky = "e")
     tkgrid(tklabel(top, text = "Number of dead per cicle  "), dEntry, sticky = "e")
     tkgrid(tklabel(top, text = "Cicles per Simulation "), cicloSlider, sticky = "e")
-
     tkgrid(tklabel(top, text = "Show simulation frames "), animaBox, sticky = "s")
-
     tkgrid.configure(entryDsname, sticky = "sw")
     tkgrid.configure(SmSlider, sticky = "sw")
     tkgrid.configure(jmSlider, sticky = "sw")
@@ -732,7 +685,6 @@ hubDbox3=function()
     tkgrid.configure(nsVarSlider, sticky = "sw")
     tkgrid.configure(jiVarSlider, sticky = "sw")
     tkgrid.configure(dEntry, sticky = "sw")
-
     tkgrid.configure(cicloSlider, sticky = "sw")
     tkgrid.configure(animaBox, sticky = "sw")
     tkgrid(buttonsFrame, columnspan = 2, sticky = "e")
