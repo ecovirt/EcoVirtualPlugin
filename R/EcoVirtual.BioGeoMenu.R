@@ -440,7 +440,7 @@ extGameDbox=function()
     tkgrid.configure(apVarSlider, sticky = "sw")
     tkgrid.configure(mtEntry, sticky = "sw")
     tkgrid(buttonsFrame, columnspan = 2, sticky = "w")
-    dialogSuffix(rows = 5, columns = 2, focus = nsEntry)
+    dialogSuffix(rows = 5, columns = 2, focus = mVarSlider)
 }
 #############################################
 ### Caixa de dialogo Modelo Neutro Hubbel  ##

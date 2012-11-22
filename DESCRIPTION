@@ -1,8 +1,8 @@
 Package: RcmdrPlugin.EcoVirtual
 Type: Package
 Title: Rcmdr EcoVirtual Plugin
-Version: 1.0
-Date: 2011-02-09
+Version: 0.01
+Date: 2012-11-21
 Author:Alexandre Adalardo <aleadalardo@gmail.com>
 Maintainer: Alexandre Adalardo <aleadalardo@gmail.com>
 Depends: Rcmdr (>= 1.4-0), tcltk, EcoVirtual
