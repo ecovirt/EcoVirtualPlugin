@@ -54,17 +54,17 @@ peEntry <- tkscale(top, from=0, to=1, showvalue=TRUE, variable=peVar, resolution
    dsnameValue <- trim.blanks(tclvalue(dsname))
         if (dsnameValue == "Do_Not_Save" | dsnameValue=="") 
         {
-        	command <- paste("meta.inter(tf = ",tf, ", cl = ", cl,", fi = ", fi,", ln =", ln,", i = ", i,", pe = ", pe, ")", sep = "")
+        	command <- paste("metaCi(tf = ",tf, ", cl = ", cl,", fi = ", fi,", ln =", ln,", i = ", i,", pe = ", pe, ")", sep = "")
         }
         else  
 		  {
-		  command <- paste(dsnameValue,"<- meta.inter(tf = ",tf, ", cl = ", cl,", fi = ", fi,", ln =", ln,", i = ", i,", pe = ", pe, ")", sep = "")
+		  command <- paste(dsnameValue,"<- metaCi(tf = ",tf, ", cl = ", cl,", fi = ", fi,", ln =", ln,", i = ", i,", pe = ", pe, ")", sep = "")
 		  }
 ########
 	doItAndPrint(command)
 	tkfocus(CommanderWindow())
 	}
-OKCancelHelp(helpSubject = "metapop")
+OKCancelHelp(helpSubject = "metaPop")
 # data name
 tkgrid(tklabel(top, text="Enter name for data set: "), entryDsname, sticky="e")
 tkgrid(tklabel(top, text="Simulation Arena Conditions : ", fg="blue"), sticky="w")
@@ -136,18 +136,18 @@ peEntry <- tkscale(top, from=0, to=1, showvalue=TRUE, variable=peVar, resolution
    dsnameValue <- trim.blanks(tclvalue(dsname))
         if (dsnameValue == "Do_Not_Save" | dsnameValue=="") 
         {
-        	command <- paste("metapop(tf = ",tf, ", cl = ", cl,", fi = ", fi,", ln =", ln,", pc = ", pc,", pe = ", pe, ")", sep = "")
+        	command <- paste("metaPop(tf = ",tf, ", cl = ", cl,", fi = ", fi,", ln =", ln,", pc = ", pc,", pe = ", pe, ")", sep = "")
         }
         else  
 		  {
-		  command <- paste(dsnameValue,"<-metapop(tf = ",tf, ", cl = ", cl,", fi = ", fi,", ln =", ln,", pc = ", pc,", pe = ", pe, ")", sep = "")
+		  command <- paste(dsnameValue,"<-metaPop(tf = ",tf, ", cl = ", cl,", fi = ", fi,", ln =", ln,", pc = ", pc,", pe = ", pe, ")", sep = "")
 		  }
 ########
-#	command <- paste("metapop(tf = ",tf, ", cl = ", cl,", fi = ", fi,", ln =", ln,", pc = ", pc,", pe = ", pe, ")", sep = "")
+#	command <- paste("metaPop(tf = ",tf, ", cl = ", cl,", fi = ", fi,", ln =", ln,", pc = ", pc,", pe = ", pe, ")", sep = "")
 	doItAndPrint(command)
 	tkfocus(CommanderWindow())
 	}
-OKCancelHelp(helpSubject = "metapop")
+OKCancelHelp(helpSubject = "metaPop")
 tkgrid(tklabel(top, text="Enter name for data set: "), entryDsname, sticky="e")
 tkgrid(tklabel(top, text="Simulation Arena Conditions : ", fg="blue"), sticky="w")
 tkgrid(tklabel(top, text = "Maximum time  "), tfEntry, sticky = "e")
@@ -235,7 +235,7 @@ eEntry <- tkscale(top, from=0, to=1, sowvalue=TRUE, variable = eVar, resolution=
 	doItAndPrint(command)
 	tkfocus(CommanderWindow())
 	}
-OKCancelHelp(helpSubject = "metapop")
+OKCancelHelp(helpSubject = "metaPop")
 tkgrid(tklabel(top, text="Enter data set name: "), entryDsname, sticky="e")
 tkgrid(tklabel(top, text="Simulation Arena Conditions : ", fg="blue"), sticky="w")
 tkgrid(tklabel(top, text = "Maximum time  "), tfEntry, sticky = "e")
@@ -327,7 +327,7 @@ eEntry <- tkentry(top, width = "6", textvariable = eVar)
 	doItAndPrint(command)
 	tkfocus(CommanderWindow())
 	}
-OKCancelHelp(helpSubject = "metapop")
+OKCancelHelp(helpSubject = "metaPop")
 tkgrid(tklabel(top, text="Enter data set name:"), entryDsname, sticky="e")
 tkgrid(tklabel(top, text="Simulation Arena Conditions :", fg="blue"), sticky="w")
 tkgrid(tklabel(top, text = "Maximum time  "), tfEntry, sticky = "e")
@@ -424,7 +424,7 @@ cantoVF <- as.logical(as.numeric(tclvalue(cantoVar)))
 	doItAndPrint(command)
 	tkfocus(CommanderWindow())
 	}
-OKCancelHelp(helpSubject = "metapop")
+OKCancelHelp(helpSubject = "metaPop")
 tkgrid(tklabel(top, text="Enter name for data set:"), entryDsname, sticky="e")
 tkgrid(tklabel(top, text="Simulation Arena Conditions :", fg="blue"), sticky="w")
 tkgrid(tklabel(top, text = "Maximum time  "), tfEntry, sticky = "e")
@@ -535,7 +535,7 @@ cantoBox <- tkcheckbutton(top, variable = cantoVar)
 	doItAndPrint(command)
 	tkfocus(CommanderWindow())
 	}
-OKCancelHelp(helpSubject = "metapop")
+OKCancelHelp(helpSubject = "metaPop")
 # data name
 tkgrid(tklabel(top, text="Enter name for data set:"), entryDsname, sticky="e")
 ##
