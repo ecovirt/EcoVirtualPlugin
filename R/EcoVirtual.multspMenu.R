@@ -322,18 +322,18 @@ pRsEntry <- tkscale(top, from=0, to=1, showvalue=TRUE, variable=pScVar, resoluti
    dsnameValue <- trim.blanks(tclvalue(dsname))
         if (dsnameValue == "Do_Not_Save" | dsnameValue=="") 
         {
-        	command <- paste("reg.nicho(tmax= ",tmax, ",ln= ",ln, ", cl = ", cl,", c1 = ", c1,", c2 = ", c2,", ec = ", ec,", dst = ", dst,", Er = ", pEr,", Sc =", pSc,", Mx =", pMx,", Rs =", pRs,")", sep = "")
+        	command <- paste("regNicho(tmax= ",tmax, ",ln= ",ln, ", cl = ", cl,", c1 = ", c1,", c2 = ", c2,", ec = ", ec,", dst = ", dst,", Er = ", pEr,", Sc =", pSc,", Mx =", pMx,", Rs =", pRs,")", sep = "")
         }
         else  
 		  {
-		  command <- paste(dsnameValue, " <- reg.nicho(tmax= ",tmax, ",ln= ",ln, ", cl = ", cl,", c1 = ", c1,", c2 = ", c2,", ec = ", ec,", dst = ", dst,", Er = ", pEr,", Sc =", pSc,", Mx =", pMx,", Rs =", pRs,")", sep = "")
+		  command <- paste(dsnameValue, " <- regNicho(tmax= ",tmax, ",ln= ",ln, ", cl = ", cl,", c1 = ", c1,", c2 = ", c2,", ec = ", ec,", dst = ", dst,", Er = ", pEr,", Sc =", pSc,", Mx =", pMx,", Rs =", pRs,")", sep = "")
 		  }
-#test1=reg.nicho(tmax=50, ln=100, cl=100, c1=0.2, c2=0.8, ec=0.5, m=0.04,  Er=0.08, Sc=0.02, Mx=0, Rs=0)
+#test1=regNicho(tmax=50, ln=100, cl=100, c1=0.2, c2=0.8, ec=0.5, m=0.04,  Er=0.08, Sc=0.02, Mx=0, Rs=0)
 ########
 	doItAndPrint(command)
 	tkfocus(CommanderWindow())
 	}
-OKCancelHelp(helpSubject = "reg.nicho")
+OKCancelHelp(helpSubject = "regNicho")
 tkgrid(tklabel(top, text="Enter name for data set:"), entryDsname, sticky="e")
 ##
 tkgrid(tklabel(top, text="Simulation Arena Conditions :", fg="blue"), sticky="w")
@@ -374,7 +374,7 @@ dialogSuffix(rows = 13, columns = 2, focus = tmaxEntry)
 ######################
 ##Trade off Dialogo Box
 #############
-#teste1=com.compete(tmax=200,ln=100,cl=100, rq=10, fi=0.2, fsp1=0.2, pe=0.04, fr=0, int=0)
+#teste1=comCompete(tmax=200,ln=100,cl=100, rq=10, fi=0.2, fsp1=0.2, pe=0.04, fr=0, int=0)
 comcompDbox<-function () 
 {
 require(EcoVirtual)
@@ -439,17 +439,17 @@ onOK <- function()
    dsnameValue <- trim.blanks(tclvalue(dsname))
         if (dsnameValue == "Do_Not_Save" | dsnameValue=="") 
         {
-        	command <- paste("com.compete(tmax= ",tmax, ",ln= ",ln, ", cl = ", cl,", rq = ", rq,", fi = ", fi,", fsp1 = ", fsp1,", pe = ", pe,", fr = ", fr,", int =", int,")", sep = "")
+        	command <- paste("comCompete(tmax= ",tmax, ",ln= ",ln, ", cl = ", cl,", rq = ", rq,", fi = ", fi,", fsp1 = ", fsp1,", pe = ", pe,", fr = ", fr,", int =", int,")", sep = "")
         }
         else  
 		  {
-		  command <- paste(dsnameValue, "<- com.compete(tmax= ",tmax, ",ln= ",ln, ", cl = ", cl,", rq = ", rq,", fi = ", fi,", fsp1 = ", fsp1,", pe = ", pe,", fr = ", fr,", int =", int,")", sep = "")
+		  command <- paste(dsnameValue, "<- comCompete(tmax= ",tmax, ",ln= ",ln, ", cl = ", cl,", rq = ", rq,", fi = ", fi,", fsp1 = ", fsp1,", pe = ", pe,", fr = ", fr,", int =", int,")", sep = "")
 		  }
-########com.compete(tmax=200,ln=100,cl=100, rq=10, fi=0.2, fsp1=0.2, pe=0.04, fr=0, int=0)
+########comCompete(tmax=200,ln=100,cl=100, rq=10, fi=0.2, fsp1=0.2, pe=0.04, fr=0, int=0)
 	doItAndPrint(command)
 	tkfocus(CommanderWindow())
 	}
-OKCancelHelp(helpSubject = "com.compete")
+OKCancelHelp(helpSubject = "comCompete")
 tkgrid(tklabel(top, text="Enter name for data set:"), entryDsname, sticky="e")
 ##
 tkgrid(tklabel(top, text="Simulation Arena Conditions :", fg="blue"), sticky="w")

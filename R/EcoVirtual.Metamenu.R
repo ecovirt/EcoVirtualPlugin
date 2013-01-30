@@ -169,8 +169,8 @@ dialogSuffix(rows = 7, columns = 2, focus = tfEntry)
 }
 ###############################################################
 ##################################################
-#meta.cier <-function(tf,cl,ln,fi,i,e)
-#meta.er <-function(tf,cl,ln,fi,pc,e)
+#metaCiEr <-function(tf,cl,ln,fi,i,e)
+#metaEr <-function(tf,cl,ln,fi,pc,e)
 resEff <-function () 
 {
 require(EcoVirtual)
@@ -224,14 +224,14 @@ eEntry <- tkscale(top, from=0, to=1, sowvalue=TRUE, variable = eVar, resolution=
    dsnameValue <- trim.blanks(tclvalue(dsname))
         if (dsnameValue == "Do_Not_Save" | dsnameValue=="") 
         {
-        	command <- paste("meta.er(tf = ",tf, ", cl = ", cl,", fi = ", fi,", ln =", ln,", pc = ", pc,", e = ", e, ")", sep = "")
+        	command <- paste("metaEr(tf = ",tf, ", cl = ", cl,", fi = ", fi,", ln =", ln,", pc = ", pc,", e = ", e, ")", sep = "")
         }
         else  
 		  {
-		  command <- paste(dsnameValue,"<-meta.er(tf = ",tf, ", cl = ", cl,", fi = ", fi,", ln =", ln,", pc = ", pc,", e = ", e, ")", sep = "")
+		  command <- paste(dsnameValue,"<-metaEr(tf = ",tf, ", cl = ", cl,", fi = ", fi,", ln =", ln,", pc = ", pc,", e = ", e, ")", sep = "")
 		  }
 ########   
-#	command <- paste("meta.er(tf = ",tf, ", cl = ", cl,", fi = ", fi,", ln =", ln,", pc = ", pc,", e = ", e, ")", sep = "")
+#	command <- paste("metaEr(tf = ",tf, ", cl = ", cl,", fi = ", fi,", ln =", ln,", pc = ", pc,", e = ", e, ")", sep = "")
 	doItAndPrint(command)
 	tkfocus(CommanderWindow())
 	}
@@ -256,8 +256,8 @@ tkgrid.configure(eEntry, sticky = "w")
 dialogSuffix(rows = 8, columns = 2, focus = tfEntry)
 }
 ################################################
-#meta.cier <-function(tf,cl,ln,fi,i,e)
-#meta.er <-function(tf,cl,ln,fi,pc,e)
+#metaCiEr <-function(tf,cl,ln,fi,i,e)
+#metaEr <-function(tf,cl,ln,fi,pc,e)
 resEffcol <-function () 
 {
 require(EcoVirtual)
@@ -316,14 +316,14 @@ eEntry <- tkentry(top, width = "6", textvariable = eVar)
    dsnameValue <- trim.blanks(tclvalue(dsname))
         if (dsnameValue == "Do_Not_Save" | dsnameValue=="") 
         {
-        	command <- paste("meta.cier(tf = ",tf, ", cl = ", cl,", fi = ", fi,", ln =", ln,", i = ", i,", e = ", e, ")", sep = "")
+        	command <- paste("metaCiEr(tf = ",tf, ", cl = ", cl,", fi = ", fi,", ln =", ln,", i = ", i,", e = ", e, ")", sep = "")
         }
         else  
 		  {
-		  command <- paste(dsnameValue,"<-meta.cier(tf = ",tf, ", cl = ", cl,", fi = ", fi,", ln =", ln,", i = ", i,", e = ", e, ")", sep = "")
+		  command <- paste(dsnameValue,"<-metaCiEr(tf = ",tf, ", cl = ", cl,", fi = ", fi,", ln =", ln,", i = ", i,", e = ", e, ")", sep = "")
 		  }
 ########   
-#	command <- paste("meta.er(tf = ",tf, ", cl = ", cl,", fi = ", fi,", ln =", ln,", pc = ", pc,", e = ", e, ")", sep = "")
+#	command <- paste("metaEr(tf = ",tf, ", cl = ", cl,", fi = ", fi,", ln =", ln,", pc = ", pc,", e = ", e, ")", sep = "")
 	doItAndPrint(command)
 	tkfocus(CommanderWindow())
 	}
