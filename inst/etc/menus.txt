@@ -11,7 +11,7 @@ item     metaMenu      command     "Seed Rain..."     propRain    ""     ""
 item     metaMenu      command     "Internal Colonization..."     intCol    ""     ""
 item     metaMenu      command     "Rescue Effect..."     resEff    ""     ""
 item     metaMenu      command     "Rescue  and Internal..."     resEffcol    ""     ""
-item     metaMenu      command     "Spatial Dependence..."     spDep    ""     ""
+#item     metaMenu      command     "Spatial Dependence..."     spDep    ""     ""
 ######
 menu     twoMenu     ecovMenu      ""    ""    ""    ""
 item     twoMenu     command     "Competition..."     compDb    ""  ""

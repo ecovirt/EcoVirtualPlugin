@@ -16,7 +16,7 @@
 estdemDb <-function () 
 {
 require(EcoVirtual)
-initializeDialog(title = gettextRcmdr("Demographyc Stochasticity"))
+initializeDialog(title = gettextRcmdr("Demographic Stochasticity"))
 #### Salva dados
 dsname <- tclVar("Do_Not_Save")
 entryDsname <- tkentry(top, width="20", textvariable=dsname)
@@ -60,7 +60,7 @@ tmaxEntry <- tkentry(top, width = "4", textvariable = tmaxVar)
 	doItAndPrint(command)
 	tkfocus(CommanderWindow())
 	}
-OKCancelHelp(helpSubject = "estEsp")
+OKCancelHelp(helpSubject = "dynPop")
 tkgrid(tklabel(top, text="Enter name for data set: "), entryDsname, sticky="e")
 #tkgrid(tklabel(top, text="Simulation Conditions :  ", fg="blue"), sticky="w")
 tkgrid(tklabel(top, text = "Number of simulations"), tmaxEntry, sticky = "e")
@@ -77,6 +77,9 @@ tkgrid.configure(bEntry, sticky = "w")
 tkgrid.configure(dEntry, sticky = "w")
 dialogSuffix(rows = 6, columns = 2, focus = tmaxEntry)
 }
+
+
+#############################################################3
 ############################################################
 #estExp(N0=1000,r=0.0488,varr=0.005,tmax=100) 
 popExp <-function () 
@@ -143,7 +146,7 @@ command=set.gr)
 	doItAndPrint(command)
 	tkfocus(CommanderWindow())
 	}
-OKCancelHelp(helpSubject = "estExp")
+OKCancelHelp(helpSubject = "dynPop")
 tkgrid(tklabel(top, text="Enter name for last simulation data set: "), entryDsname, sticky="e")
 #tkgrid(tklabel(top, text="Simulation Arena Conditions :  ", fg="blue"), sticky="w")
 tkgrid(tklabel(top, text = "Maximum time"), tmaxEntry, sticky = "e")
@@ -161,6 +164,9 @@ tkgrid.configure(varrEntry, sticky = "w")
 tkgrid.configure(rEntry, sticky = "w")
 dialogSuffix(rows = 6, columns = 2, focus = tmaxEntry)
 }
+
+
+#########################################################
 ##########################################################
 #crescLog(N0=10, r=0.05, K=80, tmax=100)
 popLog<-function () 
@@ -185,7 +191,7 @@ tmaxEntry <- tkentry(top, width = "4", textvariable = tmaxVar)
         N0 <- round(as.numeric(tclvalue(noVar)))
         if (is.na(N0) || N0 <= 0) 
         {
-            errorCondition(message = "Number of individuos at the simulation start must be a positive integer")
+            errorCondition(message = "Number of individuals at the simulation start must be a positive integer")
             return()
         }
         tmax <- round(as.numeric(tclvalue(tmaxVar)))
@@ -197,7 +203,7 @@ tmaxEntry <- tkentry(top, width = "4", textvariable = tmaxVar)
         K <- as.numeric(tclvalue(kVar))
         if (is.na(K) || K <= 0)
         {
-            errorCondition(message = "Suporte Capacity (K) must be a positive integer")
+            errorCondition(message = "Carrying Capacity (K) must be a positive integer")
             return()
         }
         r=as.numeric(tclvalue(rVar))
@@ -215,7 +221,7 @@ tmaxEntry <- tkentry(top, width = "4", textvariable = tmaxVar)
 	doItAndPrint(command)
 	tkfocus(CommanderWindow())
 	}
-OKCancelHelp(helpSubject = "crescLog")
+OKCancelHelp(helpSubject = "dynPop")
 tkgrid(tklabel(top, text="Enter name for data set:  "), entryDsname, sticky="e")
 tkgrid(tklabel(top, text="Simulation Arena Conditions : ", fg="blue"), sticky="w")
 tkgrid(tklabel(top, text = "Number of simulations  "), tmaxEntry, sticky = "e")
@@ -231,6 +237,8 @@ tkgrid.configure(kEntry, sticky = "w")
 tkgrid.configure(rEntry, sticky = "w")
 dialogSuffix(rows = 6, columns = 2, focus = tmaxEntry)
 }
+
+##########################################
 ##########################################
 #compLV(n01=10, n02=10,r1=0.05, r2=0.03, k1=80, k2=50, alfa=1.2, beta=0.5, tmax=200)
 compDb<-function () 
@@ -265,13 +273,13 @@ tmaxEntry <- tkentry(top, width = "4", textvariable = tmaxVar)
         n01 <- round(as.numeric(tclvalue(n01Var)))
         if (is.na(n01) || n01 <= 0) 
         {
-            errorCondition(message = "Number of individuos at the simulation start must be a positive integer")
+            errorCondition(message = "Number of individuals at the simulation start must be a positive integer")
             return()
         }
         n02 <- round(as.numeric(tclvalue(n02Var)))
         if (is.na(n02) || n02 <= 0) 
         {
-            errorCondition(message = "Number of individuos at the simulation start must be a positive integer")
+            errorCondition(message = "Number of individuals at the simulation start must be a positive integer")
             return()
         }
         tmax <- round(as.numeric(tclvalue(tmaxVar)))
@@ -283,13 +291,13 @@ tmaxEntry <- tkentry(top, width = "4", textvariable = tmaxVar)
         k1 <- as.numeric(tclvalue(k1Var))
         if (is.na(k1) || k1 <= 0)
         {
-            errorCondition(message = "Suporte Capacity (K) must be a positive integer")
+            errorCondition(message = "Carrying Capacity (K) must be a positive integer")
             return()
         }
         k2 <- as.numeric(tclvalue(k2Var))
         if (is.na(k2) || k2 <= 0)
         {
-            errorCondition(message = "Suporte Capacity (K) must be a positive integer")
+            errorCondition(message = "Carrying Capacity (K) must be a positive integer")
             return()
         }
         r1=as.numeric(tclvalue(r1Var))
@@ -311,7 +319,7 @@ tmaxEntry <- tkentry(top, width = "4", textvariable = tmaxVar)
 	doItAndPrint(command)
 	tkfocus(CommanderWindow())
 	}
-OKCancelHelp(helpSubject = "crescLog")
+OKCancelHelp(helpSubject = "compLV")
 tkgrid(tklabel(top, text="Enter name for data set:"), entryDsname, sticky="e")
 tkgrid(tklabel(top, text = "Number of simulations  "), tmaxEntry, sticky = "e")
 tkgrid(tklabel(top, text="Best competitor species  parameters : ", fg="blue"), sticky="w")
@@ -337,6 +345,8 @@ tkgrid.configure(alfaEntry, sticky = "w")
 tkgrid.configure(betaEntry, sticky = "w")
 dialogSuffix(rows = 11, columns = 2, focus = tmaxEntry)
 }
+
+
 ##########################################
 ######################################
 popstrDb<-function () 
@@ -383,19 +393,19 @@ naEntry <- tkentry(top, width = "6", textvariable = naVar)
   	cl <- round(as.numeric(tclvalue(clVar)))
         if (is.na(cl) || cl <= 0) 
         {
-        errorCondition(message = "Number of coluns on the simulated arena must be a positive integer.")
+        errorCondition(message = "Number of columns on the simulated arena must be a positive integer.")
         return()
         }
 	ln <- round(as.numeric(tclvalue(lnVar)))
         if (is.na(ln) || ln <= 0) 
         {
-        errorCondition("Number of lines on the simulated arena must be a positive integer.")
+        errorCondition("Number of rows on the simulated arena must be a positive integer.")
         return()
         }
    ns <- as.numeric(tclvalue(nsVar))
         if (ns<0 ) 
         {
-        errorCondition(message = "mean number of propagulus must be positive")
+        errorCondition(message = "Mean number of propagulus must be positive")
         return()
         }
    nj <- as.numeric(tclvalue(njVar))
@@ -420,19 +430,19 @@ naEntry <- tkentry(top, width = "6", textvariable = naVar)
    dsnameValue <- trim.blanks(tclvalue(dsname))
         if (dsnameValue == "Do_Not_Save" | dsnameValue=="") 
         {
-        	command <- paste("popStr(tmax = ",tmax, ", cl = ", cl,", ln = ", ln, ", p.sj = ", p.sj,", p.jj = ", p.jj,", p.ja =", p.ja,", p.aa = ", p.aa,", fec = ", fec,", ns = ", ns,", nj = ", nj,", na = ", na, ")", sep = "")
+        	command <- paste("popStr(tmax = ",tmax, ", cl = ", cl,", rw = ", ln, ", p.sj = ", p.sj,", p.jj = ", p.jj,", p.ja =", p.ja,", p.aa = ", p.aa,", fec = ", fec,", ns = ", ns,", nj = ", nj,", na = ", na, ")", sep = "")
         }
         #popStr=function(p.sj, p.jj, p.ja, p.aa, fec, ns,nj,na, ln, cl, tmax)
         else  
 		  {
-		  command <- paste(dsnameValue,"<- popStr(tmax = ",tmax, ", cl = ", cl,", ln = ", ln, ", p.sj = ", p.sj,", p.jj = ", p.jj,", p.ja =", p.ja,", p.aa = ", p.aa,", fec = ", fec,", ns = ", ns,", nj = ", nj,", na = ", na, ")", sep = "")
+		  command <- paste(dsnameValue,"<- popStr(tmax = ",tmax, ", cl = ", cl,", rw = ", ln, ", p.sj = ", p.sj,", p.jj = ", p.jj,", p.ja =", p.ja,", p.aa = ", p.aa,", fec = ", fec,", ns = ", ns,", nj = ", nj,", na = ", na, ")", sep = "")
 		  }
 ########
 ##popStr(p.sj, p.jj, p.ja, p.aa, fec, ns,nj,na, ln, cl, tmax)
 	doItAndPrint(command)
 	tkfocus(CommanderWindow())
 	}
-OKCancelHelp(helpSubject = "metapop")
+OKCancelHelp(helpSubject = "dynPop")
 # data name
 tkgrid(tklabel(top, text="Enter name for data set:"), entryDsname, sticky="e")
 ##

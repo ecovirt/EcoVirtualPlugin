@@ -1,3 +1,5 @@
+############################################
+###########################################
 sucmatrixDbox<- function()
 {
 #    Library("abind")
@@ -208,11 +210,11 @@ sucmatrixDbox<- function()
    dsnameValue <- trim.blanks(tclvalue(dsname))
         if (dsnameValue == "Do_Not_Save" | dsnameValue=="") 
         {
-        	command <- paste("sucMatrix(mat.trans= .Table , init.prop  = .Nt, tmax = ",tmax, ", ln = ", ln,", cl = ", cl,")", sep = "")
+        	command <- paste("sucMatrix(mat.trans= .Table , init.prop  = .Nt, tmax = ",tmax, ", rw = ", ln,", cl = ", cl,")", sep = "")
         }
         else  
 		  {
-		  command <- paste(dsnameValue,"<- sucMatrix(mat.trans= .Table , init.prop  = .Nt, tmax = ",tmax, ", ln = ", ln,", cl = ", cl,")", sep = "")
+		  command <- paste(dsnameValue,"<- sucMatrix(mat.trans= .Table , init.prop  = .Nt, tmax = ",tmax, ", rw = ", ln,", cl = ", cl,")", sep = "")
 		  }
 ########
 		doItAndPrint(command)
@@ -222,7 +224,7 @@ sucmatrixDbox<- function()
         #remove(.Nt, envir=.GlobalEnv)
       tkfocus(CommanderWindow())
       }
-    OKCancelHelp(helpSubject="multSp")
+    OKCancelHelp(helpSubject="sucMatrix")
 ##############
 tkgrid(tklabel(top, text="Enter name for simulation data set :", fg="blue"), sticky="w")
 #    tkgrid(tklabel(top, text="\tEnter name for data set:"), entryDsname, sticky="e")
@@ -249,9 +251,9 @@ tkgrid(labelRcmdr(top, text=gettextRcmdr("Enter Transitions Probabilities: "), f
     tkgrid(buttonsFrame, columnspan=2, sticky="w")
     dialogSuffix(rows=10, columns=2)
 }
+
 ##############################################
-#### regnicho
-#################
+##########################################
 regnichoDbox<-function () 
 {
 require(EcoVirtual)
@@ -302,7 +304,7 @@ pRsEntry <- tkscale(top, from=0, to=1, showvalue=TRUE, variable=pScVar, resoluti
         dst=as.numeric(tclvalue(dstVar))
 			if (sum(is.na(c(c1,c2)))>0 || c1 <= 0 || c2 <= 0) 
           {
-            errorCondition(message = "Colization rate for both species must be positive ")
+            errorCondition(message = "Colonization rate for both species must be positive ")
             return()
           }
         pEr <- as.numeric(tclvalue(pErVar))
@@ -322,11 +324,11 @@ pRsEntry <- tkscale(top, from=0, to=1, showvalue=TRUE, variable=pScVar, resoluti
    dsnameValue <- trim.blanks(tclvalue(dsname))
         if (dsnameValue == "Do_Not_Save" | dsnameValue=="") 
         {
-        	command <- paste("regNicho(tmax= ",tmax, ",ln= ",ln, ", cl = ", cl,", c1 = ", c1,", c2 = ", c2,", ec = ", ec,", dst = ", dst,", Er = ", pEr,", Sc =", pSc,", Mx =", pMx,", Rs =", pRs,")", sep = "")
+        	command <- paste("regNicho(tmax= ",tmax, ", rw= ",ln, ", cl = ", cl,", c1 = ", c1,", c2 = ", c2,", ec = ", ec,", dst = ", dst,", er = ", pEr,", sc =", pSc,", mx =", pMx,", rs =", pRs,")", sep = "")
         }
         else  
 		  {
-		  command <- paste(dsnameValue, " <- regNicho(tmax= ",tmax, ",ln= ",ln, ", cl = ", cl,", c1 = ", c1,", c2 = ", c2,", ec = ", ec,", dst = ", dst,", Er = ", pEr,", Sc =", pSc,", Mx =", pMx,", Rs =", pRs,")", sep = "")
+		  command <- paste(dsnameValue, " <- regNicho(tmax= ",tmax, ", rw= ",ln, ", cl = ", cl,", c1 = ", c1,", c2 = ", c2,", ec = ", ec,", dst = ", dst,", er = ", pEr,", sc =", pSc,", mx =", pMx,", rs =", pRs,")", sep = "")
 		  }
 #test1=regNicho(tmax=50, ln=100, cl=100, c1=0.2, c2=0.8, ec=0.5, m=0.04,  Er=0.08, Sc=0.02, Mx=0, Rs=0)
 ########
@@ -338,7 +340,7 @@ tkgrid(tklabel(top, text="Enter name for data set:"), entryDsname, sticky="e")
 ##
 tkgrid(tklabel(top, text="Simulation Arena Conditions :", fg="blue"), sticky="w")
 tkgrid(tklabel(top, text = "Maximum time"), tmaxEntry, sticky = "e")
-tkgrid(tklabel(top, text = "Coluns"), clEntry, sticky = "e")
+tkgrid(tklabel(top, text = "Columns"), clEntry, sticky = "e")
 tkgrid(tklabel(top, text = "Rows"), lnEntry, sticky = "e")
 #
 tkgrid(tklabel(top, text="Initial Stages Proportions :", fg="blue"), sticky="w")
@@ -371,8 +373,9 @@ tkgrid.configure(ecEntry, sticky = "w")
 tkgrid.configure(dstEntry, sticky = "w")
 dialogSuffix(rows = 13, columns = 2, focus = tmaxEntry)
 }
+
+
 ######################
-##Trade off Dialogo Box
 #############
 #teste1=comCompete(tmax=200,ln=100,cl=100, rq=10, fi=0.2, fsp1=0.2, pe=0.04, fr=0, int=0)
 comcompDbox<-function () 
@@ -439,11 +442,11 @@ onOK <- function()
    dsnameValue <- trim.blanks(tclvalue(dsname))
         if (dsnameValue == "Do_Not_Save" | dsnameValue=="") 
         {
-        	command <- paste("comCompete(tmax= ",tmax, ",ln= ",ln, ", cl = ", cl,", rq = ", rq,", fi = ", fi,", fsp1 = ", fsp1,", pe = ", pe,", fr = ", fr,", int =", int,")", sep = "")
+        	command <- paste("comCompete(tmax= ",tmax, ", rw= ",ln, ", cl = ", cl,", S = ", rq,", fi = ", fi,", fsp1 = ", fsp1,", pe = ", pe,", fr = ", fr,", int =", int,")", sep = "")
         }
         else  
 		  {
-		  command <- paste(dsnameValue, "<- comCompete(tmax= ",tmax, ",ln= ",ln, ", cl = ", cl,", rq = ", rq,", fi = ", fi,", fsp1 = ", fsp1,", pe = ", pe,", fr = ", fr,", int =", int,")", sep = "")
+		  command <- paste(dsnameValue, "<- comCompete(tmax= ",tmax, ",rw= ",ln, ", cl = ", cl,", S = ", rq,", fi = ", fi,", fsp1 = ", fsp1,", pe = ", pe,", fr = ", fr,", int =", int,")", sep = "")
 		  }
 ########comCompete(tmax=200,ln=100,cl=100, rq=10, fi=0.2, fsp1=0.2, pe=0.04, fr=0, int=0)
 	doItAndPrint(command)

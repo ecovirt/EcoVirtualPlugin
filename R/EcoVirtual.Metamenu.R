@@ -1,3 +1,4 @@
+
 ########### Meta Menu #################
 intCol <-function () 
 {
@@ -54,17 +55,17 @@ peEntry <- tkscale(top, from=0, to=1, showvalue=TRUE, variable=peVar, resolution
    dsnameValue <- trim.blanks(tclvalue(dsname))
         if (dsnameValue == "Do_Not_Save" | dsnameValue=="") 
         {
-        	command <- paste("metaCi(tf = ",tf, ", cl = ", cl,", fi = ", fi,", ln =", ln,", i = ", i,", pe = ", pe, ")", sep = "")
+        	command <- paste("metaCi(tmax = ",tf, ", cl = ", cl,", fi = ", fi,", rw =", ln,", ci = ", i,", pe = ", pe, ")", sep = "")
         }
         else  
 		  {
-		  command <- paste(dsnameValue,"<- metaCi(tf = ",tf, ", cl = ", cl,", fi = ", fi,", ln =", ln,", i = ", i,", pe = ", pe, ")", sep = "")
+		  command <- paste(dsnameValue,"<- metaCi(tmax = ",tf, ", rw = ", cl,", fi = ", fi,", ln =", ln,", ci = ", i,", pe = ", pe, ")", sep = "")
 		  }
 ########
 	doItAndPrint(command)
 	tkfocus(CommanderWindow())
 	}
-OKCancelHelp(helpSubject = "metaPop")
+OKCancelHelp(helpSubject = "metapopulation")
 # data name
 tkgrid(tklabel(top, text="Enter name for data set: "), entryDsname, sticky="e")
 tkgrid(tklabel(top, text="Simulation Arena Conditions : ", fg="blue"), sticky="w")
@@ -86,6 +87,8 @@ tkgrid.configure(iEntry, sticky = "w")
 tkgrid.configure(peEntry, sticky = "w")
 dialogSuffix(rows = 8, columns = 2, focus = tfEntry)
 }
+
+
 ######################################
 ##########################################
 propRain <-function() 
@@ -136,18 +139,18 @@ peEntry <- tkscale(top, from=0, to=1, showvalue=TRUE, variable=peVar, resolution
    dsnameValue <- trim.blanks(tclvalue(dsname))
         if (dsnameValue == "Do_Not_Save" | dsnameValue=="") 
         {
-        	command <- paste("metaPop(tf = ",tf, ", cl = ", cl,", fi = ", fi,", ln =", ln,", pc = ", pc,", pe = ", pe, ")", sep = "")
+        	command <- paste("metaPop(tmax = ",tf, ", cl = ", cl,", fi = ", fi,", rw =", ln,", pc = ", pc,", pe = ", pe, ")", sep = "")
         }
         else  
 		  {
-		  command <- paste(dsnameValue,"<-metaPop(tf = ",tf, ", cl = ", cl,", fi = ", fi,", ln =", ln,", pc = ", pc,", pe = ", pe, ")", sep = "")
+		  command <- paste(dsnameValue,"<-metaPop(tmax = ",tf, ", cl = ", cl,", fi = ", fi,", rw =", ln,", pc = ", pc,", pe = ", pe, ")", sep = "")
 		  }
 ########
 #	command <- paste("metaPop(tf = ",tf, ", cl = ", cl,", fi = ", fi,", ln =", ln,", pc = ", pc,", pe = ", pe, ")", sep = "")
 	doItAndPrint(command)
 	tkfocus(CommanderWindow())
 	}
-OKCancelHelp(helpSubject = "metaPop")
+OKCancelHelp(helpSubject = "metapopulation")
 tkgrid(tklabel(top, text="Enter name for data set: "), entryDsname, sticky="e")
 tkgrid(tklabel(top, text="Simulation Arena Conditions : ", fg="blue"), sticky="w")
 tkgrid(tklabel(top, text = "Maximum time  "), tfEntry, sticky = "e")
@@ -190,7 +193,7 @@ fiEntry <- tkscale(top, from=0, to=1, showvalue=TRUE, variable=fiVar, resolution
 pcVar <- tclVar("0.1") ## nclassVar ->fiVar
 pcEntry <- tkscale(top, from=0, to=1, showvalue=TRUE, variable=pcVar, resolution=0.01, orient="horizontal")
 eVar <- tclVar("0.05") ## nclassVar ->fiVar
-eEntry <- tkscale(top, from=0, to=1, sowvalue=TRUE, variable = eVar, resolution=0.01, orient="horizontal")
+eEntry <- tkscale(top, from=0, to=1, showvalue=TRUE, variable = eVar, resolution=0.01, orient="horizontal")
 	onOK <- function() 
 	{
         closeDialog()
@@ -224,18 +227,18 @@ eEntry <- tkscale(top, from=0, to=1, sowvalue=TRUE, variable = eVar, resolution=
    dsnameValue <- trim.blanks(tclvalue(dsname))
         if (dsnameValue == "Do_Not_Save" | dsnameValue=="") 
         {
-        	command <- paste("metaEr(tf = ",tf, ", cl = ", cl,", fi = ", fi,", ln =", ln,", pc = ", pc,", e = ", e, ")", sep = "")
+        	command <- paste("metaEr(tmax = ",tf, ", cl = ", cl,", fi = ", fi,", rw =", ln,", pc = ", pc,", ce = ", e, ")", sep = "")
         }
         else  
 		  {
-		  command <- paste(dsnameValue,"<-metaEr(tf = ",tf, ", cl = ", cl,", fi = ", fi,", ln =", ln,", pc = ", pc,", e = ", e, ")", sep = "")
+		  command <- paste(dsnameValue,"<-metaEr(tmax = ",tf, ", cl = ", cl,", fi = ", fi,", rw =", ln,", pc = ", pc,", ce = ", e, ")", sep = "")
 		  }
 ########   
 #	command <- paste("metaEr(tf = ",tf, ", cl = ", cl,", fi = ", fi,", ln =", ln,", pc = ", pc,", e = ", e, ")", sep = "")
 	doItAndPrint(command)
 	tkfocus(CommanderWindow())
 	}
-OKCancelHelp(helpSubject = "metaPop")
+OKCancelHelp(helpSubject = "metapopulation")
 tkgrid(tklabel(top, text="Enter data set name: "), entryDsname, sticky="e")
 tkgrid(tklabel(top, text="Simulation Arena Conditions : ", fg="blue"), sticky="w")
 tkgrid(tklabel(top, text = "Maximum time  "), tfEntry, sticky = "e")
@@ -258,6 +261,8 @@ dialogSuffix(rows = 8, columns = 2, focus = tfEntry)
 ################################################
 #metaCiEr <-function(tf,cl,ln,fi,i,e)
 #metaEr <-function(tf,cl,ln,fi,pc,e)
+
+
 resEffcol <-function () 
 {
 require(EcoVirtual)
@@ -316,18 +321,18 @@ eEntry <- tkentry(top, width = "6", textvariable = eVar)
    dsnameValue <- trim.blanks(tclvalue(dsname))
         if (dsnameValue == "Do_Not_Save" | dsnameValue=="") 
         {
-        	command <- paste("metaCiEr(tf = ",tf, ", cl = ", cl,", fi = ", fi,", ln =", ln,", i = ", i,", e = ", e, ")", sep = "")
+        	command <- paste("metaCiEr(tmax = ",tf, ", cl = ", cl,", fi = ", fi,", rw =", ln,", ci = ", i,", ce = ", e, ")", sep = "")
         }
         else  
 		  {
-		  command <- paste(dsnameValue,"<-metaCiEr(tf = ",tf, ", cl = ", cl,", fi = ", fi,", ln =", ln,", i = ", i,", e = ", e, ")", sep = "")
+		  command <- paste(dsnameValue,"<-metaCiEr(tmax = ",tf, ", rw = ", cl,", fi = ", fi,", ln =", ln,", ci = ", i,", ce = ", e, ")", sep = "")
 		  }
 ########   
 #	command <- paste("metaEr(tf = ",tf, ", cl = ", cl,", fi = ", fi,", ln =", ln,", pc = ", pc,", e = ", e, ")", sep = "")
 	doItAndPrint(command)
 	tkfocus(CommanderWindow())
 	}
-OKCancelHelp(helpSubject = "metaPop")
+OKCancelHelp(helpSubject = "metapopulation")
 tkgrid(tklabel(top, text="Enter data set name:"), entryDsname, sticky="e")
 tkgrid(tklabel(top, text="Simulation Arena Conditions :", fg="blue"), sticky="w")
 tkgrid(tklabel(top, text = "Maximum time  "), tfEntry, sticky = "e")
@@ -347,105 +352,8 @@ tkgrid.configure(iEntry, sticky = "w")
 tkgrid.configure(eEntry, sticky = "w")
 dialogSuffix(rows = 8, columns = 2, focus = tfEntry)
 }
-################ Spatial Dependence Model ######################################
-spDep <-function () 
-{
-require(EcoVirtual)
-initializeDialog(title = gettextRcmdr("Spatial Colonization"))
-####
-dsname <- tclVar("Do_Not_Save")
-entryDsname <- tkentry(top, width="20", textvariable=dsname)
-###
-tfVar <- tclVar("100")
-tfEntry <- tkentry(top, width = "4", textvariable = tfVar)
-clVar <- tclVar("20")
-lnVar <- tclVar("20")
-clEntry <- tkentry(top, width = "4", textvariable = clVar)
-lnEntry <- tkentry(top, width = "4", textvariable = lnVar)
-fiVar <- tclVar(0.25) ## nclassVar ->fiVar
-fiEntry <- tkscale(top, from=0, to=1, showvalue=TRUE, variable=fiVar, resolution=0.01, orient="horizontal")
-pcVar <- tclVar("0.1") ## nclassVar ->fiVar
-pcEntry <- tkscale(top, from=0, to=1, showvalue=TRUE, variable=pcVar, resolution=0.01, orient="horizontal")
-peVar <- tclVar("0.05") ## nclassVar ->fiVar
-peEntry <- tkscale(top, from=0, to=1, showvalue=TRUE, variable=peVar, resolution=0.01, orient="horizontal")
-cantoVar <- tclVar("1")
-cantoBox <- tkcheckbutton(top, variable = cantoVar)
-	onOK <- function() 
-	{
-        closeDialog()
-        tf <- round(as.numeric(tclvalue(tfVar)))
-        if (is.na(tf) || tf <= 0) 
-        {
-            errorCondition(message = "Number of simulations must be a positive integer")
-            return()
-        }
-        cl <- round(as.numeric(tclvalue(clVar)))
-        if (is.na(cl) || cl <= 0) 
-        {
-            errorCondition(message = "Number of columns on the simulated arena must be a positive integer.")
-            return()
-        }
-        ln <- round(as.numeric(tclvalue(lnVar)))
-        if (is.na(ln) || ln <= 0) 
-        {
-            errorCondition("Number of lines on the simulated arena must be a positive integer.")
-            return()
-        }
-        fi <- as.numeric(tclvalue(fiVar))
-#        if (fi<=0 || fi > 1) 
-#        {
-#            errorCondition(message = "Proportion of patchs occuped must be between 0 and 1 ")
-#            return()
-#        }
-       pc <- as.numeric(tclvalue(pcVar))
-#        if (pc<0 || pc > 10) 
-#        {
-#            errorCondition(message = "Colonization constant must be between 0 and 10")
-#            return()
-#        }
-       pe <- as.numeric(tclvalue(peVar))
-#        if (pe<0 || pe > 1) 
-#        {
-#            errorCondition(message = "Probability of extintion must be between 0 and 1")
-#            return()
-#        }
-cantoVF <- as.logical(as.numeric(tclvalue(cantoVar)))
-############ Data name
-   dsnameValue <- trim.blanks(tclvalue(dsname))
-        if (dsnameValue == "Do_Not_Save" | dsnameValue=="") 
-        {
-        	command <- paste("meta.spac(tf = ",tf, ", cl = ", cl,", fi = ", fi,", ln =", ln,", pc = ", pc,", pe = ", pe, ", canto = ", cantoVF,")", sep = "")
-        }
-        else  
-		  {
-		  command <- paste(dsnameValue,"<-meta.spac(tf = ",tf, ", cl = ", cl,", fi = ", fi,", ln =", ln,", pc = ", pc,", pe = ", pe, ", canto = ", cantoVF,")", sep = "")
-		  }
-######## 
-	doItAndPrint(command)
-	tkfocus(CommanderWindow())
-	}
-OKCancelHelp(helpSubject = "metaPop")
-tkgrid(tklabel(top, text="Enter name for data set:"), entryDsname, sticky="e")
-tkgrid(tklabel(top, text="Simulation Arena Conditions :", fg="blue"), sticky="w")
-tkgrid(tklabel(top, text = "Maximum time  "), tfEntry, sticky = "e")
-tkgrid(tklabel(top, text = "Columns  "), clEntry, sticky = "e")
-tkgrid(tklabel(top, text = "Rows  "), lnEntry, sticky = "e")
-tkgrid(tklabel(top, text="Initial Simulation Conditions :", fg="blue"), sticky="w")
-tkgrid(tklabel(top, text = "Initial occupance"), fiEntry, sticky = "se")
-tkgrid(tklabel(top, text = "Colonization probability"), pcEntry, sticky = "se")
-tkgrid(tklabel(top, text = "Extintion probability"), peEntry, sticky = "se")
-tkgrid(tklabel(top, text = "Corner start"), cantoBox, sticky = "e")
-tkgrid(buttonsFrame, sticky = "w", columnspan = 2)
-tkgrid.configure(entryDsname, sticky = "w")
-tkgrid.configure(tfEntry, sticky = "w")
-tkgrid.configure(clEntry, sticky = "w")
-tkgrid.configure(lnEntry, sticky = "w")
-tkgrid.configure(fiEntry, sticky = "w")
-tkgrid.configure(pcEntry, sticky = "w")
-tkgrid.configure(peEntry, sticky = "w")
-tkgrid.configure(cantoBox, sticky = "w")
-dialogSuffix(rows = 9, columns = 2, focus = entryDsname)
-}
+
+
 ####################################
 ########################################################
 #metaComp(tmax=100,cl=100,ln=100,fi1=0.1,fi2=0.4,i1=0.4,i2=0.5,pe=0.25)
@@ -524,18 +432,18 @@ cantoBox <- tkcheckbutton(top, variable = cantoVar)
    dsnameValue <- trim.blanks(tclvalue(dsname))
         if (dsnameValue == "Do_Not_Save" | dsnameValue=="") 
         {
-        	command <- paste("metaComp(tmax = ",tmax, ", cl = ", cl,", fi1 = ", fi1,", fi2 = ", fi2,", ln =", ln,", i1 = ", i1,", i2 = ", i2,", pe = ", pe,", D = ", distr,", anima = ", cantoVF, ")", sep = "")
+        	command <- paste("metaComp(tmax = ",tmax, ", cl = ", cl,", fi1 = ", fi1,", fi2 = ", fi2,", rw =", ln,", i1 = ", i1,", i2 = ", i2,", pe = ", pe,", D = ", distr,", anima = ", cantoVF, ")", sep = "")
         }
         else  
 		  {
-		  command <- paste(dsnameValue,"<- metaComp(tmax = ",tmax, ", cl = ", cl,", fi1 = ", fi1,", fi2 = ", fi2,", ln =", ln,", i1 = ", i1,", i2 = ", i2,", pe = ", pe,", D = ", distr,", anima = ", cantoVF, ")", sep = "")
+		  command <- paste(dsnameValue,"<- metaComp(tmax = ",tmax, ", cl = ", cl,", fi1 = ", fi1,", fi2 = ", fi2,", rw =", ln,", i1 = ", i1,", i2 = ", i2,", pe = ", pe,", D = ", distr,", anima = ", cantoVF, ")", sep = "")
 		  }
 ########
 #metaComp(tmax=100,cl=100,ln=100,fi1=0.1,fi2=0.4,i1=0.4,i2=0.5,pe=0.25)
 	doItAndPrint(command)
 	tkfocus(CommanderWindow())
 	}
-OKCancelHelp(helpSubject = "metaPop")
+OKCancelHelp(helpSubject = "metaComp")
 # data name
 tkgrid(tklabel(top, text="Enter name for data set:"), entryDsname, sticky="e")
 ##

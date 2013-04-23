@@ -1,4 +1,7 @@
-### testando vpn #####
+### biogeographical functionsv ###
+
+############################
+############################
 arquipDbox<-function () 
 {
 require(EcoVirtual)
@@ -58,17 +61,17 @@ onOK <- function()
    dsnameValue <- trim.blanks(tclvalue(dsname))
         if (dsnameValue == "Do_Not_Save" | dsnameValue=="") 
         {
-        	command <- paste("arquip(nIsl= ", nIsl, ",ar.min= ", ar.min,",ar.max= ",ar.max, ",Nspp= ",rq, ", chuva.total = ", ct,", abund = ", fsp1,", tmax = ", tmax,", anima = ", cantoVF,")" , sep = "")
+        	command <- paste("arquip(n.isl= ", nIsl, ",ar.min= ", ar.min,",ar.max= ",ar.max, ",S= ",rq, ", seed.rain = ", ct,", abund = ", fsp1,", tmax = ", tmax,", anima = ", cantoVF,")" , sep = "")
         }
         else  
 		  {
-		  command <- paste(dsnameValue, "<- arquip(nIsl= ", nIsl, ",ar.min= ", ar.min,",ar.max= ",ar.max, ",Nspp= ",rq, ", chuva.total = ", ct,", abund = ", fsp1,", tmax = ", tmax,", anima = ", cantoVF,")" , sep = "")
+		  command <- paste(dsnameValue, "<- arquip(n.isl= ", nIsl, ",ar.min= ", ar.min,",ar.max= ",ar.max, ",S= ",rq, ", seed.rain= ", ct,", abund = ", fsp1,", tmax = ", tmax,", anima = ", cantoVF,")" , sep = "")
 		  }
 	doItAndPrint(command)
 	tkfocus(CommanderWindow())
 	}
 ############ 
-OKCancelHelp(helpSubject = "com.compete")
+OKCancelHelp(helpSubject = "arquip")
 tkgrid(tklabel(top, text="Enter name for data set:"), entryDsname, sticky="e")
 tkgrid(tklabel(top, text = "Maximum time"), tmaxEntry, sticky = "e")
 ###########
@@ -79,7 +82,7 @@ tkgrid(tklabel(top, text = "Bigger Island (square side)"), ar.maxEntry, sticky =
 #########
 tkgrid(tklabel(top, text="Mainland Parameters :", fg="blue"), sticky="w")
 tkgrid(tklabel(top, text = "Number of species "), rqEntry, sticky = "se")
-tkgrid(tklabel(top, text = "Abundance eveness "), fsp1Entry, sticky = "se")
+tkgrid(tklabel(top, text = "Abundance dominance"), fsp1Entry, sticky = "se")
 tkgrid(tklabel(top, text = "Seed rain size "), ctEntry, sticky = "se")
 tkgrid(tklabel(top, text = "Show simulation frames"), cantoBox, sticky = "e")
 #
@@ -98,6 +101,9 @@ tkgrid.configure(ctEntry, sticky = "w")
 tkgrid.configure(cantoBox, sticky = "w")
 dialogSuffix(rows = 10, columns = 2, focus = tmaxEntry)
 }
+
+
+######################################
 ######################################
 ColExtDbox<-function () 
 {
@@ -131,7 +137,7 @@ onOK <- function(){
 #        
         doItAndPrint(paste("animaColExt(Ext= '", Ext,  "', Col ='", Col,"')", sep=""))
         }
-OKCancelHelp(helpSubject = "com.compete")
+OKCancelHelp(helpSubject = "animaColExt")
 ###########
 tkgrid(tklabel(top, text="Colonization  :", fg="blue"), sticky="w")
     tkgrid(labelRcmdr(top, text=gettextRcmdr("Increase")), ColCrsButton, sticky="e")
@@ -151,8 +157,11 @@ tkgrid(buttonsFrame, sticky="w", columnspan=2)
     tkgrid.configure(ExtFixButton, sticky="w")
     dialogSuffix(rows=9, columns=2, focus=ColCrsButton)
 }
+
+
 #########################################
-#bioGeoIsl=function(areas , dist , P , peso.A=.5 , a=1, b=-.01, c=1, d=-.01, e=0, f=.01, g=0, h=.01)
+#########################################
+#bioGeoIsl=function(area , dist , P , peso.A=.5 , a=1, b=-.01, c=1, d=-.01, e=0, f=.01, g=0, h=.01)
 bioGeoIslDbox= function () 
 {
     env <- environment()
@@ -261,20 +270,20 @@ bioGeoIslDbox= function ()
         doItAndPrint(".dist  # distances")
         dsnameValue <- trim.blanks(tclvalue(dsname))
         if (dsnameValue == "Do_Not_Save" | dsnameValue == "") {
-            command <- paste("bioGeoIsl(areas=.size, dist  = .dist, P = ", 
-                PVar, ", b = ", bVar, ", d = ", dVar, ",f =", 
-                fVar, ",h= ", hVar, ")", sep = "")
+            command <- paste("bioGeoIsl(area=.size, dist  = .dist, P = ", 
+                PVar, ", b.e = ", bVar, ", d.i = ", dVar, ",f.i =", 
+                fVar, ",h.e= ", hVar, ")", sep = "")
         }
         else {
-            command <- paste(dsnameValue, "<- bioGeoIsl(areas=", 
-                size, ", dist  = ", dist, ", P = ", PVar, ", b = ", 
-                bVar, ", d = ", dVar, ",f =", fVar, ",h= ", hVar, 
+            command <- paste(dsnameValue, "<- bioGeoIsl(area=", 
+                size, ", dist  = ", dist, ", P = ", PVar, ", b.e = ", 
+                bVar, ", d.i = ", dVar, ",f.i =", fVar, ",h.e= ", hVar, 
                 ")", sep = "")
         }
         doItAndPrint(command)
         tkfocus(CommanderWindow())
     }
-    OKCancelHelp(helpSubject = "multSp")
+    OKCancelHelp(helpSubject = "bioGeoIsl")
     tkgrid(tklabel(top, text = "Enter name for simulation data set :", 
         fg = "blue"), sticky = "w")
     tkgrid(entryDsname, sticky = "e")
@@ -302,34 +311,28 @@ bioGeoIslDbox= function ()
 #    dialogSuffix(rows = 10, columns = 2)
 }
 #bioGeoIslDbox()
-########################################
+
+##########################################
+##########################################
 gr.abund=function(rq, fsp1, add=FALSE,...)
 {
-#	rq <- as.numeric(tclvalue(rqVar))
-#	fsp1 <- as.numeric(tclvalue(fsp1Var))
-#	pe <- as.numeric(tclvalue(peVar))
 	rank=1:rq
-	#ci= pe/(1-fsp1)^(2*rank-1)
 	px= fsp1*(1-fsp1)^(rank-1)
 		if(add==FALSE)
 		{
 		toff<-x11( width=5, height=5)
 		}
 	old<-par(mar=c(3,3,3,3))
-	#plot(px~rank,col="red",ylim=c(0,max(ci)*1.1), type="b", ann=FALSE, axes=FALSE)
 	plot(px~rank, ylim=c(0,fsp1),type="b", bty="n",  ann=FALSE, cex.axis=0.8)
-	#axis(4, cex.axis=0.8)#, yaxp=c(0,3,3))
 	par(new=TRUE)
-	#yaxt="n", xaxp=c(0,10,5))
-	#axis(2, cex.axis=0.8)#, yaxp=c(0,0.2,4))
 	mtext("Specie abundance rank", 1, 2, cex=0.9)
 	mtext("Abundance", 2, 2, cex=0.9)
-	#mtext("Colonization rate", 4, 2, cex=0.9)
 	mtext("Relative Species Abundance ", 3, 0, cex=1.2)
 	par(old)
 }
+
+
 #############################
-##### Randon Walk DBox
 #############################
 randWalkDbox=function () 
 {
@@ -359,19 +362,19 @@ randWalkDbox=function ()
         dsnameValue <- trim.blanks(tclvalue(dsname))
 ##        randWalk <- function(n=1,step=1,ciclo=1e5,x1max=NULL, alleq=FALSE)
         if (dsnameValue == "Do_Not_Save" | dsnameValue == "") {
-            command <- paste("randWalk(n = ", ns, ", step = ", 
-                st, ", ciclo = ", tf, ", x1max =", mid, ", alleq = ", cantoVF, 
+            command <- paste("randWalk(S = ", ns, ", step = ", 
+                st, ", tmax = ", tf, ", x1max =", mid, ", alleq = ", cantoVF, 
                 ")", sep = "")
         }
         else {
-            command <- paste(dsnameValue, "<-randWalk(n = ", ns, ", step = ", 
-                st, ", ciclo = ", tf, ", x1max =", mid, ", alleq = ", cantoVF, 
+            command <- paste(dsnameValue, "<-randWalk(S = ", ns, ", step = ", 
+                st, ", tmax = ", tf, ", x1max =", mid, ", alleq = ", cantoVF, 
                 ")", sep = "")
         }
         doItAndPrint(command)
         tkfocus(CommanderWindow())
     }
-    OKCancelHelp(helpSubject = "neutModel")
+    OKCancelHelp(helpSubject = "randWalk")
     tkgrid(tklabel(top, text = "Enter name for data set: "), 
         entryDsname, sticky = "e")
     tkgrid(tklabel(top, text = "Randon Walk Parameters", 
@@ -392,8 +395,9 @@ randWalkDbox=function ()
     tkgrid(buttonsFrame, columnspan = 2, sticky = "w")
     dialogSuffix(rows = 8, columns = 2, focus = nsEntry)
 }
+
+
 ############################
-#### Zero Sum Game DBox
 ############################
 extGameDbox=function() 
 {
@@ -417,16 +421,16 @@ extGameDbox=function()
         dsnameValue <- trim.blanks(tclvalue(dsname))
 ##extGame <- function(aposta=1,total=100, tmax=5
         if (dsnameValue == "Do_Not_Save" | dsnameValue == "") {
-            command <- paste("extGame(aposta = ", ap, ", total = ", 
+            command <- paste("extGame(bet = ", ap, ", total = ", 
                 m, ", tmax = ", mt,")", sep = "")
         }
         else {
-            command <- paste(dsnameValue, "<-extGame(aposta = ", ap, ", total = ", m, ", tmax = ", mt,")", sep = "")
+            command <- paste(dsnameValue, "<-extGame(bet = ", ap, ", total = ", m, ", tmax = ", mt,")", sep = "")
         }
         doItAndPrint(command)
         tkfocus(CommanderWindow())
     }
-    OKCancelHelp(helpSubject = "neutModel")
+    OKCancelHelp(helpSubject = "extGane")
     tkgrid(tklabel(top, text = "Enter name for data set: "), 
         entryDsname, sticky = "e")
     tkgrid(tklabel(top, text = "Game Parameters", 
@@ -442,8 +446,8 @@ extGameDbox=function()
     tkgrid(buttonsFrame, columnspan = 2, sticky = "w")
     dialogSuffix(rows = 5, columns = 2, focus = mVarSlider)
 }
+
 #############################################
-### Caixa de dialogo Modelo Neutro Hubbel  ##
 #############################################
 hubDbox=function () 
 {
@@ -493,16 +497,16 @@ hubDbox=function ()
 ##        simHub1=function(S= 100, j=10, D=1, ciclo=1e4){
         if (dsnameValue == "Do_Not_Save" | dsnameValue == "") {
             command <- paste("simHub1(S = ", S, ", j = ", 
-                ji, ", D = ", D,", ciclo = ", ciclos, ", anima = ",animaVF ,")", sep = "")
+                ji, ", D = ", D,", cicles = ", ciclos, ", anima = ",animaVF ,")", sep = "")
         }
         else {
             command <- paste(dsnameValue, "<-simHub1(S = ", S, ", j = ", 
-                ji,", D = ", D, ", ciclo = ", ciclos, ", anima = ",animaVF , ")", sep = "")
+                ji,", D = ", D, ", cicles = ", ciclos, ", anima = ",animaVF , ")", sep = "")
         }
         doItAndPrint(command)
         tkfocus(CommanderWindow())
     }
-    OKCancelHelp(helpSubject = "neutModel")
+    OKCancelHelp(helpSubject = "simHub")
     tkgrid(tklabel(top, text = "Enter name for data set: "), 
         entryDsname, sticky = "e")
     tkgrid(tklabel(top, text = "Neutral Model Parameters", 
@@ -526,9 +530,8 @@ hubDbox=function ()
     tkgrid(buttonsFrame, columnspan = 2, sticky = "e")
     dialogSuffix(rows = 9, columns = 2, focus = nsVarSlider)
 }
+
 ##############################################
-### Caixa de dialogo Modelo Neutro Hubbel 2 ##
-##########  migration ########################
 #############################################
 hubDbox2=function () 
 {
@@ -566,16 +569,16 @@ hubDbox2=function ()
 ##        simHub1=function(S= 100, j=10, D=1, ciclo=1e4){
         if (dsnameValue == "Do_Not_Save" | dsnameValue == "") {
             command <- paste("simHub2(S = ", S, ", j = ", 
-                ji,  ", D = ", D, ", ciclo = ", ciclos, ", m = ",migra ,", anima = ",animaVF ,")", sep = "")
+                ji,  ", D = ", D, ", cicles = ", ciclos, ", m = ",migra ,", anima = ",animaVF ,")", sep = "")
         }
         else {
             command <- paste(dsnameValue, "<-simHub2(S = ", S, ", j = ", 
-                ji,  ", D = ", D,", ciclo = ", ciclos, ", m = ",migra, ", anima = ",animaVF , ")", sep = "")
+                ji,  ", D = ", D,", cicles = ", ciclos, ", m = ",migra, ", anima = ",animaVF , ")", sep = "")
         }
         doItAndPrint(command)
         tkfocus(CommanderWindow())
     }
-    OKCancelHelp(helpSubject = "neutModel")
+    OKCancelHelp(helpSubject = "simHub")
     tkgrid(tklabel(top, text = "Enter name for data set: "), 
         entryDsname, sticky = "e")
     tkgrid(tklabel(top, text = "Neutral Model Parameters", 
@@ -597,9 +600,8 @@ hubDbox2=function ()
     dialogSuffix(rows = 9, columns = 2, focus = mig1Slider)
 }
 
+
 ##############################################
-### Caixa de dialogo Modelo Neutro Hubbel 2 ##
-##########  migration ########################
 #############################################
 #simHub3=function(Sm=200, jm=20, S= 100, j=10, D=1, ciclo=1e4, m=0.01, nu=0.001, anima=TRUE)
 hubDbox3=function() 
@@ -652,16 +654,16 @@ hubDbox3=function()
 ##        simHub1=function(S= 100, j=10, D=1, ciclo=1e4){
         if (dsnameValue == "Do_Not_Save" | dsnameValue == "") {
             command <- paste("simHub3(Sm = ", Sm,  ", jm = ", jm,",S = ", S, ", j = ", 
-                ji,  ", D = ", D, ", ciclo = ", ciclos, ", m = ", migra ,", nu = ", nu ,", anima = ",animaVF ,")", sep = "")
+                ji,  ", D = ", D, ", cicles = ", ciclos, ", m = ", migra ,", nu = ", nu ,", anima = ",animaVF ,")", sep = "")
         }
         else {
             command <- paste(dsnameValue, "<-simHub3(Sm = ", Sm,  ", jm = ", jm,",S = ", S, ", j = ", 
-                ji,  ", D = ", D,", ciclo = ", ciclos, ", m = ",migra,", nu = ", nu , ", anima = ",animaVF , ")", sep = "")
+                ji,  ", D = ", D,", cicles = ", ciclos, ", m = ",migra,", nu = ", nu , ", anima = ",animaVF , ")", sep = "")
         }
         doItAndPrint(command)
         tkfocus(CommanderWindow())
     }
-    OKCancelHelp(helpSubject = "neutModel")
+    OKCancelHelp(helpSubject = "simHub")
     tkgrid(tklabel(top, text = "Enter name for data set: "), 
         entryDsname, sticky = "e")
     tkgrid(tklabel(top, text = "Regional Communnity Parameters", 
