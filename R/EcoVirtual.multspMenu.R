@@ -373,8 +373,6 @@ tkgrid.configure(ecEntry, sticky = "w")
 tkgrid.configure(dstEntry, sticky = "w")
 dialogSuffix(rows = 13, columns = 2, focus = tmaxEntry)
 }
-
-
 ######################
 #############
 #teste1=comCompete(tmax=200,ln=100,cl=100, rq=10, fi=0.2, fsp1=0.2, pe=0.04, fr=0, int=0)
@@ -414,8 +412,8 @@ doItAndPrint(command)
 rqEntry <- tkscale(top, from=2, to=30, showvalue=TRUE, variable=rqVar, resolution=1, orient="horizontal", command=set.gtoff)
 fsp1Entry <-tkscale(top, from=0, to=1, showvalue=TRUE, variable=fsp1Var, resolution=0.01, orient="horizontal",command=set.gtoff)
 peEntry <- tkscale(top, from=0, to=1, showvalue=TRUE, variable=peVar, resolution=0.01, orient="horizontal", command=set.gtoff)
-cantoVar <- tclVar("1")
-cantoBox <- tkcheckbutton(top, variable = cantoVar)
+#cantoVar <- tclVar("1")
+#cantoBox <- tkcheckbutton(top, variable = cantoVar)
 onOK <- function() 
 	{
 	command="dev.off(dev.cur()); x11()"
@@ -436,7 +434,7 @@ onOK <- function()
 	pe<- as.numeric(tclvalue(peVar))
 	fr <- as.numeric(tclvalue(frVar))
 	int <- as.numeric(tclvalue(intVar))
-	cantoVF <- as.logical(as.numeric(tclvalue(cantoVar)))
+#	cantoVF <- as.logical(as.numeric(tclvalue(cantoVar)))
 ############ Comando
 ##
    dsnameValue <- trim.blanks(tclvalue(dsname))
@@ -469,7 +467,7 @@ tkgrid(tklabel(top, text = "Mortality rate  "), peEntry, sticky = "se")
 tkgrid(tklabel(top, text="Disturbance :", fg="blue"), sticky="w")
 tkgrid(tklabel(top, text = "Frequency "), frEntry, sticky = "e")
 tkgrid(tklabel(top, text = "Intensity "), intEntry, sticky = "e")
-tkgrid(tklabel(top, text = "Show simulation frames"), cantoBox, sticky = "e")
+#tkgrid(tklabel(top, text = "Show simulation frames"), cantoBox, sticky = "e")
 #
 tkgrid(buttonsFrame, sticky = "w", columnspan = 2)
 tkgrid.configure(entryDsname, sticky = "w")
@@ -484,7 +482,7 @@ tkgrid.configure(peEntry, sticky = "w")
 #
 tkgrid.configure(frEntry, sticky = "w")
 tkgrid.configure(intEntry, sticky = "w")
-tkgrid.configure(cantoBox, sticky = "w")
+#tkgrid.configure(cantoBox, sticky = "w")
 dialogSuffix(rows = 12, columns = 2, focus = tmaxEntry)
 }
 #########################

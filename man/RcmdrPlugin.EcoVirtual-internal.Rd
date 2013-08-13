@@ -1,9 +1,9 @@
 \name{RcmdrEcoVirtualPlugin-internal}
 \title{Internal RcmdrEcoVirtualPlugin objects}
-\alias{estdemDb}
-\alias{popExp}
-\alias{popLog}
-\alias{popstrDb}
+\alias{estDemDb}
+\alias{popExpDb}
+\alias{popLogDb}
+\alias{popStrDb}
 \alias{propRain}
 \alias{intCol}
 \alias{resEff}

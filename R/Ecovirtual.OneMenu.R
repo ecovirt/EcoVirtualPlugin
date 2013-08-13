@@ -13,7 +13,7 @@
         }
     }
 ########################################################
-estdemDb <-function () 
+estDemDb <-function () 
 {
 require(EcoVirtual)
 initializeDialog(title = gettextRcmdr("Demographic Stochasticity"))
@@ -33,7 +33,7 @@ npopVar <-tclVar("20")
 npopEntry <- tkentry(top, width = "3", textvariable = npopVar)
 	onOK <- function() 
 	{
-        closeDialog()
+        #closeDialog()
         N0 <- round(as.numeric(tclvalue(noVar)))
         if (is.na(N0) || N0 <= 0) 
         {
@@ -82,10 +82,9 @@ tkgrid.configure(bEntry, sticky = "w")
 tkgrid.configure(dEntry, sticky = "w")
 dialogSuffix(rows = 6, columns = 2, focus = tmaxEntry)
 }
-#############################################################3
-############################################################
-#estExp(N0=1000,r=0.0488,varr=0.005,tmax=100) 
-popExp <-function () 
+#########################################################
+#########################################################
+popExpDb<-function()
 {
 require(EcoVirtual)
 initializeDialog(title = gettextRcmdr("Exponential Growth"))
@@ -95,56 +94,101 @@ entryDsname <- tkentry(top, width="20", textvariable=dsname)
 ####
 noVar <- tclVar("10")
 noEntry <- tkentry(top, width = "4", textvariable = noVar)
-rVar <- tclVar(0.05)
+lambVar <- tclVar(1.05)
+tmaxVar <- tclVar(10)
+tmaxEntry <- tkentry(top, width = "4", textvariable = tmaxVar)
+inttVar<-tclVar(1.00)
+#########################
+	set.gr=function(...)
+	{
+#extVF <- as.logical(as.numeric(tclvalue(extVar)))
+	command=paste("popExp(N0 = ", as.numeric(tclvalue(noVar)), ", lamb = ", as.numeric(tclvalue(lambVar)), ", tmax = ", as.numeric(tclvalue(tmaxVar)),", intt = ", as.numeric(tclvalue(inttVar)),")", sep="")
+	doItAndPrint(command)
+#	tkfocus(CommanderWindow())
+	}
+##########################
+lambEntry<-tkscale(top, from=0, to=5, showvalue=TRUE, variable=lambVar, resolution=0.01, orient="horizontal", 
+command=set.gr)
+inttEntry <- tkscale(top, from=0.01, to=1, showvalue=TRUE, variable=inttVar, resolution=0.01, orient="horizontal",command=set.gr)
+################################################
+	onOK <- function() 
+	{	
+############ Data name
+   dsnameValue <- trim.blanks(tclvalue(dsname))
+        if (dsnameValue == "Do_Not_Save" | dsnameValue=="") 
+        {
+        	command <- paste("popExp(N0 = ", as.numeric(tclvalue(noVar)), ", lamb = ", as.numeric(tclvalue(lambVar)), ", tmax = ", as.numeric(tclvalue(tmaxVar)),", intt = ", as.numeric(tclvalue(inttVar)),")", sep="")
+        }
+        else  
+		  {
+		  command <- paste(dsnameValue, " <- popExp(N0 = ", as.numeric(tclvalue(noVar)), ", lamb = ", as.numeric(tclvalue(lambVar)), ", tmax = ", as.numeric(tclvalue(tmaxVar)),", intt = ", as.numeric(tclvalue(inttVar)),")", sep="")
+		  }
+	doItAndPrint(command)
+	tkfocus(CommanderWindow())
+	}
+#popExp(N0,lamb,tmax, intt= 1) 
+OKCancelHelp(helpSubject = "dynPop")
+tkgrid(tklabel(top, text="Enter name for last simulation data set: "), entryDsname, sticky="e")
+#tkgrid(tklabel(top, text="Simulation Arena Conditions :  ", fg="blue"), sticky="w")
+tkgrid(tklabel(top, text = "Maximum time"), tmaxEntry, sticky = "e")
+tkgrid(tklabel(top, text = "Interval time size "), inttEntry, sticky = "e")
+tkgrid(tklabel(top, text="Species parameters :", fg="blue"), sticky="w")
+tkgrid(tklabel(top, text = "Initial population size  "), noEntry, sticky = "e")
+tkgrid(tklabel(top, text = "Population growth rate (lambda)  "), lambEntry, sticky = "e")
+
+tkgrid(buttonsFrame, sticky = "w", columnspan = 2)
+#tkgrid(tklabel(top, text="Enter name for data set:"), entryDsname, sticky="e")
+tkgrid.configure(entryDsname, sticky = "w")
+tkgrid.configure(tmaxEntry, sticky = "w")
+tkgrid.configure(inttEntry, sticky = "w")
+tkgrid.configure(noEntry, sticky = "w")
+tkgrid.configure(lambEntry, sticky = "w")
+dialogSuffix(rows = 6, columns = 2, focus = tmaxEntry)
+}
+############################################################
+estEnvDb <-function () 
+{
+require(EcoVirtual)
+initializeDialog(title = gettextRcmdr("Environmental Sthocasticity"))
+#### Salva dados
+dsname <- tclVar("Do_Not_Save")
+entryDsname <- tkentry(top, width="20", textvariable=dsname)
+####
+noVar <- tclVar("10")
+noEntry <- tkentry(top, width = "4", textvariable = noVar)
+lambVar <- tclVar(1.05)
 varrVar <- tclVar(0.02)
 tmaxVar <- tclVar(100)
 tmaxEntry <- tkentry(top, width = "4", textvariable = tmaxVar)
+npopVar<-tclVar("20")
+npopEntry <- tkentry(top, width = "4", textvariable = npopVar)
+extVar <- tclVar("0")
+extBox <- tkcheckbutton(top, variable = extVar)
 #################################################################
 	set.gr=function(...)
 	{
-	command=paste("estExp(N0 = ", as.numeric(tclvalue(noVar)), ", r = ", as.numeric(tclvalue(rVar)), ", varr = ", as.numeric(tclvalue(varrVar)),", tmax = ", as.numeric(tclvalue(tmaxVar)), ")")
+#extVF <- as.logical(as.numeric(tclvalue(extVar)))
+	command=paste("estEnv(N0 = ", as.numeric(tclvalue(noVar)), ", lamb = ", as.numeric(tclvalue(lambVar)), ", varr = ", as.numeric(tclvalue(varrVar)),", tmax = ", as.numeric(tclvalue(tmaxVar)),", npop = ", as.numeric(tclvalue(npopVar)), ", ext =", as.logical(as.numeric(tclvalue(extVar))), ")", sep="")
 	doItAndPrint(command)
 #	tkfocus(CommanderWindow())
 	}
 ##############################################################
-rEntry<-tkscale(top, from=-5, to=5, showvalue=TRUE, variable=rVar, resolution=0.01, orient="horizontal", 
+lambEntry<-tkscale(top, from=0, to=5, showvalue=TRUE, variable=lambVar, resolution=0.01, orient="horizontal", 
 command=set.gr)
 varrEntry <- tkscale(top, from=0, to=15, showvalue=TRUE, variable=varrVar, resolution=0.01, orient="horizontal", 
 command=set.gr)
 ################################################
 	onOK <- function() 
 	{	
-#	command="dev.off(dev.cur()); x11()"
-#	doItAndPrint(command)
-   closeDialog()
-#   N0 <- round(as.numeric(tclvalue(noVar)))
-#        if (is.na(N0) || N0 <= 0) 
-#        {
-#            errorCondition(message = "Number of individuos at the simulation start must be a positive integer")
-#            return()
-#        }
-#        tmax <- round(as.numeric(tclvalue(tmaxVar)))
-#        if (is.na(tmax) || tmax <= 0) 
-#        {
-#            errorCondition("Number of simulations must be a positive integer")
-#            return()
-#        }
-#        varr <- as.numeric(tclvalue(varrVar))
-#        if (varr < 0)
-#        {
-#            errorCondition(message = "r Variance must be zero (no stocatiscit) or positive value")
-#            return()
-#        }
-#        r=as.numeric(tclvalue(rVar))
 ############ Data name
    dsnameValue <- trim.blanks(tclvalue(dsname))
-        if (dsnameValue != "Do_Not_Save" & dsnameValue!="") 
-#        {
-#        	command <- paste("estExp(N0= ",N0, ", r = ", r,", varr = ", varr,", tmax =", tmax,")", sep = "")
-#        }
-#        else  
+        if (dsnameValue == "Do_Not_Save" | dsnameValue=="") 
+        {
+        	command <- paste("estEnv(N0 = ", as.numeric(tclvalue(noVar)), ", lamb = ", as.numeric(tclvalue(lambVar)), ", varr = ", as.numeric(tclvalue(varrVar)),", tmax = ", as.numeric(tclvalue(tmaxVar)),", npop = ", as.numeric(tclvalue(npopVar)), ", ext =", as.logical(as.numeric(tclvalue(extVar))), ")", sep = "")
+        }
+        else  
 		  {
-		  command <- paste(dsnameValue, " <- estExp(N0= ",N0, ", r = ", r,", varr = ", varr,", tmax =", tmax,")", sep = "")
+		  command <- paste(dsnameValue, " <- estEnv(N0 = ", as.numeric(tclvalue(noVar)), ", lamb = ", as.numeric(tclvalue(lambVar)), ", varr = ", as.numeric(tclvalue(varrVar)),", tmax = ", as.numeric(tclvalue(tmaxVar)),", npop = ", as.numeric(tclvalue(npopVar)), ", ext =", as.logical(as.numeric(tclvalue(extVar))), ")", sep = "")
 		  }
 	doItAndPrint(command)
 	tkfocus(CommanderWindow())
@@ -153,24 +197,29 @@ OKCancelHelp(helpSubject = "dynPop")
 tkgrid(tklabel(top, text="Enter name for last simulation data set: "), entryDsname, sticky="e")
 #tkgrid(tklabel(top, text="Simulation Arena Conditions :  ", fg="blue"), sticky="w")
 tkgrid(tklabel(top, text = "Maximum time"), tmaxEntry, sticky = "e")
+tkgrid(tklabel(top, text = "Number of estochastic simulation "), npopEntry, sticky = "e")
 tkgrid(tklabel(top, text="Species parameters :", fg="blue"), sticky="w")
 tkgrid(tklabel(top, text = "Initial population size  "), noEntry, sticky = "e")
-tkgrid(tklabel(top, text = "Intrinsic growth rate (r)  "), rEntry, sticky = "se")
+tkgrid(tklabel(top, text = "Population growth rate (lambda)  "), lambEntry, sticky = "e")
 tkgrid(tklabel(top, text="Environment stochasticity :", fg="blue"), sticky="w")
-tkgrid(tklabel(top, text = "r variance  "), varrEntry, sticky = "e")
+tkgrid(tklabel(top, text = "lambda variance  "), varrEntry, sticky = "e")
+tkgrid(tklabel(top, text = "Population Extinction"), extBox, sticky = "e")
+
 tkgrid(buttonsFrame, sticky = "w", columnspan = 2)
 #tkgrid(tklabel(top, text="Enter name for data set:"), entryDsname, sticky="e")
 tkgrid.configure(entryDsname, sticky = "w")
 tkgrid.configure(tmaxEntry, sticky = "w")
+tkgrid.configure(npopEntry, sticky = "w")
 tkgrid.configure(noEntry, sticky = "w")
 tkgrid.configure(varrEntry, sticky = "w")
-tkgrid.configure(rEntry, sticky = "w")
+tkgrid.configure(lambEntry, sticky = "w")
+tkgrid.configure(extBox, sticky = "w")
 dialogSuffix(rows = 6, columns = 2, focus = tmaxEntry)
 }
 #########################################################
 ##########################################################
 #crescLog(N0=10, r=0.05, K=80, tmax=100)
-popLog<-function () 
+popLogDb<-function () 
 {
 require(EcoVirtual)
 initializeDialog(title = gettextRcmdr("Logistic Growth"))
@@ -185,10 +234,12 @@ tmaxVar <- tclVar(100)
 noEntry <- tkentry(top, width = "4", textvariable = noVar)
 tmaxEntry <- tkentry(top, width = "4", textvariable = tmaxVar)
 kEntry<-tkentry(top, width = "4", textvariable = kVar)
+extVar <- tclVar("0")
+extBox <- tkcheckbutton(top, variable = extVar)
 #################################################################
 	set.gr=function(...)
 	{
-	command <- paste("crescLog(N0= ", as.numeric(tclvalue(noVar)), ", r = ", as.numeric(tclvalue(rVar)),", K = ", as.numeric(tclvalue(kVar)),", tmax =", round(as.numeric(tclvalue(tmaxVar))),")", sep = "")
+	command <- paste("popLog(N0= ", as.numeric(tclvalue(noVar)), ", r = ", as.numeric(tclvalue(rVar)),", K = ", as.numeric(tclvalue(kVar)),", tmax =", round(as.numeric(tclvalue(tmaxVar))), ", ext =", as.logical(as.numeric(tclvalue(extVar))),")", sep = "")
 	doItAndPrint(command)
 #	tkfocus(CommanderWindow())
 	}
@@ -208,11 +259,11 @@ r=as.numeric(tclvalue(rVar))
    dsnameValue <- trim.blanks(tclvalue(dsname))
         if (dsnameValue == "Do_Not_Save" | dsnameValue=="") 
         {
-        	command <- paste("crescLog(N0= ",N0, ", r = ", r,", K = ", K,", tmax =", tmax,")", sep = "")
+        	command <- paste("popLog(N0= ",N0, ", r = ", r,", K = ", K,", tmax =", tmax, ", ext =", as.logical(as.numeric(tclvalue(extVar))),")", sep = "")
         }
         else  
 		  {
-		  command <- paste(dsnameValue,"<-crescLog(N0= ",N0, ", r = ", r,", K = ", K,", tmax =", tmax,")", sep = "")
+		  command <- paste(dsnameValue,"<-popLog(N0= ",N0, ", r = ", r,", K = ", K,", tmax =", tmax, ", ext =", as.logical(as.numeric(tclvalue(extVar))),")", sep = "")
 		  }
 ########
 	doItAndPrint(command)
@@ -226,12 +277,14 @@ tkgrid(tklabel(top, text="Species parameters :", fg="blue"), sticky="w")
 tkgrid(tklabel(top, text = "Initial population size  "), noEntry, sticky = "e")
 tkgrid(tklabel(top, text = "Carrying capacity (K) "), kEntry, sticky = "e")
 tkgrid(tklabel(top, text = "Intrinsic growth rate (r) "), rEntry, sticky = "se")
+tkgrid(tklabel(top, text = "Population Extinction"), extBox, sticky = "e")
 tkgrid(buttonsFrame, sticky = "w", columnspan = 2)
 tkgrid.configure(entryDsname, sticky = "w")
 tkgrid.configure(tmaxEntry, sticky = "w")
 tkgrid.configure(noEntry, sticky = "w")
 tkgrid.configure(kEntry, sticky = "w")
 tkgrid.configure(rEntry, sticky = "w")
+tkgrid.configure(extBox, sticky = "w")
 dialogSuffix(rows = 6, columns = 2, focus = tmaxEntry)
 }
 ##########################################
@@ -342,11 +395,9 @@ tkgrid.configure(alfaEntry, sticky = "w")
 tkgrid.configure(betaEntry, sticky = "w")
 dialogSuffix(rows = 11, columns = 2, focus = tmaxEntry)
 }
-
-
 ##########################################
 ######################################
-popstrDb<-function () 
+popStrDb<-function () 
 {
 require(EcoVirtual)
 initializeDialog(title = gettextRcmdr("Structured Population"))
