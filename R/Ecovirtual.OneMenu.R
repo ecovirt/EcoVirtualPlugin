@@ -290,6 +290,86 @@ dialogSuffix(rows = 6, columns = 2, focus = tmaxEntry)
 ##########################################
 #compLV(n01=10, n02=10,r1=0.05, r2=0.03, k1=80, k2=50, alfa=1.2, beta=0.5, tmax=200)
 ##########################################
+logBifDb<-function () 
+{
+require(EcoVirtual)
+initializeDialog(title = gettextRcmdr("Logistic Bifurcation"))
+#### Salva dados
+dsname <- tclVar("Do_Not_Save")
+entryDsname <- tkentry(top, width="20", textvariable=dsname)
+####
+noVar <- tclVar("10")
+rdminVar <- tclVar(1)
+rdmaxVar <- tclVar(3)
+kVar <- tclVar("20")
+nrdVar <- tclVar("500")
+tmaxVar <- tclVar(200)
+noEntry <- tkentry(top, width = "4", textvariable = noVar)
+tmaxEntry <- tkentry(top, width = "4", textvariable = tmaxVar)
+kEntry<-tkentry(top, width = "4", textvariable = kVar)
+nrdEntry<-tkentry(top, width = "4", textvariable = nrdVar)
+#extVar <- tclVar("0")
+#extBox <- tkcheckbutton(top, variable = extVar)
+##################################################################
+#	set.gr=function(...)
+#	{
+#	command <- paste("popLog(N0= ", as.numeric(tclvalue(noVar)), ", r = ", as.numeric(tclvalue(rVar)),", K = ", as.numeric(tclvalue(kVar)),", tmax =", round(as.numeric(tclvalue(tmaxVar))), ", ext =", as.logical(as.numeric(tclvalue(extVar))),")", sep = "")
+#	doItAndPrint(command)
+##	tkfocus(CommanderWindow())
+#	}
+##############################################################
+rdminEntry <-tkscale(top, from= 1, to=2.999, showvalue=TRUE, variable=rdminVar, resolution=0.001, orient="horizontal")#, command=set.gr
+rdmaxEntry <-tkscale(top, from= 2, to=3, showvalue=TRUE, variable=rdmaxVar, resolution=0.001, orient="horizontal")
+nrdEntry<-tkscale(top, from= 100, to=1000, showvalue=TRUE, variable=nrdVar, resolution=100, orient="horizontal")
+#kEntry <- tkscale(top, from=0, to= 10*as.numeric(tclvalue(noVar)), showvalue=TRUE, variable=kVar, resolution=round(0.1*as.numeric(tclvalue(noVar))), orient="horizontal", command=set.gr)
+##############################################################
+	onOK <- function() 
+	{
+N0 <- round(as.numeric(tclvalue(noVar)))
+#kEntry <- tkscale(top, from=0, to= 10*N0, showvalue=TRUE, variable=kVar, resolution=round(0.1*N0), orient="horizontal")
+tmax <- round(as.numeric(tclvalue(tmaxVar)))
+K <- as.numeric(tclvalue(kVar))
+nrd <- as.numeric(tclvalue(nrdVar))
+rdmin=as.numeric(tclvalue(rdminVar))
+rdmax=as.numeric(tclvalue(rdmaxVar))
+#bifAttr(N0, K, tmax, nrd,maxrd=3, minrd=1)
+############ Data name
+   dsnameValue <- trim.blanks(tclvalue(dsname))
+        if (dsnameValue == "Do_Not_Save" | dsnameValue=="") 
+        {
+        	command <- paste("bifAttr(N0= ",N0, ", K = ", K, ", tmax =", tmax, ", nrd = ", nrd, ", minrd = ", rdmin,", maxrd = ", rdmax,")", sep = "")
+        }
+        else  
+		  {
+		  command <- paste(dsnameValue,"<-bifAttr(N0= ",N0, ", K = ", K, ", tmax =", tmax, ", nrd = ", nrd, ", minrd = ", rdmin,", maxrd = ", rdmax,")", sep = "")
+		  }
+########
+	doItAndPrint(command)
+	tkfocus(CommanderWindow())
+	}
+OKCancelHelp(helpSubject = "dynPop")
+tkgrid(tklabel(top, text="Enter name for data set:  "), entryDsname, sticky="e")
+#tkgrid(tklabel(top, text="Simulation Arena Conditions : ", fg="blue"), sticky="w")
+tkgrid(tklabel(top, text = "Time to converge  "), tmaxEntry, sticky = "e")
+tkgrid(tklabel(top, text="Species parameters :", fg="blue"), sticky="w")
+tkgrid(tklabel(top, text = "Initial population size  "), noEntry, sticky = "e")
+tkgrid(tklabel(top, text = "Carrying capacity (K) "), kEntry, sticky = "e")
+tkgrid(tklabel(top, text = "Minimum discrete growth rate (rd) "), rdminEntry, sticky = "se")
+tkgrid(tklabel(top, text = "Maximum discrete growth rate (rd) "), rdmaxEntry, sticky = "se")
+tkgrid(tklabel(top, text = "Number of rds"), nrdEntry, sticky = "se")
+#tkgrid(tklabel(top, text = "Population Extinction"), extBox, sticky = "e")
+tkgrid(buttonsFrame, sticky = "w", columnspan = 2)
+tkgrid.configure(entryDsname, sticky = "w")
+tkgrid.configure(tmaxEntry, sticky = "w")
+tkgrid.configure(noEntry, sticky = "w")
+tkgrid.configure(kEntry, sticky = "w")
+tkgrid.configure(rdminEntry, sticky = "w")
+tkgrid.configure(rdmaxEntry, sticky = "w")
+tkgrid.configure(rnEntry, sticky = "w")
+#tkgrid.configure(extBox, sticky = "w")
+dialogSuffix(rows = 7, columns = 2, focus = tmaxEntry)
+}
+##########################################
 ##########################################
 compDb<-function () 
 {

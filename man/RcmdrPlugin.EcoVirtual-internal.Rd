@@ -3,6 +3,7 @@
 \alias{estDemDb}
 \alias{popExpDb}
 \alias{popLogDb}
+\alias{logBifDb}
 \alias{popStrDb}
 \alias{propRain}
 \alias{intCol}
