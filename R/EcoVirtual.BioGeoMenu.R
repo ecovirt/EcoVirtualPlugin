@@ -157,8 +157,6 @@ tkgrid(buttonsFrame, sticky="w", columnspan=2)
     tkgrid.configure(ExtFixButton, sticky="w")
     dialogSuffix(rows=9, columns=2, focus=ColCrsButton)
 }
-
-
 #########################################
 #########################################
 #bioGeoIsl=function(area , dist , P , peso.A=.5 , a=1, b=-.01, c=1, d=-.01, e=0, f=.01, g=0, h=.01)
@@ -170,7 +168,8 @@ bioGeoIslDbox= function ()
     entryDsname <- tkentry(top, width = "20", textvariable = dsname)
     PVar <- tclVar("100")
     PEntry <- tkentry(top, width = "4", textvariable = PVar)
-    ncolsVar <- tclVar("2")
+    #ncolsVar <- tclVar("2")
+    #ncolsValue <- tkentry(top, width = "4", textvariable = PVar)
     bVar <- tclVar("-0.01")
     bEntry <- tkscale(top, from = -1, to = 0, showvalue = TRUE, 
         variable = bVar, resolution = 0.01, orient = "horizontal")
@@ -192,17 +191,15 @@ bioGeoIslDbox= function ()
         tkdestroy(get(".tableFrame", envir = env))
         assign(".tableFrame", tkframe(outerTableFrame), envir = env)
         nrows <- as.numeric(tclvalue(rowsValue))
-        ncols <- as.numeric(tclvalue(ncolsVar))
+        ncols <- as.numeric(2)
         make.col.names <- "labelRcmdr(.tableFrame, text='')"
         assign(".colname.1", tclVar("Distance"), envir = env)
         assign(".colname.2", tclVar("Size"), envir = env)
-        for (j in 1:ncols) {
+        	for (j in 1:ncols) {
             col.varname <- paste(".colname.", j, sep = "")
-            make.col.names <- paste(make.col.names, ", ", "ttkentry(.tableFrame, width='8', textvariable= ", 
-                col.varname, ")", sep = "")
-        }
-        eval(parse(text = paste("tkgrid(", make.col.names, ")", 
-            sep = "")), envir = env)
+            make.col.names <- paste(make.col.names, ", ", "ttkentry(.tableFrame, width='8', textvariable= ",  col.varname, ")", sep = "")
+        	}
+        eval(parse(text = paste("tkgrid(", make.col.names, ")", sep = "")), envir = env)
         for (i in 1:nrows) {
             varname <- paste(".tab.", i, ".1", sep = "")
             assign(varname, tclVar(""), envir = env)
@@ -226,11 +223,8 @@ bioGeoIslDbox= function ()
     }
     rowColFrame <- tkframe(top)
     rowsValue <- tclVar("2")
-    rowsSlider <- tkscale(rowColFrame, from = 2, to = 10, showvalue = FALSE, 
-        variable = rowsValue, resolution = 1, orient = "horizontal", 
-        command = setUpTable)
-    rowsShow <- labelRcmdr(rowColFrame, textvariable = rowsValue, 
-        width = 2, justify = "right")
+    rowsSlider <- tkscale(rowColFrame, from = 2, to = 10, showvalue = FALSE, variable = rowsValue, resolution = 1, orient = "horizontal", command = setUpTable)
+    rowsShow <- labelRcmdr(rowColFrame, textvariable = rowsValue, width = 2, justify = "right")
     onOK <- function() {
         PVar <- as.numeric(tclvalue(PVar))
         bVar <- as.numeric(tclvalue(bVar))
@@ -239,7 +233,7 @@ bioGeoIslDbox= function ()
         hVar <- as.numeric(tclvalue(hVar))
         peso.AVar <- as.numeric(tclvalue(peso.AVar))
         nrows <- as.numeric(tclvalue(rowsValue))
-        ncols <- as.numeric(tclvalue(ncolsVar))
+        ncols <- as.numeric(2)
         cell <- 0
         dist <- rep(0, nrows)
         size <- rep(0, nrows)
@@ -289,26 +283,18 @@ bioGeoIslDbox= function ()
     tkgrid(entryDsname, sticky = "e")
     tkgrid(tklabel(top, text = "Models Parameters :", fg = "blue"), 
         sticky = "w")
-    tkgrid(tklabel(top, text = "Mainland Number of Species"), 
-        PEntry, sticky = "w")
-    tkgrid(tklabel(top, text = "Extinction/Area coefficient "), 
-        bEntry, sticky = "w")
-    tkgrid(tklabel(top, text = "Extinction/Distance coefficient "), 
-        hEntry, sticky = "w")
-    tkgrid(tklabel(top, text = "Colonization/Area coefficient "), 
-        fEntry, sticky = "w")
-    tkgrid(tklabel(top, text = "Colonization/Distance coefficient "), 
-        dEntry, sticky = "w")
-    tkgrid(tklabel(top, text = "Ratio Area/Distance effect"), 
-        peso.AEntry, sticky = "w")
-    tkgrid(labelRcmdr(top, text = gettextRcmdr("Island Size and Distance: "), 
-        fg = "blue"), sticky = "w")
-    tkgrid(labelRcmdr(rowColFrame, text = gettextRcmdr("Number of Islands:")), 
-        rowsSlider, rowsShow, sticky = "w")
+    tkgrid(tklabel(top, text = "Mainland Number of Species"), PEntry, sticky = "w")
+    tkgrid(tklabel(top, text = "Extinction/Area coefficient "), bEntry, sticky = "w")
+    tkgrid(tklabel(top, text = "Extinction/Distance coefficient "),  hEntry, sticky = "w")
+    tkgrid(tklabel(top, text = "Colonization/Area coefficient "),  fEntry, sticky = "w")
+    tkgrid(tklabel(top, text = "Colonization/Distance coefficient "), dEntry, sticky = "w")
+    tkgrid(tklabel(top, text = "Ratio Area/Distance effect"),  peso.AEntry, sticky = "w")
+    tkgrid(labelRcmdr(top, text = gettextRcmdr("Island Size and Distance: "), fg = "blue"), sticky = "w")
+    tkgrid(labelRcmdr(rowColFrame, text = gettextRcmdr("Number of Islands:")),  rowsSlider, rowsShow, sticky = "w")
     tkgrid(rowColFrame, sticky = "w")
     tkgrid(outerTableFrame, sticky = "e")
     tkgrid(buttonsFrame, columnspan = 2, sticky = "w")
-#    dialogSuffix(rows = 10, columns = 2)
+    dialogSuffix(rows = 10, columns = 2)
 }
 #bioGeoIslDbox()
 
