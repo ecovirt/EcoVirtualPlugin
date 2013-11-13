@@ -24,7 +24,7 @@ peVar <- tclVar(0.05)
 peEntry <- tkscale(top, from=0, to=1, showvalue=TRUE, variable=peVar, resolution=0.01, orient="horizontal")
 	onOK <- function() 
 	{
-	closeDialog()
+	#closeDialog()
    tf <- round(as.numeric(tclvalue(tfVar)))
         if (is.na(tf) || tf <= 0) 
         {
@@ -113,7 +113,7 @@ peVar <- tclVar("0.05") ## nclassVar ->fiVar
 peEntry <- tkscale(top, from=0, to=1, showvalue=TRUE, variable=peVar, resolution=0.01, orient="horizontal")
 	onOK <- function() 
 	{
-        closeDialog()
+        #closeDialog()
         tf <- round(as.numeric(tclvalue(tfVar)))
         if (is.na(tf) || tf <= 0) 
         {
@@ -196,7 +196,7 @@ eVar <- tclVar("0.05") ## nclassVar ->fiVar
 eEntry <- tkscale(top, from=0, to=1, showvalue=TRUE, variable = eVar, resolution=0.01, orient="horizontal")
 	onOK <- function() 
 	{
-        closeDialog()
+        #closeDialog()
         tf <- round(as.numeric(tclvalue(tfVar)))
         if (is.na(tf) || tf <= 0) 
         {
@@ -285,7 +285,7 @@ eVar <- tclVar("0.05") ## nclassVar ->fiVar
 eEntry <- tkentry(top, width = "6", textvariable = eVar)
 	onOK <- function() 
 	{
-        closeDialog()
+        #closeDialog()
         tf <- round(as.numeric(tclvalue(tfVar)))
         if (is.na(tf) || tf <= 0) 
         {
@@ -392,7 +392,7 @@ cantoBox <- tkcheckbutton(top, variable = cantoVar)
 
 	onOK <- function() 
 	{
-	closeDialog()
+	#closeDialog()
    tmax <- round(as.numeric(tclvalue(tmaxVar)))
         if (is.na(tmax) || tmax <= 0) 
         {
