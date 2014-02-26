@@ -37,7 +37,7 @@ npopEntry <- tkentry(top, width = "3", textvariable = npopVar)
         N0 <- round(as.numeric(tclvalue(noVar)))
         if (is.na(N0) || N0 <= 0) 
         {
-            errorCondition(message = "Number of individuos at the simulation start must be a positive integer")
+            errorCondition(message = "Number of individuals at the simulation start must be a positive integer")
             return()
         }
         tmax <- round(as.numeric(tclvalue(tmaxVar)))
@@ -54,11 +54,11 @@ npopEntry <- tkentry(top, width = "3", textvariable = npopVar)
    dsnameValue <- trim.blanks(tclvalue(dsname))
         if (dsnameValue == "Do_Not_Save" | dsnameValue=="") 
         {
-        	command <- paste("estDem(tmax= ",tmax, ", n = ", b,", m = ", d,", N0 =", N0, ", nsim = ", npop, ")", sep = "")
+        	command <- paste("estDem(tmax= ",tmax, ", b = ", b,", d = ", d,", N0 =", N0, ", nsim = ", npop, ")", sep = "")
         }
         else  
 		  {
-		  command <- paste(dsnameValue, " <- estDem(tmax= ",tmax, ", n = ", b,", m = ", d,", N0 =", N0, ", nsim = ", npop, ")", sep = "")
+		  command <- paste(dsnameValue, " <- estDem(tmax= ",tmax, ", b = ", b,", d = ", d,", N0 =", N0, ", nsim = ", npop, ")", sep = "")
 		  }
 	doItAndPrint(command)
 	tkfocus(CommanderWindow())
