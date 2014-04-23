@@ -1,0 +1,11 @@
+Package: RcmdrPlugin.EcoVirtual
+Type: Package
+Title: Rcmdr EcoVirtual Plugin
+Version: 0.05
+Date: 2013-11-13
+Author:Alexandre Adalardo and Paulo Inacio Prado <ecovirtualpackage@gmail.com>
+Maintainer: Alexandre Adalardo and Paulo Inacio Prado <ecovirtualpackage@gmail.com>
+Depends: Rcmdr (>= 1.4-0), tcltk, EcoVirtual
+Description:This package provides an Rcmdr "plug-in" for the EcoVirtual package and was designed primarily for teaching ecological models using simulations.
+License: GPL (>= 2)
+LazyLoad: yes
