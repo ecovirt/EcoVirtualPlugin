@@ -26,6 +26,9 @@ LazyLoad: \tab yes\cr
 Alexandre Adalardo <aleadalardo@gmail.com>
 Maintainer: Alexandre Adalardo <aleadalardo@gmail.com>
 }
+\references{
+\url{http://ecovirtual.ib.usp.br}
+}
 \keyword{ package }
 \seealso{
 \code{\link[Rcmdr]{Rcmdr}}.
