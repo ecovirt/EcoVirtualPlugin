@@ -538,19 +538,19 @@ naEntry <- tkentry(top, width = "6", textvariable = naVar)
    ns <- as.numeric(tclvalue(nsVar))
         if (ns<0 ) 
         {
-        errorCondition(message = "Mean number of propagulus must be positive")
+        errorCondition(message = "Mean number of propagules must be positive")
         return()
         }
    nj <- as.numeric(tclvalue(njVar))
         if (nj<0 | nj > (cl*ln) ) 
         {
-        errorCondition(message = "Number of juvenils must be positive and less than number of patchs")
+        errorCondition(message = "Number of juveniles must be positive and less than number of patches")
         return()        
         }
    na <- as.numeric(tclvalue(naVar))
         if (na<0 | (na+nj) > (cl*ln) ) 
         {
-        errorCondition(message = "Number of adults must be positive and adults plus juvenils less than number of patchs")
+        errorCondition(message = "Number of adults must be positive and adults plus juvenils less than number of patches")
         return()
         }
    p.sj <- as.numeric(tclvalue(sjVar))
