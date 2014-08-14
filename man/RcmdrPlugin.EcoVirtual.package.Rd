@@ -6,7 +6,11 @@
 Rcmdr EcoVirtual Plug-In
 }
 \description{
-This plugin install menus on Rcmdr for use EcoVirtual
+This plugin install menus on Rcmdr for use EcoVirtual. The Rcmdr interface
+should open when this library is attached, providing help.
+
+See the help pages on package EcoVirtual for details about the simulation
+and graphical functions.
 }
 \details{
 \tabular{ll}{

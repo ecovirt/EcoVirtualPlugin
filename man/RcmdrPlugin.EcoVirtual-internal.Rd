@@ -16,7 +16,7 @@
 \alias{regnichoDbox}
 \alias{sucmatrixDbox}
 \alias{ColExtDbox}
-\alias{arquipDbox}
+\alias{archipDbox}
 \alias{bioGeoIslDbox}
 \alias{extGameDbox}
 \alias{gr.abund}
@@ -24,7 +24,8 @@
 \alias{hubDbox2}
 \alias{hubDbox3}
 \alias{randWalkDbox}
+\alias{estEnvDb}
 
 \description{Internal RcmdrEcoVirtualPlugin objects.}
-\details{These are not to be called by the user.}
+\details{These are not to be called by the user. See the help on packages Rcmdr and EcoVirtual for details.}
 \keyword{internal}

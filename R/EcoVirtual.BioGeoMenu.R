@@ -2,7 +2,7 @@
 
 ############################
 ############################
-arquipDbox<-function () 
+archipDbox<-function () 
 {
 require(EcoVirtual)
 initializeDialog(title = gettextRcmdr("The Archipelago"))
@@ -61,17 +61,17 @@ onOK <- function()
    dsnameValue <- trim.blanks(tclvalue(dsname))
         if (dsnameValue == "Do_Not_Save" | dsnameValue=="") 
         {
-        	command <- paste("arquip(n.isl= ", nIsl, ",ar.min= ", ar.min,",ar.max= ",ar.max, ",S= ",rq, ", seed.rain = ", ct,", abund = ", fsp1,", tmax = ", tmax,", anima = ", cantoVF,")" , sep = "")
+        	command <- paste("archip(n.isl= ", nIsl, ",ar.min= ", ar.min,",ar.max= ",ar.max, ",S= ",rq, ", seed.rain = ", ct,", abund = ", fsp1,", tmax = ", tmax,", anima = ", cantoVF,")" , sep = "")
         }
         else  
 		  {
-		  command <- paste(dsnameValue, "<- arquip(n.isl= ", nIsl, ",ar.min= ", ar.min,",ar.max= ",ar.max, ",S= ",rq, ", seed.rain= ", ct,", abund = ", fsp1,", tmax = ", tmax,", anima = ", cantoVF,")" , sep = "")
+		  command <- paste(dsnameValue, "<- archip(n.isl= ", nIsl, ",ar.min= ", ar.min,",ar.max= ",ar.max, ",S= ",rq, ", seed.rain= ", ct,", abund = ", fsp1,", tmax = ", tmax,", anima = ", cantoVF,")" , sep = "")
 		  }
 	doItAndPrint(command)
 	tkfocus(CommanderWindow())
 	}
 ############ 
-OKCancelHelp(helpSubject = "arquip")
+OKCancelHelp(helpSubject = "archip")
 tkgrid(tklabel(top, text="Enter name for data set:"), entryDsname, sticky="e")
 tkgrid(tklabel(top, text = "Maximum time"), tmaxEntry, sticky = "e")
 ###########
