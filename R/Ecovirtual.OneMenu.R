@@ -1,17 +1,44 @@
 #### Dialogs boxes for RcmdrPlugin.EcoVirtual package
 ### Alexandre Adalardo de Oliveira 17 fevereiro 2010
 ####################################################
-.First.lib <- function(libname, pkgname){
+## por padrao .First.lib nao existe mais
+# .First.lib <- function(libname, pkgname){
+#     if (!interactive()) return()
+#     Rcmdr <- options()$Rcmdr
+#     plugins <- Rcmdr$plugins
+#     if ((!pkgname %in% plugins) && !getRcmdr("autoRestart")) {
+#         Rcmdr$plugins <- c(plugins, pkgname)
+#         options(Rcmdr=Rcmdr)
+#         closeCommander(ask=FALSE, ask.save=TRUE)
+#         Commander()
+#         }
+#     }
+####################################################
+## usando a funcao do RcmdrPlugin.TeachingDemo (Jonh Fox)
+# Note: the following function (with contributions from Richard Heiberger and Milan Bouchet-Valat) 
+# can be included in any Rcmdr plug-in package to cause the package to load
+# the Rcmdr if it is not already loaded
+.onAttach <- function(libname, pkgname){
     if (!interactive()) return()
+    putRcmdr("slider.env", new.env())    
     Rcmdr <- options()$Rcmdr
     plugins <- Rcmdr$plugins
-    if ((!pkgname %in% plugins) && !getRcmdr("autoRestart")) {
+    if (!pkgname %in% plugins) {
         Rcmdr$plugins <- c(plugins, pkgname)
         options(Rcmdr=Rcmdr)
-        closeCommander(ask=FALSE, ask.save=TRUE)
-        Commander()
+        if("package:Rcmdr" %in% search()) {
+            if(!getRcmdr("autoRestart")) {
+                closeCommander(ask=FALSE, ask.save=TRUE)
+                Commander()
+            }
+        }
+        else {
+            Commander()
         }
     }
+}
+
+
 ########################################################
 estDemDb <-function () 
 {
