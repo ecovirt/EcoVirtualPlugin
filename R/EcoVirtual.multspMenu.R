@@ -4,7 +4,7 @@ sucmatrixDbox<- function()
 {
 #    Library("abind")
     env <- environment()
-    initializeDialog(title=gettextRcmdr("Sucessional Model"))
+    initializeDialog(title=gettextRcmdr("Successional Model"))
     dsname <- tclVar("Do_Not_Save")
     ## incluido
 	entryDsname <- tkentry(top, width="20", textvariable=dsname)
@@ -147,7 +147,7 @@ sucmatrixDbox<- function()
 		sum.col<-apply(t.counts, 2, sum)
 			if (sum(sum.col==1) != nrows)
 			{
-			errorCondition(recall=sucmatrixDbox, message=sprintf(gettextRcmdr("Transitions for each stage at time t (coluns) must sum 1. ADJUSTED BY TOTALS")))
+			errorCondition(recall=sucmatrixDbox, message=sprintf(gettextRcmdr("Transitions for each stage at time t (columns) must sum 1. ADJUSTED BY TOTALS")))
 		   t.counts=tcounts/sum.col     
 			}        
       	if (length(unique(row.names)) != nrows)
@@ -173,12 +173,12 @@ sucmatrixDbox<- function()
         s.counts <- na.omit(s.counts)
 		if (sum(s.counts)!=1)
 		{
-			errorCondition(message=sprintf(gettextRcmdr("Proportion sum for all stage at itial time (coluns) must sum 1\n VALUES ADJUSTED BY TOTAL")))
+			errorCondition(message=sprintf(gettextRcmdr("Proportion sum for all stage at initial time (columns) must sum 1\n VALUES ADJUSTED BY TOTAL")))
 		s.counts=s.counts/sum(s.counts)       
 		}        
       if (length(unique(s.col.names)) != ncols)
       {
-         errorCondition(recall=sucmatrixDbox, message=gettextRcmdr("Inital proportions row names are not unique."))
+         errorCondition(recall=sucmatrixDbox, message=gettextRcmdr("Initial proportions row names are not unique."))
        return()
        }
 ###########################
@@ -232,7 +232,7 @@ tkgrid(entryDsname,sticky="e" )
 ## incluido
 tkgrid(tklabel(top, text="Simulation Arena Conditions :", fg="blue"), sticky="w")
 tkgrid(tklabel(top, text = "Maximum time"), tmaxEntry, sticky = "e")
-tkgrid(tklabel(top, text = "Coluns"), clEntry, sticky = "e")
+tkgrid(tklabel(top, text = "Columns"), clEntry, sticky = "e")
 tkgrid(tklabel(top, text = "Rows"), lnEntry, sticky = "e")
 #tkgrid.configure(entryDsname, sticky = "w")
 tkgrid.configure(tmaxEntry, sticky = "w")
@@ -243,7 +243,7 @@ tkgrid(labelRcmdr(top, text=gettextRcmdr("Enter Transitions Probabilities: "), f
     tkgrid(labelRcmdr(rowColFrame, text=gettextRcmdr("Number of stages:")), rowsSlider, rowsShow, sticky="w")
    tkgrid(rowColFrame, sticky="w")
 
-    tkgrid(labelRcmdr(top, text=gettextRcmdr("Coluns: stages at time t"), fg="red"), sticky="e")
+    tkgrid(labelRcmdr(top, text=gettextRcmdr("Columns: stages at time t"), fg="red"), sticky="e")
     tkgrid(labelRcmdr(top, text=gettextRcmdr("Rows: stages at \n\ttime t+1"), fg="red"), sticky="w")
     tkgrid(outerTableFrame, sticky="e")
     tkgrid(labelRcmdr(top, text=gettextRcmdr("Initial stages proportions: "), fg="blue"), sticky="w")
@@ -295,7 +295,7 @@ pRsEntry <- tkscale(top, from=0, to=1, showvalue=TRUE, variable=pScVar, resoluti
         npatch=cl*ln
 			if (sum(is.na(c(tmax,npatch)))>0 || tmax <= 0 || npatch <= 0) 
           {
-            errorCondition("Number of simulations, coluns and rows must be positive integers")
+            errorCondition("Number of simulations, columns and rows must be positive integers")
             return()
           }
         c1 <- as.numeric(tclvalue(c1Var))
@@ -314,7 +314,7 @@ pRsEntry <- tkscale(top, from=0, to=1, showvalue=TRUE, variable=pScVar, resoluti
         ptot<- pEr+pSc+pMx+pRs
         if (ptot > 1) 
         {
-            errorCondition(message = "Proportion of patchs occuped should sum less than one\n VALUES ADJUSTED BY TOTAL LESS 10% LEFT EMPTY")
+            errorCondition(message = "Proportion of patches occupied should sum less than one\n VALUES ADJUSTED BY TOTAL LESS 10% LEFT EMPTY")
         pEr=(pEr/ptot)*0.9 
         pSc=(pSc/ptot)*0.9 
         pMx=(pMx/ptot)*0.9 
@@ -345,13 +345,13 @@ tkgrid(tklabel(top, text = "Rows"), lnEntry, sticky = "e")
 #
 tkgrid(tklabel(top, text="Initial Stages Proportions :", fg="blue"), sticky="w")
 tkgrid(tklabel(top, text = "Early Stage (only sp2) "), pErEntry, sticky = "se")
-tkgrid(tklabel(top, text = "Susceptivel (only sp1)  "), pScEntry, sticky = "se")
+tkgrid(tklabel(top, text = "Susceptible (only sp1)  "), pScEntry, sticky = "se")
 tkgrid(tklabel(top, text = "Mixed (sp1 and sp2)  "), pMxEntry, sticky = "se")
 tkgrid(tklabel(top, text = "Resistant (sp1)"), pRsEntry, sticky = "se")
 #
 tkgrid(tklabel(top, text="Colonization rates :", fg="blue"), sticky="w")
 tkgrid(tklabel(top, text = "Better competitor (sp1) "), c1Entry, sticky = "e")
-tkgrid(tklabel(top, text = "Porr competitor (sp2)  "), c2Entry, sticky = "e")
+tkgrid(tklabel(top, text = "Inferior competitor (sp2)  "), c2Entry, sticky = "e")
 tkgrid(tklabel(top, text="General parameters:", fg="blue"), sticky="w")
 tkgrid(tklabel(top, text = "Competitive exclusion:   "), ecEntry, sticky = "se")
 tkgrid(tklabel(top, text = "Disturbance (mortality):  "), dstEntry, sticky = "se")
@@ -425,7 +425,7 @@ onOK <- function()
 	npatch=cl*ln
 		if (sum(is.na(c(tmax,npatch)))>0 || tmax <= 0 || npatch <= 0)
 		{
-		errorCondition("Number of simulations, coluns and rows must be positive integers")
+		errorCondition("Number of simulations, columns and rows must be positive integers")
 		return()
 		}
 	rq <- as.numeric(tclvalue(rqVar))
@@ -455,7 +455,7 @@ tkgrid(tklabel(top, text="Enter name for data set:"), entryDsname, sticky="e")
 ##
 tkgrid(tklabel(top, text="Simulation Arena Conditions :", fg="blue"), sticky="w")
 tkgrid(tklabel(top, text = "Maximum time"), tmaxEntry, sticky = "e")
-tkgrid(tklabel(top, text = "Coluns"), clEntry, sticky = "e")
+tkgrid(tklabel(top, text = "Columns"), clEntry, sticky = "e")
 tkgrid(tklabel(top, text = "Rows"), lnEntry, sticky = "e")
 #
 tkgrid(tklabel(top, text="Initial Parameters :", fg="blue"), sticky="w")

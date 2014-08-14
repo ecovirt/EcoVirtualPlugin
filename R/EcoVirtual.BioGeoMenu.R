@@ -323,7 +323,7 @@ gr.abund=function(rq, fsp1, add=FALSE,...)
 randWalkDbox=function () 
 {
     require(EcoVirtual)
-    initializeDialog(title = gettextRcmdr("Randon Walk Simulation"))
+    initializeDialog(title = gettextRcmdr("Random Walk Simulation"))
     dsname <- tclVar("Do_Not_Save")
     entryDsname <- tkentry(top, width = "20", textvariable = dsname)
     nsVar <- tclVar("10")
@@ -363,7 +363,7 @@ randWalkDbox=function ()
     OKCancelHelp(helpSubject = "randWalk")
     tkgrid(tklabel(top, text = "Enter name for data set: "), 
         entryDsname, sticky = "e")
-    tkgrid(tklabel(top, text = "Randon Walk Parameters", 
+    tkgrid(tklabel(top, text = "Random Walk Parameters", 
         fg = "blue"), sticky = "w")
     tkgrid(tklabel(top, text = "Number of Species  "), nsEntry, sticky = "e")
     tkgrid(tklabel(top, text = "Step size  "), stEntry, sticky = "e")
@@ -416,7 +416,7 @@ extGameDbox=function()
         doItAndPrint(command)
         tkfocus(CommanderWindow())
     }
-    OKCancelHelp(helpSubject = "extGane")
+    OKCancelHelp(helpSubject = "extGame")
     tkgrid(tklabel(top, text = "Enter name for data set: "), 
         entryDsname, sticky = "e")
     tkgrid(tklabel(top, text = "Game Parameters", 
@@ -483,11 +483,11 @@ hubDbox=function ()
 ##        simHub1=function(S= 100, j=10, D=1, ciclo=1e4){
         if (dsnameValue == "Do_Not_Save" | dsnameValue == "") {
             command <- paste("simHub1(S = ", S, ", j = ", 
-                ji, ", D = ", D,", cicles = ", ciclos, ", anima = ",animaVF ,")", sep = "")
+                ji, ", D = ", D,", cycles = ", ciclos, ", anima = ",animaVF ,")", sep = "")
         }
         else {
             command <- paste(dsnameValue, "<-simHub1(S = ", S, ", j = ", 
-                ji,", D = ", D, ", cicles = ", ciclos, ", anima = ",animaVF , ")", sep = "")
+                ji,", D = ", D, ", cycles = ", ciclos, ", anima = ",animaVF , ")", sep = "")
         }
         doItAndPrint(command)
         tkfocus(CommanderWindow())
@@ -499,8 +499,8 @@ hubDbox=function ()
         fg = "blue"), sticky = "w")
     tkgrid(tklabel(top, text = "Number of Species  "), nsVarSlider, sticky = "e")
     tkgrid(tklabel(top, text = "Individuals per species  "), jiVarSlider, sticky = "e")
-    tkgrid(tklabel(top, text = "Cicles per Simulation "), cicloSlider, sticky = "e")
-    tkgrid(tklabel(top, text = "Number of dead per cicle  "), dEntry, sticky = "e")
+    tkgrid(tklabel(top, text = "Cycles per Simulation "), cicloSlider, sticky = "e")
+    tkgrid(tklabel(top, text = "Number of dead per cycle  "), dEntry, sticky = "e")
     tkgrid(tklabel(top, text = "Immigration  "), migBox, sticky = "e")
     tkgrid(tklabel(top, text = "Immigration and Speciation   "), spBox, sticky = "s")
     tkgrid(tklabel(top, text = "Show simulation frames "), animaBox, sticky = "s")
@@ -555,11 +555,11 @@ hubDbox2=function ()
 ##        simHub1=function(S= 100, j=10, D=1, ciclo=1e4){
         if (dsnameValue == "Do_Not_Save" | dsnameValue == "") {
             command <- paste("simHub2(S = ", S, ", j = ", 
-                ji,  ", D = ", D, ", cicles = ", ciclos, ", m = ",migra ,", anima = ",animaVF ,")", sep = "")
+                ji,  ", D = ", D, ", cycles = ", ciclos, ", m = ",migra ,", anima = ",animaVF ,")", sep = "")
         }
         else {
             command <- paste(dsnameValue, "<-simHub2(S = ", S, ", j = ", 
-                ji,  ", D = ", D,", cicles = ", ciclos, ", m = ",migra, ", anima = ",animaVF , ")", sep = "")
+                ji,  ", D = ", D,", cycles = ", ciclos, ", m = ",migra, ", anima = ",animaVF , ")", sep = "")
         }
         doItAndPrint(command)
         tkfocus(CommanderWindow())
@@ -571,8 +571,8 @@ hubDbox2=function ()
         fg = "blue"), sticky = "w")
     tkgrid(tklabel(top, text = "Number of Species  "), nsVarSlider, sticky = "e")
     tkgrid(tklabel(top, text = "Individuals per species  "), jiVarSlider, sticky = "e")
-    tkgrid(tklabel(top, text = "Number of dead per cicle  "), dEntry, sticky = "e")
-    tkgrid(tklabel(top, text = "Cicles per Simulation "), cicloSlider, sticky = "e")
+    tkgrid(tklabel(top, text = "Number of dead per cycle  "), dEntry, sticky = "e")
+    tkgrid(tklabel(top, text = "Cycles per Simulation "), cicloSlider, sticky = "e")
     tkgrid(tklabel(top, text = "Immigration rate  "), mig1Slider, sticky = "e")
     tkgrid(tklabel(top, text = "Show simulation frames "), animaBox, sticky = "s")
     tkgrid.configure(entryDsname, sticky = "sw")
@@ -640,11 +640,11 @@ hubDbox3=function()
 ##        simHub1=function(S= 100, j=10, D=1, ciclo=1e4){
         if (dsnameValue == "Do_Not_Save" | dsnameValue == "") {
             command <- paste("simHub3(Sm = ", Sm,  ", jm = ", jm,",S = ", S, ", j = ", 
-                ji,  ", D = ", D, ", cicles = ", ciclos, ", m = ", migra ,", nu = ", nu ,", anima = ",animaVF ,")", sep = "")
+                ji,  ", D = ", D, ", cycles = ", ciclos, ", m = ", migra ,", nu = ", nu ,", anima = ",animaVF ,")", sep = "")
         }
         else {
             command <- paste(dsnameValue, "<-simHub3(Sm = ", Sm,  ", jm = ", jm,",S = ", S, ", j = ", 
-                ji,  ", D = ", D,", cicles = ", ciclos, ", m = ",migra,", nu = ", nu , ", anima = ",animaVF , ")", sep = "")
+                ji,  ", D = ", D,", cycles = ", ciclos, ", m = ",migra,", nu = ", nu , ", anima = ",animaVF , ")", sep = "")
         }
         doItAndPrint(command)
         tkfocus(CommanderWindow())
@@ -662,8 +662,8 @@ hubDbox3=function()
         fg = "blue"), sticky = "w")
     tkgrid(tklabel(top, text = "Number of local Species  "), nsVarSlider, sticky = "e")
     tkgrid(tklabel(top, text = "Individuals per species (local)  "), jiVarSlider, sticky = "e")
-    tkgrid(tklabel(top, text = "Number of dead per cicle  "), dEntry, sticky = "e")
-    tkgrid(tklabel(top, text = "Cicles per Simulation "), cicloSlider, sticky = "e")
+    tkgrid(tklabel(top, text = "Number of dead per cycle  "), dEntry, sticky = "e")
+    tkgrid(tklabel(top, text = "Cycles per Simulation "), cicloSlider, sticky = "e")
     tkgrid(tklabel(top, text = "Show simulation frames "), animaBox, sticky = "s")
     tkgrid.configure(entryDsname, sticky = "sw")
     tkgrid.configure(SmSlider, sticky = "sw")
