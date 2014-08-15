@@ -42,7 +42,6 @@
 ########################################################
 estDemDb <-function () 
 {
-require(EcoVirtual)
 initializeDialog(title = gettextRcmdr("Demographic Stochasticity"))
 #### Salva dados
 dsname <- tclVar("Do_Not_Save")
@@ -113,7 +112,6 @@ dialogSuffix(rows = 6, columns = 2, focus = tmaxEntry)
 #########################################################
 popExpDb<-function()
 {
-require(EcoVirtual)
 initializeDialog(title = gettextRcmdr("Exponential Growth"))
 #### Salva dados
 dsname <- tclVar("Do_Not_Save")
@@ -175,7 +173,6 @@ dialogSuffix(rows = 6, columns = 2, focus = tmaxEntry)
 ############################################################
 estEnvDb <-function () 
 {
-require(EcoVirtual)
 initializeDialog(title = gettextRcmdr("Environmental Sthocasticity"))
 #### Salva dados
 dsname <- tclVar("Do_Not_Save")
@@ -248,7 +245,6 @@ dialogSuffix(rows = 6, columns = 2, focus = tmaxEntry)
 #crescLog(N0=10, r=0.05, K=80, tmax=100)
 popLogDb<-function () 
 {
-require(EcoVirtual)
 initializeDialog(title = gettextRcmdr("Logistic Growth"))
 #### Salva dados
 dsname <- tclVar("Do_Not_Save")
@@ -319,7 +315,6 @@ dialogSuffix(rows = 6, columns = 2, focus = tmaxEntry)
 ##########################################
 logBifDb<-function () 
 {
-require(EcoVirtual)
 initializeDialog(title = gettextRcmdr("Logistic Bifurcation"))
 #### Salva dados
 dsname <- tclVar("Do_Not_Save")
@@ -405,7 +400,6 @@ dialogSuffix(rows = 7, columns = 2, focus = tmaxEntry)
 ##########################################
 compDb<-function () 
 {
-require(EcoVirtual)
 initializeDialog(title = gettextRcmdr("Competition LV Model"))
 #### Salva dados
 dsname <- tclVar("Do_Not_Save")
@@ -511,7 +505,6 @@ dialogSuffix(rows = 11, columns = 2, focus = tmaxEntry)
 ######################################
 popStrDb<-function () 
 {
-require(EcoVirtual)
 initializeDialog(title = gettextRcmdr("Structured Population"))
 #### Salva dados
 dsname <- tclVar("Do_Not_Save")

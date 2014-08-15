@@ -256,7 +256,6 @@ tkgrid(labelRcmdr(top, text=gettextRcmdr("Enter Transitions Probabilities: "), f
 ##########################################
 regnichoDbox<-function () 
 {
-require(EcoVirtual)
 initializeDialog(title = gettextRcmdr("Niche Regeneration"))
 #### Salva dados
 dsname <- tclVar("Do_Not_Save")
@@ -378,7 +377,6 @@ dialogSuffix(rows = 13, columns = 2, focus = tmaxEntry)
 #teste1=comCompete(tmax=200,ln=100,cl=100, rq=10, fi=0.2, fsp1=0.2, pe=0.04, fr=0, int=0)
 comcompDbox<-function () 
 {
-require(EcoVirtual)
 initializeDialog(title = gettextRcmdr("Trade-off"))
 #### Salva dados
 dsname <- tclVar("Do_Not_Save")
@@ -416,7 +414,7 @@ peEntry <- tkscale(top, from=0, to=1, showvalue=TRUE, variable=peVar, resolution
 #cantoBox <- tkcheckbutton(top, variable = cantoVar)
 onOK <- function() 
 	{
-	command="dev.off(dev.cur()); x11()"
+	command="dev.off(dev.cur()); dev.new()"
 	doItAndPrint(command)
 	closeDialog()
 	tmax=as.numeric(tclvalue(tmaxVar))

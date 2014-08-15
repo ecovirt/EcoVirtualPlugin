@@ -28,4 +28,12 @@
 
 \description{Internal RcmdrEcoVirtualPlugin objects.}
 \details{These are not to be called by the user. See the help on packages Rcmdr and EcoVirtual for details.}
+
+\author{
+Alexandre Adalardo de Oliveira \email{ecovirtualpackage@gmail.com}
+}
+
+\seealso{
+        \url{http://ecovirtual.ib.usp.br}
+}
 \keyword{internal}

@@ -4,7 +4,6 @@
 ############################
 archipDbox<-function () 
 {
-require(EcoVirtual)
 initializeDialog(title = gettextRcmdr("The Archipelago"))
 #### Salva dados
 dsname <- tclVar("Do_Not_Save")
@@ -40,7 +39,7 @@ cantoBox <- tkcheckbutton(top, variable = cantoVar)
 ################ passando as variáveis
 onOK <- function() 
 	{
-	command="dev.off(dev.cur()); x11()"
+	command="dev.off(dev.cur()); dev.new()"
 	doItAndPrint(command)
 	closeDialog()
 	tmax=as.numeric(tclvalue(tmaxVar))
@@ -108,7 +107,6 @@ dialogSuffix(rows = 10, columns = 2, focus = tmaxEntry)
 ColExtDbox<-function () 
 {
 #animaColExt(minimo=0.01, maximo=1, interv=0.01, Ext="crs", Col="dcr")
-require(EcoVirtual)
 initializeDialog(title = gettextRcmdr("Colonization/Extinction Balance"))
 #### 
 #radioButtons(top, "col", buttons=c("crs", "dcr","fix" ), 
@@ -306,7 +304,7 @@ gr.abund=function(rq, fsp1, add=FALSE,...)
 	px= fsp1*(1-fsp1)^(rank-1)
 		if(add==FALSE)
 		{
-		toff<-x11( width=5, height=5)
+		toff<-dev.new( width=5, height=5)
 		}
 	old<-par(mar=c(3,3,3,3))
 	plot(px~rank, ylim=c(0,fsp1),type="b", bty="n",  ann=FALSE, cex.axis=0.8)
@@ -322,7 +320,6 @@ gr.abund=function(rq, fsp1, add=FALSE,...)
 #############################
 randWalkDbox=function () 
 {
-    require(EcoVirtual)
     initializeDialog(title = gettextRcmdr("Random Walk Simulation"))
     dsname <- tclVar("Do_Not_Save")
     entryDsname <- tkentry(top, width = "20", textvariable = dsname)
@@ -387,7 +384,6 @@ randWalkDbox=function ()
 ############################
 extGameDbox=function() 
 {
-    require(EcoVirtual)
     initializeDialog(title = gettextRcmdr("Zero Sum Game"))
     dsname <- tclVar("Do_Not_Save")
     entryDsname <- tkentry(top, width = "20", textvariable = dsname)
@@ -437,7 +433,6 @@ extGameDbox=function()
 #############################################
 hubDbox=function () 
 {
-    require(EcoVirtual)
     initializeDialog(title = gettextRcmdr("Neutral Model Simulation"))
     dsname <- tclVar("Do_Not_Save")
     entryDsname <- tkentry(top, width = "20", textvariable = dsname)
@@ -521,7 +516,6 @@ hubDbox=function ()
 #############################################
 hubDbox2=function () 
 {
-    require(EcoVirtual)
     initializeDialog(title = gettextRcmdr("Neutral Model Simulation"))
     dsname <- tclVar("Do_Not_Save")
     entryDsname <- tkentry(top, width = "20", textvariable = dsname)
@@ -592,7 +586,6 @@ hubDbox2=function ()
 #simHub3=function(Sm=200, jm=20, S= 100, j=10, D=1, ciclo=1e4, m=0.01, nu=0.001, anima=TRUE)
 hubDbox3=function() 
 {
-    require(EcoVirtual)
     initializeDialog(title = gettextRcmdr("Neutral Model Simulation"))
     dsname <- tclVar("Do_Not_Save")
     entryDsname <- tkentry(top, width = "20", textvariable = dsname)

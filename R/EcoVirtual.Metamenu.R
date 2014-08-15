@@ -2,7 +2,6 @@
 ########### Meta Menu #################
 intCol <-function () 
 {
-require(EcoVirtual)
 initializeDialog(title = gettextRcmdr("Internal Colonization"))
 #### Salva dados
 dsname <- tclVar("Do_Not_Save")
@@ -93,7 +92,6 @@ dialogSuffix(rows = 8, columns = 2, focus = tfEntry)
 ##########################################
 propRain <-function() 
 {
-require(EcoVirtual)
 initializeDialog(title = gettextRcmdr("Propagulus Rain"))
 ####
 dsname <- tclVar("Do_Not_Save")
@@ -176,7 +174,6 @@ dialogSuffix(rows = 7, columns = 2, focus = tfEntry)
 #metaEr <-function(tf,cl,ln,fi,pc,e)
 resEff <-function () 
 {
-require(EcoVirtual)
 initializeDialog(title = gettextRcmdr("Rescue Effect"))
 ####
 dsname <- tclVar("Do_Not_Save")
@@ -265,7 +262,6 @@ dialogSuffix(rows = 8, columns = 2, focus = tfEntry)
 
 resEffcol <-function () 
 {
-require(EcoVirtual)
 initializeDialog(title = gettextRcmdr("Rescue and Internal Colonization"))
 ####
 dsname <- tclVar("Do_Not_Save")
@@ -359,7 +355,6 @@ dialogSuffix(rows = 8, columns = 2, focus = tfEntry)
 #metaComp(tmax=100,cl=100,ln=100,fi1=0.1,fi2=0.4,i1=0.4,i2=0.5,pe=0.25)
 metacompDb <-function () 
 {
-require(EcoVirtual)
 initializeDialog(title = gettextRcmdr("Meta Competition"))
 #### Salva dados
 dsname <- tclVar("Do_Not_Save")
