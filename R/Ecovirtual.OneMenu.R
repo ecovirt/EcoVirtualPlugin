@@ -1,21 +1,47 @@
 #### Dialogs boxes for RcmdrPlugin.EcoVirtual package
 ### Alexandre Adalardo de Oliveira 17 fevereiro 2010
 ####################################################
-.First.lib <- function(libname, pkgname){
+## por padrao .First.lib nao existe mais
+# .First.lib <- function(libname, pkgname){
+#     if (!interactive()) return()
+#     Rcmdr <- options()$Rcmdr
+#     plugins <- Rcmdr$plugins
+#     if ((!pkgname %in% plugins) && !getRcmdr("autoRestart")) {
+#         Rcmdr$plugins <- c(plugins, pkgname)
+#         options(Rcmdr=Rcmdr)
+#         closeCommander(ask=FALSE, ask.save=TRUE)
+#         Commander()
+#         }
+#     }
+####################################################
+## usando a funcao do RcmdrPlugin.TeachingDemo (Jonh Fox)
+# Note: the following function (with contributions from Richard Heiberger and Milan Bouchet-Valat) 
+# can be included in any Rcmdr plug-in package to cause the package to load
+# the Rcmdr if it is not already loaded
+.onAttach <- function(libname, pkgname){
     if (!interactive()) return()
+    putRcmdr("slider.env", new.env())    
     Rcmdr <- options()$Rcmdr
     plugins <- Rcmdr$plugins
-    if ((!pkgname %in% plugins) && !getRcmdr("autoRestart")) {
+    if (!pkgname %in% plugins) {
         Rcmdr$plugins <- c(plugins, pkgname)
         options(Rcmdr=Rcmdr)
-        closeCommander(ask=FALSE, ask.save=TRUE)
-        Commander()
+        if("package:Rcmdr" %in% search()) {
+            if(!getRcmdr("autoRestart")) {
+                closeCommander(ask=FALSE, ask.save=TRUE)
+                Commander()
+            }
+        }
+        else {
+            Commander()
         }
     }
+}
+
+
 ########################################################
 estDemDb <-function () 
 {
-require(EcoVirtual)
 initializeDialog(title = gettextRcmdr("Demographic Stochasticity"))
 #### Salva dados
 dsname <- tclVar("Do_Not_Save")
@@ -86,7 +112,6 @@ dialogSuffix(rows = 6, columns = 2, focus = tmaxEntry)
 #########################################################
 popExpDb<-function()
 {
-require(EcoVirtual)
 initializeDialog(title = gettextRcmdr("Exponential Growth"))
 #### Salva dados
 dsname <- tclVar("Do_Not_Save")
@@ -148,7 +173,6 @@ dialogSuffix(rows = 6, columns = 2, focus = tmaxEntry)
 ############################################################
 estEnvDb <-function () 
 {
-require(EcoVirtual)
 initializeDialog(title = gettextRcmdr("Environmental Sthocasticity"))
 #### Salva dados
 dsname <- tclVar("Do_Not_Save")
@@ -197,12 +221,12 @@ OKCancelHelp(helpSubject = "dynPop")
 tkgrid(tklabel(top, text="Enter name for last simulation data set: "), entryDsname, sticky="e")
 #tkgrid(tklabel(top, text="Simulation Arena Conditions :  ", fg="blue"), sticky="w")
 tkgrid(tklabel(top, text = "Maximum time"), tmaxEntry, sticky = "e")
-tkgrid(tklabel(top, text = "Number of estochastic simulation "), npopEntry, sticky = "e")
+tkgrid(tklabel(top, text = "Number of stochastic simulations "), npopEntry, sticky = "e")
 tkgrid(tklabel(top, text="Species parameters :", fg="blue"), sticky="w")
 tkgrid(tklabel(top, text = "Initial population size  "), noEntry, sticky = "e")
-tkgrid(tklabel(top, text = "Population growth rate (lambda)  "), lambEntry, sticky = "e")
-tkgrid(tklabel(top, text="Environment stochasticity :", fg="blue"), sticky="w")
-tkgrid(tklabel(top, text = "lambda variance  "), varrEntry, sticky = "e")
+tkgrid(tklabel(top, text = "Population growth rate (lambda) "), lambEntry, sticky = "e")
+tkgrid(tklabel(top, text="Environment stochasticity: ", fg="blue"), sticky="w")
+tkgrid(tklabel(top, text = "lambda variance "), varrEntry, sticky = "e")
 tkgrid(tklabel(top, text = "Population Extinction"), extBox, sticky = "e")
 
 tkgrid(buttonsFrame, sticky = "w", columnspan = 2)
@@ -221,7 +245,6 @@ dialogSuffix(rows = 6, columns = 2, focus = tmaxEntry)
 #crescLog(N0=10, r=0.05, K=80, tmax=100)
 popLogDb<-function () 
 {
-require(EcoVirtual)
 initializeDialog(title = gettextRcmdr("Logistic Growth"))
 #### Salva dados
 dsname <- tclVar("Do_Not_Save")
@@ -270,11 +293,11 @@ r=as.numeric(tclvalue(rVar))
 	tkfocus(CommanderWindow())
 	}
 OKCancelHelp(helpSubject = "dynPop")
-tkgrid(tklabel(top, text="Enter name for data set:  "), entryDsname, sticky="e")
+tkgrid(tklabel(top, text="Enter name for data set: "), entryDsname, sticky="e")
 #tkgrid(tklabel(top, text="Simulation Arena Conditions : ", fg="blue"), sticky="w")
-tkgrid(tklabel(top, text = "Maximum time  "), tmaxEntry, sticky = "e")
-tkgrid(tklabel(top, text="Species parameters :", fg="blue"), sticky="w")
-tkgrid(tklabel(top, text = "Initial population size  "), noEntry, sticky = "e")
+tkgrid(tklabel(top, text = "Maximum time "), tmaxEntry, sticky = "e")
+tkgrid(tklabel(top, text="Species parameters: ", fg="blue"), sticky="w")
+tkgrid(tklabel(top, text = "Initial population size "), noEntry, sticky = "e")
 tkgrid(tklabel(top, text = "Carrying capacity (K) "), kEntry, sticky = "e")
 tkgrid(tklabel(top, text = "Intrinsic growth rate (r) "), rEntry, sticky = "se")
 tkgrid(tklabel(top, text = "Population Extinction"), extBox, sticky = "e")
@@ -292,7 +315,6 @@ dialogSuffix(rows = 6, columns = 2, focus = tmaxEntry)
 ##########################################
 logBifDb<-function () 
 {
-require(EcoVirtual)
 initializeDialog(title = gettextRcmdr("Logistic Bifurcation"))
 #### Salva dados
 dsname <- tclVar("Do_Not_Save")
@@ -355,7 +377,7 @@ rdmax=as.numeric(tclvalue(rdmaxVar))
 OKCancelHelp(helpSubject = "dynPop")
 tkgrid(tklabel(top, text="Enter name for data set:  "), entryDsname, sticky="e")
 #tkgrid(tklabel(top, text="Simulation Arena Conditions : ", fg="blue"), sticky="w")
-tkgrid(tklabel(top, text = "Time to converge  "), tmaxEntry, sticky = "e")
+tkgrid(tklabel(top, text = "Time to convergence  "), tmaxEntry, sticky = "e")
 tkgrid(tklabel(top, text="Species parameters :", fg="blue"), sticky="w")
 tkgrid(tklabel(top, text = "Initial population size  "), noEntry, sticky = "e")
 tkgrid(tklabel(top, text = "Carrying capacity (K) "), kEntry, sticky = "e")
@@ -378,7 +400,6 @@ dialogSuffix(rows = 7, columns = 2, focus = tmaxEntry)
 ##########################################
 compDb<-function () 
 {
-require(EcoVirtual)
 initializeDialog(title = gettextRcmdr("Competition LV Model"))
 #### Salva dados
 dsname <- tclVar("Do_Not_Save")
@@ -457,16 +478,16 @@ tmaxEntry <- tkentry(top, width = "4", textvariable = tmaxVar)
 OKCancelHelp(helpSubject = "compLV")
 tkgrid(tklabel(top, text="Enter name for data set:"), entryDsname, sticky="e")
 tkgrid(tklabel(top, text = "Number of simulations  "), tmaxEntry, sticky = "e")
-tkgrid(tklabel(top, text="Best competitor species  parameters : ", fg="blue"), sticky="w")
+tkgrid(tklabel(top, text="Best competitor species parameters : ", fg="blue"), sticky="w")
 tkgrid(tklabel(top, text = "Initial population  "), n01Entry, sticky = "e")
 tkgrid(tklabel(top, text = "Carrying capacity (K)  "), k1Entry, sticky = "e")
 tkgrid(tklabel(top, text = "Intrinsic growth rate  "), r1Entry, sticky = "se")
-tkgrid(tklabel(top, text = "Alfa coeficiente"), alfaEntry, sticky = "e")
-tkgrid(tklabel(top, text="Worse Competitor Specie :", fg="blue"), sticky="w")
+tkgrid(tklabel(top, text = "Alpha coefficiente"), alfaEntry, sticky = "e")
+tkgrid(tklabel(top, text="Worse Competitor Species :", fg="blue"), sticky="w")
 tkgrid(tklabel(top, text = "Initial population  "), n02Entry, sticky = "e")
 tkgrid(tklabel(top, text = "Carrying capacity (K)  "), k2Entry, sticky = "e")
 tkgrid(tklabel(top, text = "Intrinsic growth rate  "), r2Entry, sticky = "se")
-tkgrid(tklabel(top, text = "Beta coeficiente"), betaEntry, sticky = "e")
+tkgrid(tklabel(top, text = "Beta coefficiente"), betaEntry, sticky = "e")
 tkgrid(buttonsFrame, sticky = "w", columnspan = 2)
 tkgrid.configure(entryDsname, sticky = "w")
 tkgrid.configure(tmaxEntry, sticky = "w")
@@ -484,7 +505,6 @@ dialogSuffix(rows = 11, columns = 2, focus = tmaxEntry)
 ######################################
 popStrDb<-function () 
 {
-require(EcoVirtual)
 initializeDialog(title = gettextRcmdr("Structured Population"))
 #### Salva dados
 dsname <- tclVar("Do_Not_Save")
@@ -538,19 +558,19 @@ naEntry <- tkentry(top, width = "6", textvariable = naVar)
    ns <- as.numeric(tclvalue(nsVar))
         if (ns<0 ) 
         {
-        errorCondition(message = "Mean number of propagulus must be positive")
+        errorCondition(message = "Mean number of propagules must be positive")
         return()
         }
    nj <- as.numeric(tclvalue(njVar))
         if (nj<0 | nj > (cl*ln) ) 
         {
-        errorCondition(message = "Number of juvenils must be positive and less than number of patchs")
+        errorCondition(message = "Number of juveniles must be positive and less than number of patches")
         return()        
         }
    na <- as.numeric(tclvalue(naVar))
         if (na<0 | (na+nj) > (cl*ln) ) 
         {
-        errorCondition(message = "Number of adults must be positive and adults plus juvenils less than number of patchs")
+        errorCondition(message = "Number of adults must be positive and adults plus juvenils must be less than number of patches")
         return()
         }
    p.sj <- as.numeric(tclvalue(sjVar))
@@ -581,7 +601,7 @@ tkgrid(tklabel(top, text="Enter name for data set:"), entryDsname, sticky="e")
 ##
 tkgrid(tklabel(top, text="Simulation Arena Conditions :", fg="blue"), sticky="w")
 tkgrid(tklabel(top, text = "Maximum time"), tmaxEntry, sticky = "e")
-tkgrid(tklabel(top, text = "Coluns"), clEntry, sticky = "e")
+tkgrid(tklabel(top, text = "Columns"), clEntry, sticky = "e")
 tkgrid(tklabel(top, text = "Rows"), lnEntry, sticky = "e")
 #
 tkgrid(tklabel(top, text="Initial Population Size :", fg="blue"), sticky="w")
@@ -590,9 +610,9 @@ tkgrid(tklabel(top, text = "Saplings "), njEntry, sticky = "e")
 tkgrid(tklabel(top, text = "Adults "), naEntry, sticky = "e")
 tkgrid(tklabel(top, text="Transitions Probabilities :", fg="blue"), sticky="w")
 tkgrid(tklabel(top, text="Seed to sapling "), sjEntry, sticky="se")
-tkgrid(tklabel(top, text="Remaing sapling "), jjEntry, sticky="se")
+tkgrid(tklabel(top, text="Sapling persistence "), jjEntry, sticky="se")
 tkgrid(tklabel(top, text="Sapling to adult "), jaEntry, sticky="se")
-tkgrid(tklabel(top, text="Adult survivel "), aaEntry, sticky="se")
+tkgrid(tklabel(top, text="Adult survival "), aaEntry, sticky="se")
 tkgrid(tklabel(top, text="Fecundity "), fecEntry, sticky="e")
 ##
 tkgrid(buttonsFrame, sticky = "w", columnspan = 2)

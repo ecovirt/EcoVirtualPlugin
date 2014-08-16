@@ -2,9 +2,8 @@
 
 ############################
 ############################
-arquipDbox<-function () 
+archipDbox<-function () 
 {
-require(EcoVirtual)
 initializeDialog(title = gettextRcmdr("The Archipelago"))
 #### Salva dados
 dsname <- tclVar("Do_Not_Save")
@@ -40,7 +39,7 @@ cantoBox <- tkcheckbutton(top, variable = cantoVar)
 ################ passando as variáveis
 onOK <- function() 
 	{
-	command="dev.off(dev.cur()); x11()"
+	command="dev.off(dev.cur()); dev.new()"
 	doItAndPrint(command)
 	closeDialog()
 	tmax=as.numeric(tclvalue(tmaxVar))
@@ -61,17 +60,17 @@ onOK <- function()
    dsnameValue <- trim.blanks(tclvalue(dsname))
         if (dsnameValue == "Do_Not_Save" | dsnameValue=="") 
         {
-        	command <- paste("arquip(n.isl= ", nIsl, ",ar.min= ", ar.min,",ar.max= ",ar.max, ",S= ",rq, ", seed.rain = ", ct,", abund = ", fsp1,", tmax = ", tmax,", anima = ", cantoVF,")" , sep = "")
+        	command <- paste("archip(n.isl= ", nIsl, ",ar.min= ", ar.min,",ar.max= ",ar.max, ",S= ",rq, ", seed.rain = ", ct,", abund = ", fsp1,", tmax = ", tmax,", anima = ", cantoVF,")" , sep = "")
         }
         else  
 		  {
-		  command <- paste(dsnameValue, "<- arquip(n.isl= ", nIsl, ",ar.min= ", ar.min,",ar.max= ",ar.max, ",S= ",rq, ", seed.rain= ", ct,", abund = ", fsp1,", tmax = ", tmax,", anima = ", cantoVF,")" , sep = "")
+		  command <- paste(dsnameValue, "<- archip(n.isl= ", nIsl, ",ar.min= ", ar.min,",ar.max= ",ar.max, ",S= ",rq, ", seed.rain= ", ct,", abund = ", fsp1,", tmax = ", tmax,", anima = ", cantoVF,")" , sep = "")
 		  }
 	doItAndPrint(command)
 	tkfocus(CommanderWindow())
 	}
 ############ 
-OKCancelHelp(helpSubject = "arquip")
+OKCancelHelp(helpSubject = "archip")
 tkgrid(tklabel(top, text="Enter name for data set:"), entryDsname, sticky="e")
 tkgrid(tklabel(top, text = "Maximum time"), tmaxEntry, sticky = "e")
 ###########
@@ -108,7 +107,6 @@ dialogSuffix(rows = 10, columns = 2, focus = tmaxEntry)
 ColExtDbox<-function () 
 {
 #animaColExt(minimo=0.01, maximo=1, interv=0.01, Ext="crs", Col="dcr")
-require(EcoVirtual)
 initializeDialog(title = gettextRcmdr("Colonization/Extinction Balance"))
 #### 
 #radioButtons(top, "col", buttons=c("crs", "dcr","fix" ), 
@@ -306,7 +304,7 @@ gr.abund=function(rq, fsp1, add=FALSE,...)
 	px= fsp1*(1-fsp1)^(rank-1)
 		if(add==FALSE)
 		{
-		toff<-x11( width=5, height=5)
+		toff<-dev.new( width=5, height=5)
 		}
 	old<-par(mar=c(3,3,3,3))
 	plot(px~rank, ylim=c(0,fsp1),type="b", bty="n",  ann=FALSE, cex.axis=0.8)
@@ -322,8 +320,7 @@ gr.abund=function(rq, fsp1, add=FALSE,...)
 #############################
 randWalkDbox=function () 
 {
-    require(EcoVirtual)
-    initializeDialog(title = gettextRcmdr("Randon Walk Simulation"))
+    initializeDialog(title = gettextRcmdr("Random Walk Simulation"))
     dsname <- tclVar("Do_Not_Save")
     entryDsname <- tkentry(top, width = "20", textvariable = dsname)
     nsVar <- tclVar("10")
@@ -363,7 +360,7 @@ randWalkDbox=function ()
     OKCancelHelp(helpSubject = "randWalk")
     tkgrid(tklabel(top, text = "Enter name for data set: "), 
         entryDsname, sticky = "e")
-    tkgrid(tklabel(top, text = "Randon Walk Parameters", 
+    tkgrid(tklabel(top, text = "Random Walk Parameters", 
         fg = "blue"), sticky = "w")
     tkgrid(tklabel(top, text = "Number of Species  "), nsEntry, sticky = "e")
     tkgrid(tklabel(top, text = "Step size  "), stEntry, sticky = "e")
@@ -387,7 +384,6 @@ randWalkDbox=function ()
 ############################
 extGameDbox=function() 
 {
-    require(EcoVirtual)
     initializeDialog(title = gettextRcmdr("Zero Sum Game"))
     dsname <- tclVar("Do_Not_Save")
     entryDsname <- tkentry(top, width = "20", textvariable = dsname)
@@ -416,7 +412,7 @@ extGameDbox=function()
         doItAndPrint(command)
         tkfocus(CommanderWindow())
     }
-    OKCancelHelp(helpSubject = "extGane")
+    OKCancelHelp(helpSubject = "extGame")
     tkgrid(tklabel(top, text = "Enter name for data set: "), 
         entryDsname, sticky = "e")
     tkgrid(tklabel(top, text = "Game Parameters", 
@@ -437,7 +433,6 @@ extGameDbox=function()
 #############################################
 hubDbox=function () 
 {
-    require(EcoVirtual)
     initializeDialog(title = gettextRcmdr("Neutral Model Simulation"))
     dsname <- tclVar("Do_Not_Save")
     entryDsname <- tkentry(top, width = "20", textvariable = dsname)
@@ -483,11 +478,11 @@ hubDbox=function ()
 ##        simHub1=function(S= 100, j=10, D=1, ciclo=1e4){
         if (dsnameValue == "Do_Not_Save" | dsnameValue == "") {
             command <- paste("simHub1(S = ", S, ", j = ", 
-                ji, ", D = ", D,", cicles = ", ciclos, ", anima = ",animaVF ,")", sep = "")
+                ji, ", D = ", D,", cycles = ", ciclos, ", anima = ",animaVF ,")", sep = "")
         }
         else {
             command <- paste(dsnameValue, "<-simHub1(S = ", S, ", j = ", 
-                ji,", D = ", D, ", cicles = ", ciclos, ", anima = ",animaVF , ")", sep = "")
+                ji,", D = ", D, ", cycles = ", ciclos, ", anima = ",animaVF , ")", sep = "")
         }
         doItAndPrint(command)
         tkfocus(CommanderWindow())
@@ -499,8 +494,8 @@ hubDbox=function ()
         fg = "blue"), sticky = "w")
     tkgrid(tklabel(top, text = "Number of Species  "), nsVarSlider, sticky = "e")
     tkgrid(tklabel(top, text = "Individuals per species  "), jiVarSlider, sticky = "e")
-    tkgrid(tklabel(top, text = "Cicles per Simulation "), cicloSlider, sticky = "e")
-    tkgrid(tklabel(top, text = "Number of dead per cicle  "), dEntry, sticky = "e")
+    tkgrid(tklabel(top, text = "Cycles per Simulation "), cicloSlider, sticky = "e")
+    tkgrid(tklabel(top, text = "Number of dead per cycle  "), dEntry, sticky = "e")
     tkgrid(tklabel(top, text = "Immigration  "), migBox, sticky = "e")
     tkgrid(tklabel(top, text = "Immigration and Speciation   "), spBox, sticky = "s")
     tkgrid(tklabel(top, text = "Show simulation frames "), animaBox, sticky = "s")
@@ -521,7 +516,6 @@ hubDbox=function ()
 #############################################
 hubDbox2=function () 
 {
-    require(EcoVirtual)
     initializeDialog(title = gettextRcmdr("Neutral Model Simulation"))
     dsname <- tclVar("Do_Not_Save")
     entryDsname <- tkentry(top, width = "20", textvariable = dsname)
@@ -555,11 +549,11 @@ hubDbox2=function ()
 ##        simHub1=function(S= 100, j=10, D=1, ciclo=1e4){
         if (dsnameValue == "Do_Not_Save" | dsnameValue == "") {
             command <- paste("simHub2(S = ", S, ", j = ", 
-                ji,  ", D = ", D, ", cicles = ", ciclos, ", m = ",migra ,", anima = ",animaVF ,")", sep = "")
+                ji,  ", D = ", D, ", cycles = ", ciclos, ", m = ",migra ,", anima = ",animaVF ,")", sep = "")
         }
         else {
             command <- paste(dsnameValue, "<-simHub2(S = ", S, ", j = ", 
-                ji,  ", D = ", D,", cicles = ", ciclos, ", m = ",migra, ", anima = ",animaVF , ")", sep = "")
+                ji,  ", D = ", D,", cycles = ", ciclos, ", m = ",migra, ", anima = ",animaVF , ")", sep = "")
         }
         doItAndPrint(command)
         tkfocus(CommanderWindow())
@@ -571,8 +565,8 @@ hubDbox2=function ()
         fg = "blue"), sticky = "w")
     tkgrid(tklabel(top, text = "Number of Species  "), nsVarSlider, sticky = "e")
     tkgrid(tklabel(top, text = "Individuals per species  "), jiVarSlider, sticky = "e")
-    tkgrid(tklabel(top, text = "Number of dead per cicle  "), dEntry, sticky = "e")
-    tkgrid(tklabel(top, text = "Cicles per Simulation "), cicloSlider, sticky = "e")
+    tkgrid(tklabel(top, text = "Number of dead per cycle  "), dEntry, sticky = "e")
+    tkgrid(tklabel(top, text = "Cycles per Simulation "), cicloSlider, sticky = "e")
     tkgrid(tklabel(top, text = "Immigration rate  "), mig1Slider, sticky = "e")
     tkgrid(tklabel(top, text = "Show simulation frames "), animaBox, sticky = "s")
     tkgrid.configure(entryDsname, sticky = "sw")
@@ -592,7 +586,6 @@ hubDbox2=function ()
 #simHub3=function(Sm=200, jm=20, S= 100, j=10, D=1, ciclo=1e4, m=0.01, nu=0.001, anima=TRUE)
 hubDbox3=function() 
 {
-    require(EcoVirtual)
     initializeDialog(title = gettextRcmdr("Neutral Model Simulation"))
     dsname <- tclVar("Do_Not_Save")
     entryDsname <- tkentry(top, width = "20", textvariable = dsname)
@@ -640,11 +633,11 @@ hubDbox3=function()
 ##        simHub1=function(S= 100, j=10, D=1, ciclo=1e4){
         if (dsnameValue == "Do_Not_Save" | dsnameValue == "") {
             command <- paste("simHub3(Sm = ", Sm,  ", jm = ", jm,",S = ", S, ", j = ", 
-                ji,  ", D = ", D, ", cicles = ", ciclos, ", m = ", migra ,", nu = ", nu ,", anima = ",animaVF ,")", sep = "")
+                ji,  ", D = ", D, ", cycles = ", ciclos, ", m = ", migra ,", nu = ", nu ,", anima = ",animaVF ,")", sep = "")
         }
         else {
             command <- paste(dsnameValue, "<-simHub3(Sm = ", Sm,  ", jm = ", jm,",S = ", S, ", j = ", 
-                ji,  ", D = ", D,", cicles = ", ciclos, ", m = ",migra,", nu = ", nu , ", anima = ",animaVF , ")", sep = "")
+                ji,  ", D = ", D,", cycles = ", ciclos, ", m = ",migra,", nu = ", nu , ", anima = ",animaVF , ")", sep = "")
         }
         doItAndPrint(command)
         tkfocus(CommanderWindow())
@@ -662,8 +655,8 @@ hubDbox3=function()
         fg = "blue"), sticky = "w")
     tkgrid(tklabel(top, text = "Number of local Species  "), nsVarSlider, sticky = "e")
     tkgrid(tklabel(top, text = "Individuals per species (local)  "), jiVarSlider, sticky = "e")
-    tkgrid(tklabel(top, text = "Number of dead per cicle  "), dEntry, sticky = "e")
-    tkgrid(tklabel(top, text = "Cicles per Simulation "), cicloSlider, sticky = "e")
+    tkgrid(tklabel(top, text = "Number of dead per cycle  "), dEntry, sticky = "e")
+    tkgrid(tklabel(top, text = "Cycles per Simulation "), cicloSlider, sticky = "e")
     tkgrid(tklabel(top, text = "Show simulation frames "), animaBox, sticky = "s")
     tkgrid.configure(entryDsname, sticky = "sw")
     tkgrid.configure(SmSlider, sticky = "sw")
