@@ -32,6 +32,12 @@
 \author{
 Alexandre Adalardo de Oliveira \email{ecovirtualpackage@gmail.com}
 }
+\examples{
+\dontrun{
+Commander()
+}
+}
+
 
 \seealso{
         \url{http://ecovirtual.ib.usp.br}
