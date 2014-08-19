@@ -250,25 +250,28 @@ bioGeoIslDbox= function ()
             size[cell] <- as.numeric(eval(parse(text = paste("tclvalue(", 
                 varname2, ")", sep = ""))))
         }
-        command <- paste("c(", paste(size, collapse = ","), ")", 
-            sep = "")
-        assign(".size", justDoIt(command), envir = .GlobalEnv)
-        logger(paste(".size <- ", command, sep = ""))
-        doItAndPrint(".size  # sizes")
-        command <- paste("c(", paste(dist, collapse = ","), ")", 
-            sep = "")
-        assign(".dist", justDoIt(command), envir = .GlobalEnv)
-        logger(paste(".dist <- ", command, sep = ""))
-        doItAndPrint(".dist  # distances")
-        dsnameValue <- trim.blanks(tclvalue(dsname))
+        .size<-paste("c(", paste(size, collapse = ","), ")", sep = "")
+#          command <- paste("c(", paste(size, collapse = ","), ")", 
+#              sep = "")
+#          assign(".size", justDoIt(command), envir = env)
+#         logger(paste(".size <- ", command, sep = ""))
+#         doItAndPrint(".size  # sizes")
+#	command <- paste("c(", paste(size, collapse = ","), ")", sep = "")
+#         command <- paste("c(", paste(dist, collapse = ","), ")", 
+#             sep = "")
+#         assign(".dist", justDoIt(command), envir = .GlobalEnv)
+#         logger(paste(".dist <- ", command, sep = ""))
+#         doItAndPrint(".dist  # distances")
+	.dist<-paste("c(", paste(dist, collapse = ","), ")", sep = "")
+	dsnameValue <- trim.blanks(tclvalue(dsname))
         if (dsnameValue == "Do_Not_Save" | dsnameValue == "") {
-            command <- paste("bioGeoIsl(area=.size, dist  = .dist, P = ", 
+            command <- paste("bioGeoIsl(area=",.size, ",dist  =", .dist,", P = ", 
                 PVar, ", b.e = ", bVar, ", d.i = ", dVar, ",f.i =", 
                 fVar, ",h.e= ", hVar, ")", sep = "")
         }
         else {
             command <- paste(dsnameValue, "<- bioGeoIsl(area=", 
-                size, ", dist  = ", dist, ", P = ", PVar, ", b.e = ", 
+                .size, ", dist  = ", .dist, ", P = ", PVar, ", b.e = ", 
                 bVar, ", d.i = ", dVar, ",f.i =", fVar, ",h.e= ", hVar, 
                 ")", sep = "")
         }
