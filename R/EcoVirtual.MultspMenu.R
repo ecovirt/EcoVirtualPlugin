@@ -4,11 +4,11 @@ sucmatrixDbox<- function()
 {
 #    Library("abind")
     env <- environment()
-    initializeDialog(title=gettextRcmdr("Sucessional Model"))
+    initializeDialog(title=gettextRcmdr("Successional Model"))
     dsname <- tclVar("Do_Not_Save")
     ## incluido
 	entryDsname <- tkentry(top, width="20", textvariable=dsname)
-	tmaxVar <- tclVar("100")
+	tmaxVar <- tclVar("20")
 	tmaxEntry <- tkentry(top, width = "4", textvariable = tmaxVar)
 	clVar <- tclVar("20")
 	lnVar <- tclVar("20")
@@ -22,8 +22,8 @@ sucmatrixDbox<- function()
     assign("s.tableFrame", tkframe(s.outerTableFrame), envir=env)
     ##
 ##################################
-    	setUpTable <- function(...)
-    	{
+   setUpTable <- function(...)
+   {
         tkdestroy(get(".tableFrame", envir=env))
         assign(".tableFrame", tkframe(outerTableFrame), envir=env)
         nrows <- as.numeric(tclvalue(rowsValue))
@@ -60,32 +60,32 @@ sucmatrixDbox<- function()
         s.ncols <- as.numeric(tclvalue(rowsValue))
         s.make.col.names <- "labelRcmdr(s.tableFrame, text='')"
         for (j in 1:s.ncols) 
-        		{
+        {
             s.col.varname <- paste(".scolname.", j, sep="")
             assign(s.col.varname, tclVar(paste("st",j, sep="")), envir=env)
             s.make.col.names <- paste(s.make.col.names, ", ", "ttkentry(s.tableFrame, width='5', textvariable=", s.col.varname, ")", sep="")
-            }
+        }
         eval(parse(text=paste("tkgrid(", s.make.col.names, ")", sep="")), envir=env)
         for (i in 1:s.nrows)
-        	{
-          s.varname <- paste(".stab.", i, ".1", sep="") 
+        {
+	    s.varname <- paste(".stab.", i, ".1", sep="") 
             assign(s.varname, tclVar("") , envir=env)
-           s.row.varname <- paste(".srowname.", i, sep="")
+	    s.row.varname <- paste(".srowname.", i, sep="")
             assign(s.row.varname, tclVar("prop"), envir=env)
 ######################################################## names at row sec.table
             s.make.row <- paste("ttkentry(s.tableFrame, width='7', textvariable=",s.row.varname, ")", sep="")
-           s.make.row <- paste(s.make.row, ", ", "ttkentry(s.tableFrame, width='5', textvariable=", s.varname, ")", sep="")
+	    s.make.row <- paste(s.make.row, ", ", "ttkentry(s.tableFrame, width='5', textvariable=", s.varname, ")", sep="")
             for (j in 2:ncols)
             {
-                s.varname <- paste(".stab.", i, ".", j, sep="")
+                s.varname <- paste(".stab.1.", j, sep="")
                 assign(s.varname, tclVar(""), envir=env)
                 s.make.row <- paste(s.make.row, ", ", "ttkentry(s.tableFrame, width='5', textvariable=",
-                    s.varname, ")", sep="")
+                s.varname, ")", sep="")
             }
-            eval(parse(text=paste("tkgrid(", s.make.row, ")", sep="")), envir=env)
-            }
+        eval(parse(text=paste("tkgrid(", s.make.row, ")", sep="")), envir=env)
+        }
         tkgrid(get("s.tableFrame", envir=env), sticky="w")
-        	}
+   }
 #####################
     rowColFrame <- tkframe(top)
     rowsValue <- tclVar("2")
@@ -144,12 +144,12 @@ sucmatrixDbox<- function()
             return()
         }
 #		t.counts<-matrix(counts, nrows, nrows, byrow=TRUE)
-		sum.col<-apply(t.counts, 2, sum)
-			if (sum(sum.col==1) != nrows)
-			{
-			errorCondition(recall=sucmatrixDbox, message=sprintf(gettextRcmdr("Transitions for each stage at time t (coluns) must sum 1. ADJUSTED BY TOTALS")))
-		   t.counts=tcounts/sum.col     
-			}        
+	sum.col<-apply(t.counts, 2, sum)
+		if (sum(sum.col==1) != nrows)
+		{
+		errorCondition(recall=sucmatrixDbox, message=sprintf(gettextRcmdr("Transitions for each stage at time t (columns) must sum 1. ADJUSTED BY TOTALS")))
+		t.counts=t.counts/sum.col     
+		}        
       	if (length(unique(row.names)) != nrows)
       	{
             errorCondition(recall=sucmatrixDbox, message=gettextRcmdr("Row names are not unique."))
@@ -159,7 +159,7 @@ sucmatrixDbox<- function()
             errorCondition(recall=sucmatrixDbox, message=gettextRcmdr("Column names are not unique."))
             return()
            }
-###########################################################      
+########################    
 ######## Time 0 vector
 ########################
         #s.row.names[1] <-eval(parse(text=paste("tclvalue(", paste(".rowname.", i, sep=""),")", sep="")))
@@ -167,60 +167,61 @@ sucmatrixDbox<- function()
         { 
         s.col.names[j] <-eval(parse(text=paste("tclvalue(", paste(".scolname.", j, sep=""),")", sep="")))
         s.cell <- s.cell+1
-        s.varname <- paste(".tab.", i, ".", j, sep="")
+        s.varname <- paste(".stab.1.", j, sep="")
         s.counts[s.cell] <- as.numeric(eval(parse(text=paste("tclvalue(", s.varname,")", sep="")))) ## aqui ele guarda os valores das celulas
         }
         s.counts <- na.omit(s.counts)
 		if (sum(s.counts)!=1)
 		{
-			errorCondition(message=sprintf(gettextRcmdr("Proportion sum for all stage at itial time (coluns) must sum 1\n VALUES ADJUSTED BY TOTAL")))
+		errorCondition(message=sprintf(gettextRcmdr("Proportion sum for all stage at initial time (columns) must sum 1\n VALUES ADJUSTED BY TOTAL")))
 		s.counts=s.counts/sum(s.counts)       
 		}        
       if (length(unique(s.col.names)) != ncols)
       {
-         errorCondition(recall=sucmatrixDbox, message=gettextRcmdr("Inital proportions row names are not unique."))
+         errorCondition(recall=sucmatrixDbox, message=gettextRcmdr("Initial proportions row names are not unique."))
        return()
        }
 ###########################
 		#sn.counts=s.counts*cl*ln      
       closeDialog()
 ### transition matrix
-        command <- paste("matrix(c(", paste(counts, collapse=","), "), ", nrows, ", ", nrows,
-            ", byrow=TRUE)", sep="") ## proximo passo ver se as proporcoes somam 1 para cada estado!
-        assign(".Table", justDoIt(command), envir=.GlobalEnv)
-        logger(paste(".Table <- ", command, sep=""))
-        command <- paste("c(",paste(paste("'", row.names, "'", sep=""), collapse=", "), ")", sep="")
-        justDoIt(paste("rownames(.Table) <- ", command, sep=""))
-        logger(paste("rownames(.Table) <- ", command, sep=""))
-        command <- paste("c(",paste(paste("'", col.names, "'", sep=""), collapse=", "), ")", sep="")
-        justDoIt(paste("colnames(.Table) <- ", command, sep=""))
-        logger(paste("colnames(.Table) <- ", command, sep=""))
-        doItAndPrint(".Table  # Transition Probalities")
-
+	.Table <- paste("matrix(c(", paste(counts, collapse=","), "), ", nrows, ", ", nrows,", byrow=TRUE)", sep="")
+#         assign(".Table", justDoIt(command), envir=.GlobalEnv)
+#         logger(paste(".Table <- ", command, sep=""))
+#	rownames(.Table)<- row.names
+#         command <- paste("c(",paste(paste("'", row.names, "'", sep=""), collapse=", "), ")", sep="")
+#         justDoIt(paste("rownames(.Table) <- ", command, sep=""))
+#         logger(paste("rownames(.Table) <- ", command, sep=""))
+#	 colnames(.Table)<-  col.names
+#         command <- paste("c(",paste(paste("'", col.names, "'", sep=""), collapse=", "), ")", sep="")
+#         justDoIt(paste("colnames(.Table) <- ", command, sep=""))
+#         logger(paste("colnames(.Table) <- ", command, sep=""))
+#         doItAndPrint(".Table  # Transition Probalities")
 #################################
-        command <- paste("c(", paste(s.counts, collapse=","), ")", sep="")
-        assign(".Nt", justDoIt(command), envir=.GlobalEnv)
-        logger(paste(".Nt <- ", command, sep=""))
-        command <- paste("c(",paste(paste("'", s.col.names, "'", sep=""), collapse=", "), ")", sep="")
-        justDoIt(paste("names(.Nt) <- ", command, sep=""))
-        logger(paste("names(.Nt) <- ", command, sep=""))
-        doItAndPrint(".Nt  # Initial proportion of patchs per stage")
+        .Nt <- paste("c(", paste(s.counts, collapse=","), ")", sep="")
+#         assign(".Nt", justDoIt(command), envir=.GlobalEnv)
+#         logger(paste(".Nt <- ", command, sep=""))
+#        names(.Nt)<-  s.col.names
+#         command <- paste("c(",paste(paste("'", s.col.names, "'", sep=""), collapse=", "), ")", sep="")
+#         justDoIt(paste("names(.Nt) <- ", command, sep=""))
+#         logger(paste("names(.Nt) <- ", command, sep=""))
+#         doItAndPrint(".Nt  # Initial proportion of patchs per stage")
 ################################# 
 ##sucMatrix(mat.trans, init.prop, ln, cl, tmax)
    dsnameValue <- trim.blanks(tclvalue(dsname))
         if (dsnameValue == "Do_Not_Save" | dsnameValue=="") 
         {
-        	command <- paste("sucMatrix(mat.trans= .Table , init.prop  = .Nt, tmax = ",tmax, ", rw = ", ln,", cl = ", cl,")", sep = "")
+        	command <- paste("sucMatrix(mat.trans=", .Table ,", init.prop  =", .Nt,", tmax = ",tmax, ", rw = ", ln,", cl = ", cl,")", sep = "")
         }
         else  
 		  {
-		  command <- paste(dsnameValue,"<- sucMatrix(mat.trans= .Table , init.prop  = .Nt, tmax = ",tmax, ", rw = ", ln,", cl = ", cl,")", sep = "")
+		  command <- paste(dsnameValue,"<- sucMatrix(mat.trans=", .Table ,", init.prop  =", .Nt,", tmax = ",tmax, ", rw = ", ln,", cl = ", cl,")", sep = "")
 		  }
 ########
 		doItAndPrint(command)
-		  logger("remove(.Table)")
+	#logger("remove(.Table)")
         #remove(.Table, envir=.GlobalEnv)
-        logger("remove(.Nt)")
+        #logger("remove(.Nt)")
         #remove(.Nt, envir=.GlobalEnv)
       tkfocus(CommanderWindow())
       }
@@ -232,7 +233,7 @@ tkgrid(entryDsname,sticky="e" )
 ## incluido
 tkgrid(tklabel(top, text="Simulation Arena Conditions :", fg="blue"), sticky="w")
 tkgrid(tklabel(top, text = "Maximum time"), tmaxEntry, sticky = "e")
-tkgrid(tklabel(top, text = "Coluns"), clEntry, sticky = "e")
+tkgrid(tklabel(top, text = "Columns"), clEntry, sticky = "e")
 tkgrid(tklabel(top, text = "Rows"), lnEntry, sticky = "e")
 #tkgrid.configure(entryDsname, sticky = "w")
 tkgrid.configure(tmaxEntry, sticky = "w")
@@ -243,7 +244,7 @@ tkgrid(labelRcmdr(top, text=gettextRcmdr("Enter Transitions Probabilities: "), f
     tkgrid(labelRcmdr(rowColFrame, text=gettextRcmdr("Number of stages:")), rowsSlider, rowsShow, sticky="w")
    tkgrid(rowColFrame, sticky="w")
 
-    tkgrid(labelRcmdr(top, text=gettextRcmdr("Coluns: stages at time t"), fg="red"), sticky="e")
+    tkgrid(labelRcmdr(top, text=gettextRcmdr("Columns: stages at time t"), fg="red"), sticky="e")
     tkgrid(labelRcmdr(top, text=gettextRcmdr("Rows: stages at \n\ttime t+1"), fg="red"), sticky="w")
     tkgrid(outerTableFrame, sticky="e")
     tkgrid(labelRcmdr(top, text=gettextRcmdr("Initial stages proportions: "), fg="blue"), sticky="w")
@@ -256,7 +257,6 @@ tkgrid(labelRcmdr(top, text=gettextRcmdr("Enter Transitions Probabilities: "), f
 ##########################################
 regnichoDbox<-function () 
 {
-require(EcoVirtual)
 initializeDialog(title = gettextRcmdr("Niche Regeneration"))
 #### Salva dados
 dsname <- tclVar("Do_Not_Save")
@@ -295,7 +295,7 @@ pRsEntry <- tkscale(top, from=0, to=1, showvalue=TRUE, variable=pScVar, resoluti
         npatch=cl*ln
 			if (sum(is.na(c(tmax,npatch)))>0 || tmax <= 0 || npatch <= 0) 
           {
-            errorCondition("Number of simulations, coluns and rows must be positive integers")
+            errorCondition("Number of simulations, columns and rows must be positive integers")
             return()
           }
         c1 <- as.numeric(tclvalue(c1Var))
@@ -314,7 +314,7 @@ pRsEntry <- tkscale(top, from=0, to=1, showvalue=TRUE, variable=pScVar, resoluti
         ptot<- pEr+pSc+pMx+pRs
         if (ptot > 1) 
         {
-            errorCondition(message = "Proportion of patchs occuped should sum less than one\n VALUES ADJUSTED BY TOTAL LESS 10% LEFT EMPTY")
+            errorCondition(message = "Proportion of patches occupied should sum less than one\n VALUES ADJUSTED BY TOTAL LESS 10% LEFT EMPTY")
         pEr=(pEr/ptot)*0.9 
         pSc=(pSc/ptot)*0.9 
         pMx=(pMx/ptot)*0.9 
@@ -345,13 +345,13 @@ tkgrid(tklabel(top, text = "Rows"), lnEntry, sticky = "e")
 #
 tkgrid(tklabel(top, text="Initial Stages Proportions :", fg="blue"), sticky="w")
 tkgrid(tklabel(top, text = "Early Stage (only sp2) "), pErEntry, sticky = "se")
-tkgrid(tklabel(top, text = "Susceptivel (only sp1)  "), pScEntry, sticky = "se")
+tkgrid(tklabel(top, text = "Susceptible (only sp1)  "), pScEntry, sticky = "se")
 tkgrid(tklabel(top, text = "Mixed (sp1 and sp2)  "), pMxEntry, sticky = "se")
 tkgrid(tklabel(top, text = "Resistant (sp1)"), pRsEntry, sticky = "se")
 #
 tkgrid(tklabel(top, text="Colonization rates :", fg="blue"), sticky="w")
 tkgrid(tklabel(top, text = "Better competitor (sp1) "), c1Entry, sticky = "e")
-tkgrid(tklabel(top, text = "Porr competitor (sp2)  "), c2Entry, sticky = "e")
+tkgrid(tklabel(top, text = "Inferior competitor (sp2)  "), c2Entry, sticky = "e")
 tkgrid(tklabel(top, text="General parameters:", fg="blue"), sticky="w")
 tkgrid(tklabel(top, text = "Competitive exclusion:   "), ecEntry, sticky = "se")
 tkgrid(tklabel(top, text = "Disturbance (mortality):  "), dstEntry, sticky = "se")
@@ -378,7 +378,6 @@ dialogSuffix(rows = 13, columns = 2, focus = tmaxEntry)
 #teste1=comCompete(tmax=200,ln=100,cl=100, rq=10, fi=0.2, fsp1=0.2, pe=0.04, fr=0, int=0)
 comcompDbox<-function () 
 {
-require(EcoVirtual)
 initializeDialog(title = gettextRcmdr("Trade-off"))
 #### Salva dados
 dsname <- tclVar("Do_Not_Save")
@@ -416,7 +415,7 @@ peEntry <- tkscale(top, from=0, to=1, showvalue=TRUE, variable=peVar, resolution
 #cantoBox <- tkcheckbutton(top, variable = cantoVar)
 onOK <- function() 
 	{
-	command="dev.off(dev.cur()); x11()"
+	command="dev.off(dev.cur()); dev.new()"
 	doItAndPrint(command)
 	closeDialog()
 	tmax=as.numeric(tclvalue(tmaxVar))
@@ -425,7 +424,7 @@ onOK <- function()
 	npatch=cl*ln
 		if (sum(is.na(c(tmax,npatch)))>0 || tmax <= 0 || npatch <= 0)
 		{
-		errorCondition("Number of simulations, coluns and rows must be positive integers")
+		errorCondition("Number of simulations, columns and rows must be positive integers")
 		return()
 		}
 	rq <- as.numeric(tclvalue(rqVar))
@@ -455,7 +454,7 @@ tkgrid(tklabel(top, text="Enter name for data set:"), entryDsname, sticky="e")
 ##
 tkgrid(tklabel(top, text="Simulation Arena Conditions :", fg="blue"), sticky="w")
 tkgrid(tklabel(top, text = "Maximum time"), tmaxEntry, sticky = "e")
-tkgrid(tklabel(top, text = "Coluns"), clEntry, sticky = "e")
+tkgrid(tklabel(top, text = "Columns"), clEntry, sticky = "e")
 tkgrid(tklabel(top, text = "Rows"), lnEntry, sticky = "e")
 #
 tkgrid(tklabel(top, text="Initial Parameters :", fg="blue"), sticky="w")
