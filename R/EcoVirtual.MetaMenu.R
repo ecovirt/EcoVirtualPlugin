@@ -14,8 +14,8 @@ lnVar <- tclVar("20")
 clEntry <- tkentry(top, width = "4", textvariable = clVar)
 lnEntry <- tkentry(top, width = "4", textvariable = lnVar)
 ### controle de barra
-fiVar <- tclVar(0.4)
-fiVarSlider <- tkscale(top, from=0, to=1, showvalue=TRUE, variable=fiVar, resolution=0.01, orient="horizontal")
+f0Var <- tclVar(0.4)
+f0VarSlider <- tkscale(top, from=0, to=1, showvalue=TRUE, variable=f0Var, resolution=0.01, orient="horizontal")
 #####
 iVar <- tclVar("0.1") ## nclassVar ->iVar
 iEntry <- tkentry(top, width = "6", textvariable = iVar)
@@ -48,17 +48,17 @@ peEntry <- tkscale(top, from=0, to=1, showvalue=TRUE, variable=peVar, resolution
         errorCondition(message = "Colonization constant must be between 0 and 10")
         return()
         }
-   fi <- as.numeric(tclvalue(fiVar))
+   f0 <- as.numeric(tclvalue(f0Var))
    pe <- as.numeric(tclvalue(peVar))
 ############ Data name
    dsnameValue <- trim.blanks(tclvalue(dsname))
         if (dsnameValue == "Do_Not_Save" | dsnameValue=="")
         {
-        	command <- paste("metaCi(tmax = ",tf, ", cl = ", cl,", fi = ", fi,", rw =", ln,", ci = ", i,", pe = ", pe, ")", sep = "")
+        	command <- paste("metaCi(tmax = ",tf, ", cl = ", cl,", f0 = ", f0,", rw =", ln,", ci = ", i,", pe = ", pe, ")", sep = "")
         }
         else
 		  {
-		  command <- paste(dsnameValue,"<- metaCi(tmax = ",tf, ", rw = ", cl,", fi = ", fi,", ln =", ln,", ci = ", i,", pe = ", pe, ")", sep = "")
+		  command <- paste(dsnameValue,"<- metaCi(tmax = ",tf, ", rw = ", cl,", f0 = ", f0,", ln =", ln,", ci = ", i,", pe = ", pe, ")", sep = "")
 		  }
 ########
 	doItAndPrint(command)
@@ -73,7 +73,7 @@ tkgrid(tklabel(top, text = "Columns  "), clEntry, sticky = "e")
 tkgrid(tklabel(top, text = "Rows  "), lnEntry, sticky = "e")
 #
 tkgrid(tklabel(top, text="Species parameters :", fg="blue"), sticky="w")
-tkgrid(tklabel(top, text="Initial occupancy  "), fiVarSlider, sticky="se")
+tkgrid(tklabel(top, text="Initial occupancy  "), f0VarSlider, sticky="se")
 tkgrid(tklabel(top, text = "Colonization coefficient  "), iEntry, sticky = "e")
 tkgrid(tklabel(top, text = "Prob. Extinction  "), peEntry, sticky = "se")
 tkgrid(buttonsFrame, sticky = "w", columnspan = 2)
@@ -81,7 +81,7 @@ tkgrid.configure(entryDsname, sticky = "w")
 tkgrid.configure(tfEntry, sticky = "w")
 tkgrid.configure(clEntry, sticky = "w")
 tkgrid.configure(lnEntry, sticky = "w")
-tkgrid.configure(fiVarSlider, sticky = "w")
+tkgrid.configure(f0VarSlider, sticky = "w")
 tkgrid.configure(iEntry, sticky = "w")
 tkgrid.configure(peEntry, sticky = "w")
 dialogSuffix(rows = 8, columns = 2, focus = tfEntry)
@@ -103,11 +103,11 @@ clVar <- tclVar("20")
 lnVar <- tclVar("20")
 clEntry <- tkentry(top, width = "4", textvariable = clVar)
 lnEntry <- tkentry(top, width = "4", textvariable = lnVar)
-fiVar <- tclVar(0.25) ## nclassVar ->fiVar
-fiEntry <- tkscale(top, from=0, to=1, showvalue=TRUE, variable=fiVar, resolution=0.01, orient="horizontal")
-pcVar <- tclVar("0.1") ## nclassVar ->fiVar
-pcEntry <- tkscale(top, from=0, to=1, showvalue=TRUE, variable=pcVar, resolution=0.01, orient="horizontal")
-peVar <- tclVar("0.05") ## nclassVar ->fiVar
+f0Var <- tclVar(0.25) ## nclassVar ->f0Var
+f0Entry <- tkscale(top, from=0, to=1, showvalue=TRUE, variable=f0Var, resolution=0.01, orient="horizontal")
+piVar <- tclVar("0.1") ## nclassVar ->f0Var
+piEntry <- tkscale(top, from=0, to=1, showvalue=TRUE, variable=piVar, resolution=0.01, orient="horizontal")
+peVar <- tclVar("0.05") ## nclassVar ->f0Var
 peEntry <- tkscale(top, from=0, to=1, showvalue=TRUE, variable=peVar, resolution=0.01, orient="horizontal")
 	onOK <- function()
 	{
@@ -130,21 +130,21 @@ peEntry <- tkscale(top, from=0, to=1, showvalue=TRUE, variable=peVar, resolution
             errorCondition("Number of lines on the simulated arena must be a positive integer.")
             return()
         }
-        fi <- as.numeric(tclvalue(fiVar))
-        pc <- as.numeric(tclvalue(pcVar))
+        f0 <- as.numeric(tclvalue(f0Var))
+        pi <- as.numeric(tclvalue(piVar))
         pe <- as.numeric(tclvalue(peVar))
 ############ Data name
    dsnameValue <- trim.blanks(tclvalue(dsname))
         if (dsnameValue == "Do_Not_Save" | dsnameValue=="")
         {
-        	command <- paste("metaPop(tmax = ",tf, ", cl = ", cl,", fi = ", fi,", rw =", ln,", pc = ", pc,", pe = ", pe, ")", sep = "")
+        	command <- paste("metaPop(tmax = ",tf, ", cl = ", cl,", f0 = ", f0,", rw =", ln,", pi = ", pi,", pe = ", pe, ")", sep = "")
         }
         else
 		  {
-		  command <- paste(dsnameValue,"<-metaPop(tmax = ",tf, ", cl = ", cl,", fi = ", fi,", rw =", ln,", pc = ", pc,", pe = ", pe, ")", sep = "")
+		  command <- paste(dsnameValue,"<-metaPop(tmax = ",tf, ", cl = ", cl,", f0 = ", f0,", rw =", ln,", pi = ", pi,", pe = ", pe, ")", sep = "")
 		  }
 ########
-#	command <- paste("metaPop(tf = ",tf, ", cl = ", cl,", fi = ", fi,", ln =", ln,", pc = ", pc,", pe = ", pe, ")", sep = "")
+#	command <- paste("metaPop(tf = ",tf, ", cl = ", cl,", f0 = ", f0,", ln =", ln,", pi = ", pi,", pe = ", pe, ")", sep = "")
 	doItAndPrint(command)
 	tkfocus(CommanderWindow())
 	}
@@ -155,23 +155,23 @@ tkgrid(tklabel(top, text = "Maximum time  "), tfEntry, sticky = "e")
 tkgrid(tklabel(top, text = "Columns  "), clEntry, sticky = "e")
 tkgrid(tklabel(top, text = "Rows  "), lnEntry, sticky = "e")
 tkgrid(tklabel(top, text="Species parameters : ", fg="blue"), sticky="w")
-tkgrid(tklabel(top, text = "Initial occupancy  "), fiEntry, sticky = "se")
-tkgrid(tklabel(top, text = "Colonization probability "), pcEntry, sticky = "se")
+tkgrid(tklabel(top, text = "Initial occupancy  "), f0Entry, sticky = "se")
+tkgrid(tklabel(top, text = "Colonization probability "), piEntry, sticky = "se")
 tkgrid(tklabel(top, text = "Extinction probability "), peEntry, sticky = "se")
 tkgrid(buttonsFrame, sticky = "w", columnspan = 2)
 tkgrid.configure(entryDsname, sticky = "w")
 tkgrid.configure(tfEntry, sticky = "w")
 tkgrid.configure(clEntry, sticky = "w")
 tkgrid.configure(lnEntry, sticky = "w")
-tkgrid.configure(fiEntry, sticky = "w")
-tkgrid.configure(pcEntry, sticky = "w")
+tkgrid.configure(f0Entry, sticky = "w")
+tkgrid.configure(piEntry, sticky = "w")
 tkgrid.configure(peEntry, sticky = "w")
 dialogSuffix(rows = 7, columns = 2, focus = tfEntry)
 }
 ###############################################################
 ##################################################
-#metaCiEr <-function(tf,cl,ln,fi,i,e)
-#metaEr <-function(tf,cl,ln,fi,pc,e)
+#metaCiEr <-function(tf,cl,ln,f0,i,e)
+#metaEr <-function(tf,cl,ln,f0,pi,e)
 resEff <-function ()
 {
 initializeDialog(title = gettextRcmdr("Rescue Effect"))
@@ -185,11 +185,11 @@ clVar <- tclVar("20")
 lnVar <- tclVar("20")
 clEntry <- tkentry(top, width = "4", textvariable = clVar)
 lnEntry <- tkentry(top, width = "4", textvariable = lnVar)
-fiVar <- tclVar(0.25) ## nclassVar ->fiVar
-fiEntry <- tkscale(top, from=0, to=1, showvalue=TRUE, variable=fiVar, resolution=0.01, orient="horizontal")
-pcVar <- tclVar("0.1") ## nclassVar ->fiVar
-pcEntry <- tkscale(top, from=0, to=1, showvalue=TRUE, variable=pcVar, resolution=0.01, orient="horizontal")
-eVar <- tclVar("0.05") ## nclassVar ->fiVar
+f0Var <- tclVar(0.25) ## nclassVar ->f0Var
+f0Entry <- tkscale(top, from=0, to=1, showvalue=TRUE, variable=f0Var, resolution=0.01, orient="horizontal")
+piVar <- tclVar("0.1") ## nclassVar ->f0Var
+piEntry <- tkscale(top, from=0, to=1, showvalue=TRUE, variable=piVar, resolution=0.01, orient="horizontal")
+eVar <- tclVar("0.05") ## nclassVar ->f0Var
 eEntry <- tkscale(top, from=0, to=1, showvalue=TRUE, variable = eVar, resolution=0.01, orient="horizontal")
 	onOK <- function()
 	{
@@ -218,20 +218,20 @@ eEntry <- tkscale(top, from=0, to=1, showvalue=TRUE, variable = eVar, resolution
             errorCondition(message = "Extinction constant must be between 0 and 1")
             return()
         }
-        fi <- as.numeric(tclvalue(fiVar))
-        pc <- as.numeric(tclvalue(pcVar))
+        f0 <- as.numeric(tclvalue(f0Var))
+        pi <- as.numeric(tclvalue(piVar))
 ############ Data name
    dsnameValue <- trim.blanks(tclvalue(dsname))
         if (dsnameValue == "Do_Not_Save" | dsnameValue=="")
         {
-        	command <- paste("metaEr(tmax = ",tf, ", cl = ", cl,", fi = ", fi,", rw =", ln,", pc = ", pc,", ce = ", e, ")", sep = "")
+        	command <- paste("metaEr(tmax = ",tf, ", cl = ", cl,", f0 = ", f0,", rw =", ln,", pi = ", pi,", ce = ", e, ")", sep = "")
         }
         else
 		  {
-		  command <- paste(dsnameValue,"<-metaEr(tmax = ",tf, ", cl = ", cl,", fi = ", fi,", rw =", ln,", pc = ", pc,", ce = ", e, ")", sep = "")
+		  command <- paste(dsnameValue,"<-metaEr(tmax = ",tf, ", cl = ", cl,", f0 = ", f0,", rw =", ln,", pi = ", pi,", ce = ", e, ")", sep = "")
 		  }
 ########
-#	command <- paste("metaEr(tf = ",tf, ", cl = ", cl,", fi = ", fi,", ln =", ln,", pc = ", pc,", e = ", e, ")", sep = "")
+#	command <- paste("metaEr(tf = ",tf, ", cl = ", cl,", f0 = ", f0,", ln =", ln,", pi = ", pi,", e = ", e, ")", sep = "")
 	doItAndPrint(command)
 	tkfocus(CommanderWindow())
 	}
@@ -242,22 +242,22 @@ tkgrid(tklabel(top, text = "Maximum time  "), tfEntry, sticky = "e")
 tkgrid(tklabel(top, text = "Columns  "), clEntry, sticky = "e")
 tkgrid(tklabel(top, text = "Rows  "), lnEntry, sticky = "e")
 tkgrid(tklabel(top, text="Species parameters : ", fg="blue"), sticky="w")
-tkgrid(tklabel(top, text = "Initial occupancy "), fiEntry, sticky = "e")
-tkgrid(tklabel(top, text = "Colonization probability  "), pcEntry, sticky = "e")
+tkgrid(tklabel(top, text = "Initial occupancy "), f0Entry, sticky = "e")
+tkgrid(tklabel(top, text = "Colonization probability  "), piEntry, sticky = "e")
 tkgrid(tklabel(top, text = "Extinction coefficient  "), eEntry, sticky = "e")
 tkgrid(buttonsFrame, sticky = "w", columnspan = 2)
 tkgrid.configure(entryDsname, sticky = "w")
 tkgrid.configure(tfEntry, sticky = "w")
 tkgrid.configure(clEntry, sticky = "w")
 tkgrid.configure(lnEntry, sticky = "w")
-tkgrid.configure(fiEntry, sticky = "w")
-tkgrid.configure(pcEntry, sticky = "w")
+tkgrid.configure(f0Entry, sticky = "w")
+tkgrid.configure(piEntry, sticky = "w")
 tkgrid.configure(eEntry, sticky = "w")
 dialogSuffix(rows = 8, columns = 2, focus = tfEntry)
 }
 ################################################
-#metaCiEr <-function(tf,cl,ln,fi,i,e)
-#metaEr <-function(tf,cl,ln,fi,pc,e)
+#metaCiEr <-function(tf,cl,ln,f0,i,e)
+#metaEr <-function(tf,cl,ln,f0,pi,e)
 
 
 resEffcol <-function ()
@@ -273,11 +273,11 @@ clVar <- tclVar("20")
 lnVar <- tclVar("20")
 clEntry <- tkentry(top, width = "4", textvariable = clVar)
 lnEntry <- tkentry(top, width = "4", textvariable = lnVar)
-fiVar <- tclVar(0.25) ## nclassVar ->fiVar
-fiEntry <- tkscale(top, from=0, to=1, showvalue=TRUE, variable=fiVar, resolution=0.01, orient="horizontal")
-iVar <- tclVar("0.1") ## nclassVar ->fiVar
+f0Var <- tclVar(0.25) ## nclassVar ->f0Var
+f0Entry <- tkscale(top, from=0, to=1, showvalue=TRUE, variable=f0Var, resolution=0.01, orient="horizontal")
+iVar <- tclVar("0.1") ## nclassVar ->f0Var
 iEntry <- tkentry(top, width = "6", textvariable = iVar)
-eVar <- tclVar("0.05") ## nclassVar ->fiVar
+eVar <- tclVar("0.05") ## nclassVar ->f0Var
 eEntry <- tkentry(top, width = "6", textvariable = eVar)
 	onOK <- function()
 	{
@@ -312,19 +312,19 @@ eEntry <- tkentry(top, width = "6", textvariable = eVar)
             errorCondition(message = "Extinction constant must be positive")
             return()
         }
-        fi <- as.numeric(tclvalue(fiVar))
+        f0 <- as.numeric(tclvalue(f0Var))
 ############ Data name
    dsnameValue <- trim.blanks(tclvalue(dsname))
         if (dsnameValue == "Do_Not_Save" | dsnameValue=="")
         {
-        	command <- paste("metaCiEr(tmax = ",tf, ", cl = ", cl,", fi = ", fi,", rw =", ln,", ci = ", i,", ce = ", e, ")", sep = "")
+        	command <- paste("metaCiEr(tmax = ",tf, ", cl = ", cl,", f0 = ", f0,", rw =", ln,", ci = ", i,", ce = ", e, ")", sep = "")
         }
         else
 		  {
-		  command <- paste(dsnameValue,"<-metaCiEr(tmax = ",tf, ", rw = ", cl,", fi = ", fi,", ln =", ln,", ci = ", i,", ce = ", e, ")", sep = "")
+		  command <- paste(dsnameValue,"<-metaCiEr(tmax = ",tf, ", rw = ", cl,", f0 = ", f0,", ln =", ln,", ci = ", i,", ce = ", e, ")", sep = "")
 		  }
 ########
-#	command <- paste("metaEr(tf = ",tf, ", cl = ", cl,", fi = ", fi,", ln =", ln,", pc = ", pc,", e = ", e, ")", sep = "")
+#	command <- paste("metaEr(tf = ",tf, ", cl = ", cl,", f0 = ", f0,", ln =", ln,", pi = ", pi,", e = ", e, ")", sep = "")
 	doItAndPrint(command)
 	tkfocus(CommanderWindow())
 	}
@@ -335,7 +335,7 @@ tkgrid(tklabel(top, text = "Maximum time  "), tfEntry, sticky = "e")
 tkgrid(tklabel(top, text = "Columns  "), clEntry, sticky = "e")
 tkgrid(tklabel(top, text = "Rows  "), lnEntry, sticky = "e")
 tkgrid(tklabel(top, text="Species parameters  :", fg="blue"), sticky="w")
-tkgrid(tklabel(top, text = "Initial occupancy  "), fiEntry, sticky = "e")
+tkgrid(tklabel(top, text = "Initial occupancy  "), f0Entry, sticky = "e")
 tkgrid(tklabel(top, text = "Colonization coefficient  "), iEntry, sticky = "e")
 tkgrid(tklabel(top, text = "Extinction coefficient  "), eEntry, sticky = "e")
 tkgrid(buttonsFrame, sticky = "w", columnspan = 2)
@@ -343,7 +343,7 @@ tkgrid.configure(entryDsname, sticky = "w")
 tkgrid.configure(tfEntry, sticky = "w")
 tkgrid.configure(clEntry, sticky = "w")
 tkgrid.configure(lnEntry, sticky = "w")
-tkgrid.configure(fiEntry, sticky = "w")
+tkgrid.configure(f0Entry, sticky = "w")
 tkgrid.configure(iEntry, sticky = "w")
 tkgrid.configure(eEntry, sticky = "w")
 dialogSuffix(rows = 8, columns = 2, focus = tfEntry)
