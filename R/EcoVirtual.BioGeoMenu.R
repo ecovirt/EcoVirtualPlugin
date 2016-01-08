@@ -1,7 +1,6 @@
-### biogeographical functionsv ###
-
-############################
-############################
+##############################
+# Biogeographical Models Menu
+##############################
 archipDbox<-function () 
 {
 initializeDialog(title = gettextRcmdr("The Archipelago"))
@@ -100,42 +99,33 @@ tkgrid.configure(ctEntry, sticky = "w")
 tkgrid.configure(cantoBox, sticky = "w")
 dialogSuffix(rows = 10, columns = 2, focus = tmaxEntry)
 }
-
-
 ######################################
 ######################################
 ColExtDbox<-function () 
 {
+dialogName<-"ColExtDbox" 
+defaults <- list(ColVar="crs", ExtVar="fix")
+initial <- getDialog(dialogName, default= defaults)    
 #animaColExt(minimo=0.01, maximo=1, interv=0.01, Ext="crs", Col="dcr")
 initializeDialog(title = gettextRcmdr("Colonization/Extinction Balance"))
 #### 
-#radioButtons(top, "col", buttons=c("crs", "dcr","fix" ), 
-#		labels=gettextRcmdr(c("Increase", "Decrease", "Fixed")), title=gettextRcmdr("Colonization"))
-#radioButtons(top, "ext", buttons=c("crs", "dcr","fix" ), 
-#		labels=gettextRcmdr(c("Increase", "Decrease", "Fixed")), title=gettextRcmdr("Colonization"))
-ColVar <- tclVar("crs")
+ColVar <- tclVar(initial$ColVar)
     ColCrsButton <- ttkradiobutton(top, variable=ColVar, value="crs")
     ColDcrButton <- ttkradiobutton(top, variable=ColVar, value="dcr")
     ColFixButton <- ttkradiobutton(top, variable=ColVar, value="fix")
-ExtVar <- tclVar("fix")
+ExtVar <- tclVar(initial$ExtVar)
     ExtCrsButton <- ttkradiobutton(top, variable=ExtVar, value="crs")
     ExtDcrButton <- ttkradiobutton(top, variable=ExtVar, value="dcr")
     ExtFixButton <- ttkradiobutton(top, variable=ExtVar, value="fix")
 onOK <- function(){
         closeDialog()
-         Col <- tclvalue(ColVar)
-#			Col <- if (col == "crs") "crs"
-#			else if (col == "dcr") "dcr"
-#			else  "fix"
-#			
-			Ext <- tclvalue(ExtVar)
-#			Ext <- if (ext == "crs") "crs"
-#			else if (ext == "dcr") "dcr"
-#			else  "fix"
-#        
+        Col <- tclvalue(ColVar)
+        Ext <- tclvalue(ExtVar)
         doItAndPrint(paste("animaColExt(Ext= '", Ext,  "', Col ='", Col,"')", sep=""))
+        tkfocus(CommanderWindow())
+        putDialog(dialogName, values = list(ColVar= tclvalue(ColVar), ExtVar= tclvalue(ExtVar)),resettable = FALSE) 
         }
-OKCancelHelp(helpSubject = "animaColExt")
+OKCancelHelp(helpSubject = "animaColExt", apply=dialogName)
 ###########
 tkgrid(tklabel(top, text="Colonization  :", fg="blue"), sticky="w")
     tkgrid(labelRcmdr(top, text=gettextRcmdr("Increase")), ColCrsButton, sticky="e")
@@ -298,7 +288,6 @@ bioGeoIslDbox= function ()
     dialogSuffix(rows = 10, columns = 2)
 }
 #bioGeoIslDbox()
-
 ##########################################
 ##########################################
 gr.abund=function(rq, fsp1, add=FALSE,...)
@@ -317,50 +306,53 @@ gr.abund=function(rq, fsp1, add=FALSE,...)
 	mtext("Relative Species Abundance ", 3, 0, cex=1.2)
 	par(old)
 }
-
-
 #############################
 #############################
 randWalkDbox=function () 
 {
-    initializeDialog(title = gettextRcmdr("Random Walk Simulation"))
-    dsname <- tclVar("Do_Not_Save")
-    entryDsname <- tkentry(top, width = "20", textvariable = dsname)
-    nsVar <- tclVar("10")
-    nsEntry <- tkentry(top, width = "4", textvariable = nsVar)
-    stVar <- tclVar("1")
-    stEntry <- tkentry(top, width = "2", textvariable = stVar)
-    midVar <- tclVar("200")
-    midEntry <- tkentry(top, width = "3", textvariable = midVar)
-    cantoVar <- tclVar("0")
-    cantoBox <- tkcheckbutton(top, variable = cantoVar)
-    tfVar <- tclVar("1e5")
-    tfVarSlider <- tkentry(top, width = "9", textvariable = tfVar)
+dialogName<-"randWalkDbox" 
+defaults <- list(dsname="Do_Not_Save", nsVar=10, stVar= 1, midVar=20, cantoVar=0, tfVar=1e5)
+initial <- getDialog(dialogName, default= defaults)
+initializeDialog(title = gettextRcmdr("Random Walk Simulation"))
+dsname <- tclVar(initial$dsname)
+entryDsname <- tkentry(top, width = "20", textvariable = dsname)
+nsVar <- tclVar(initial$nsVar)
+nsEntry <- tkentry(top, width = "4", textvariable = nsVar)
+stVar <- tclVar(initial$stVar)
+stEntry <- tkentry(top, width = "2", textvariable = stVar)
+midVar <- tclVar(initial$midVar)
+midEntry <- tkentry(top, width = "3", textvariable = midVar)
+cantoVar <- tclVar(initial$cantoVar)
+cantoBox <- tkcheckbutton(top, variable = cantoVar)
+tfVar <- tclVar(initial$tfVar)
+tfVarSlider <- tkentry(top, width = "9", textvariable = tfVar)
     #tkscale(top, from = 1e3, to = 1e6, showvalue = TRUE, 
     #    variable = tfVar, resolution = 1e3, orient = "horizontal")
-    onOK <- function() {
-#        closeDialog()
+onOK <- function()
+    {
+        closeDialog()
         tf <- round(as.numeric(tclvalue(tfVar)))
         cantoVF <- as.logical(as.numeric(tclvalue(cantoVar)))
         ns <- round(as.numeric(tclvalue(nsVar)))
         st <- round(as.numeric(tclvalue(stVar)))
         mid <- as.numeric(tclvalue(midVar))
         dsnameValue <- trim.blanks(tclvalue(dsname))
-##        randWalk <- function(n=1,step=1,ciclo=1e5,x1max=NULL, alleq=FALSE)
-        if (dsnameValue == "Do_Not_Save" | dsnameValue == "") {
-            command <- paste("randWalk(S = ", ns, ", step = ", 
+        if (dsnameValue == "Do_Not_Save" | dsnameValue == "")
+            {
+                command <- paste("randWalk(S = ", ns, ", step = ", 
                 st, ", tmax = ", tf, ", x1max =", mid, ", alleq = ", cantoVF, 
                 ")", sep = "")
-        }
-        else {
-            command <- paste(dsnameValue, "<-randWalk(S = ", ns, ", step = ", 
-                st, ", tmax = ", tf, ", x1max =", mid, ", alleq = ", cantoVF, 
-                ")", sep = "")
-        }
+            }
+        else
+            {
+                command <- paste(dsnameValue, "<-randWalk(S = ", ns, ", step = ", st, ", tmax = ", tf, ", x1max =", mid, ", alleq = ", cantoVF, ")", sep = "")
+            }
         doItAndPrint(command)
         tkfocus(CommanderWindow())
+        putDialog(dialogName, values = list(dsname=dsnameValue, tfVar= round(as.numeric(tclvalue(tfVar))), nsVar= round(as.numeric(tclvalue(nsVar))), stVar= round(as.numeric(tclvalue(stVar))), midVar= as.numeric(tclvalue(midVar)), cantoVar=as.logical(as.numeric(tclvalue(cantoVar)))),resettable = FALSE)
+        
     }
-    OKCancelHelp(helpSubject = "randWalk")
+    OKCancelHelp(helpSubject = "randWalk", apply=dialogName, reset=dialogName)
     tkgrid(tklabel(top, text = "Enter name for data set: "), 
         entryDsname, sticky = "e")
     tkgrid(tklabel(top, text = "Random Walk Parameters", 
@@ -370,8 +362,6 @@ randWalkDbox=function ()
     tkgrid(tklabel(top, text = "Maximum initial distance  "), midEntry, sticky = "e")
     tkgrid(tklabel(top, text = "Initial distance equal"), cantoBox, sticky = "e")
     tkgrid(tklabel(top, text = "Final time  "), tfVarSlider, sticky = "e")
-
-
     tkgrid.configure(entryDsname, sticky = "sw")
     tkgrid.configure(nsEntry, sticky = "sw")
     tkgrid.configure(stEntry, sticky = "sw")
@@ -381,48 +371,50 @@ randWalkDbox=function ()
     tkgrid(buttonsFrame, columnspan = 2, sticky = "w")
     dialogSuffix(rows = 8, columns = 2, focus = nsEntry)
 }
-
-
 ############################
 ############################
 extGameDbox=function() 
 {
-    initializeDialog(title = gettextRcmdr("Zero Sum Game"))
-    dsname <- tclVar("Do_Not_Save")
-    entryDsname <- tkentry(top, width = "20", textvariable = dsname)
-    mVar <- tclVar(20)
-    mVarSlider <- tkscale(top, from = 10, to = 100, showvalue = TRUE, 
-        variable = mVar, resolution = 1, orient = "horizontal")
-    apVar <- tclVar(1)
-    apVarSlider <- tkscale(top, from = 1, to = 10, showvalue = TRUE, 
-        variable = apVar, resolution = 1, orient = "horizontal")
-    mtVar<-tclVar("1")
-    mtEntry <- tkentry(top, width = "1", textvariable = mtVar)
-    onOK <- function() {
+dialogName<-"extGameDbox" 
+defaults <- list(dsname="Do_Not_Save", mVar=20, apVar= 1, mtVar=1)
+initial <- getDialog(dialogName, default= defaults)
+initializeDialog(title = gettextRcmdr("Zero Sum Game"))
+dsname <- tclVar(initial$dsname)
+entryDsname <- tkentry(top, width = "20", textvariable = dsname)
+mVar <- tclVar(initial$mVar)
+mVarSlider <- tkscale(top, from = 10, to = 100, showvalue = TRUE, variable = mVar, resolution = 1, orient = "horizontal")
+apVar <- tclVar(initial$apVar)
+apVarSlider <- tkscale(top, from = 1, to = 10, showvalue = TRUE, variable = apVar, resolution = 1, orient = "horizontal")
+mtVar<-tclVar(initial$mtVar)
+mtEntry <- tkentry(top, width = "2", textvariable = mtVar)
+onOK <- function()
+    {
         closeDialog()
         m <- as.numeric(tclvalue(mVar))
         ap <- as.numeric(tclvalue(apVar))
         mt <- as.numeric(tclvalue(mtVar))
         dsnameValue <- trim.blanks(tclvalue(dsname))
 ##extGame <- function(aposta=1,total=100, tmax=5
-        if (dsnameValue == "Do_Not_Save" | dsnameValue == "") {
-            command <- paste("extGame(bet = ", ap, ", total = ", 
-                m, ", tmax = ", mt,")", sep = "")
-        }
-        else {
-            command <- paste(dsnameValue, "<-extGame(bet = ", ap, ", total = ", m, ", tmax = ", mt,")", sep = "")
-        }
+        if (dsnameValue == "Do_Not_Save" | dsnameValue == "")
+            {
+                command <- paste("extGame(bet = ", ap, ", total = ", m, ", tmax = ", mt,")", sep = "")
+            }
+        else
+            {
+                command <- paste(dsnameValue, "<-extGame(bet = ", ap, ", total = ", m, ", tmax = ", mt,")", sep = "")
+            }
         doItAndPrint(command)
         tkfocus(CommanderWindow())
+        putDialog(dialogName, values = list(dsname=dsnameValue, mVar= round(as.numeric(tclvalue(mVar))), apVar= round(as.numeric(tclvalue(apVar))), mtVar= round(as.numeric(tclvalue(mtVar)))),resettable = FALSE)
     }
-    OKCancelHelp(helpSubject = "extGame")
+    OKCancelHelp(helpSubject = "extGame", apply=dialogName, reset=dialogName)
     tkgrid(tklabel(top, text = "Enter name for data set: "), 
         entryDsname, sticky = "e")
     tkgrid(tklabel(top, text = "Game Parameters", 
         fg = "blue"), sticky = "w")
     tkgrid(tklabel(top, text = "Total amount  "), mVarSlider , sticky = "e")
     tkgrid(tklabel(top, text = "bet size  "), apVarSlider , sticky = "e")
-    tkgrid(tklabel(top, text = "Maximum game time  "), mtEntry, sticky = "e")
+    tkgrid(tklabel(top, text = "Maximum time running (minutes)  "), mtEntry, sticky = "e")
  
     tkgrid.configure(entryDsname, sticky = "sw")
     tkgrid.configure(mVarSlider, sticky = "sw")
@@ -436,112 +428,132 @@ extGameDbox=function()
 #############################################
 hubDbox=function () 
 {
-    initializeDialog(title = gettextRcmdr("Neutral Model Simulation"))
-    dsname <- tclVar("Do_Not_Save")
-    entryDsname <- tkentry(top, width = "20", textvariable = dsname)
-    nsVar <- tclVar(10)
-    nsVarSlider <- tkscale(top, from = 10, to = 1000, showvalue = TRUE, 
+dialogName<-"hubDbox" 
+defaults <- list(dsname="Do_Not_Save", nsVar=10, jiVar=10, dVar=1, cicloVar= 1000,  metaVar= "no", animaVar=1)
+initial <- getDialog(dialogName, default= defaults)
+initializeDialog(title = gettextRcmdr("Neutral Model Simulation"))
+###
+dsname <- tclVar(initial$dsname)
+nsVar <- tclVar(initial$nsVar)
+jiVar <- tclVar(initial$jiVar)
+dVar <- tclVar(initial$dVar)    
+cicloVar <- tclVar(initial$cicloVar)
+#migVar <- tclVar(initial$migVar)
+#spVar <- tclVar(initial$spVar)
+metaVar <- tclVar(initial$metaVar)
+animaVar <- tclVar(initial$animaVar)
+###
+entryDsname <- tkentry(top, width = "20", textvariable = dsname)
+nsVarSlider <- tkscale(top, from = 10, to = 1000, showvalue = TRUE, 
         variable = nsVar, resolution = 10, orient = "horizontal") 
-    jiVar <- tclVar(10)
-    jiVarSlider <- tkscale(top, from = 1, to = 100, showvalue = TRUE, 
+jiVarSlider <- tkscale(top, from = 1, to = 100, showvalue = TRUE, 
         variable = jiVar, resolution = 1, orient = "horizontal")
-    dVar <- tclVar("1")    
-    dEntry <- tkentry(top, width = "2", textvariable = dVar)    
-    cicloVar <- tclVar(1000)
-    cicloSlider <- tkscale(top, from = 1e3, to = 1e5, showvalue = TRUE, 
-        variable = cicloVar, resolution = 1000, orient = "horizontal")
-    migVar <- tclVar("0")
-    migBox <- tkcheckbutton(top, variable = migVar)
-    spVar <- tclVar("0")
-    spBox <- tkcheckbutton(top, variable = spVar)
-    animaVar <- tclVar("1")
-    animaBox <- tkcheckbutton(top, variable = animaVar)
-    onOK <- function() {
-#        closeDialog()
-        S<- as.numeric(tclvalue(nsVar))
-        ji<- as.numeric(tclvalue(jiVar))
-        D<- as.numeric(tclvalue(dVar))
-        ciclos<-as.numeric(tclvalue(cicloVar))
-        migVF <- as.logical(as.numeric(tclvalue(migVar)))
-        spVF <- as.logical(as.numeric(tclvalue(spVar)))
-        animaVF <- as.logical(as.numeric(tclvalue(animaVar)))
-        if(spVF)
+dEntry <- tkentry(top, width = "2", textvariable = dVar)    
+cicloSlider <- tkscale(top, from = 1e3, to = 1e5, showvalue = TRUE, 
+                       variable = cicloVar, resolution = 1000, orient = "horizontal")
+metaNoButton <- ttkradiobutton(top, variable=metaVar, value="no")
+metaMigButton <- ttkradiobutton(top, variable=metaVar, value="mig")
+metaSpButton <- ttkradiobutton(top, variable=metaVar, value="sp")
+##
+#migBox <- tkcheckbutton(top, variable = migVar)
+#spBox <- tkcheckbutton(top, variable = spVar)
+animaBox <- tkcheckbutton(top, variable = animaVar)
+    onOK <- function()
         {
-        closeDialog()
-        hubDbox3()
-        stop()
+            closeDialog()
+            S<- as.numeric(tclvalue(nsVar))
+            ji<- as.numeric(tclvalue(jiVar))
+            D<- as.numeric(tclvalue(dVar))
+            ciclos<-as.numeric(tclvalue(cicloVar))
+            meta = tclvalue(metaVar)
+            animaVF <- as.logical(as.numeric(tclvalue(animaVar)))
+            if(tclvalue(metaVar)=="sp")
+                {
+                    closeDialog()
+                    hubDbox3()
+                    return()
+                } 
+            if(tclvalue(metaVar)=="mig")
+                {
+                    closeDialog()
+                    hubDbox2()
+                    return()
+                }
+            dsnameValue <- trim.blanks(tclvalue(dsname))
+            if (dsnameValue == "Do_Not_Save" | dsnameValue == "")
+                {
+                    command <- paste("simHub1(S = ", S, ", j = ", ji, ", D = ", D,", cycles = ", ciclos, ", anima = ",animaVF ,")", sep = "")
+                }
+            else
+                {
+                    command <- paste(dsnameValue, "<-simHub1(S = ", S, ", j = ", ji,", D = ", D, ", cycles = ", ciclos, ", anima = ",animaVF , ")", sep = "")
+                } 
+            doItAndPrint(command)
+            tkfocus(CommanderWindow())
+            putDialog(dialogName, values = list(dsname=dsnameValue,  nsVar= as.numeric(tclvalue(nsVar)), jiVar = as.numeric(tclvalue(jiVar)), dVar = as.numeric(tclvalue(dVar)), cicloVar = as.numeric(tclvalue(cicloVar)), animaVar = as.logical(as.numeric(tclvalue(animaVar))),  metaVar = tclvalue(metaVar)),resettable = FALSE)
         }
-			if(!spVF & migVF)
-        {
-        closeDialog()
-        hubDbox2()
-        stop()
-        }
-        dsnameValue <- trim.blanks(tclvalue(dsname))
-##        simHub1=function(S= 100, j=10, D=1, ciclo=1e4){
-        if (dsnameValue == "Do_Not_Save" | dsnameValue == "") {
-            command <- paste("simHub1(S = ", S, ", j = ", 
-                ji, ", D = ", D,", cycles = ", ciclos, ", anima = ",animaVF ,")", sep = "")
-        }
-        else {
-            command <- paste(dsnameValue, "<-simHub1(S = ", S, ", j = ", 
-                ji,", D = ", D, ", cycles = ", ciclos, ", anima = ",animaVF , ")", sep = "")
-        }
-        doItAndPrint(command)
-        tkfocus(CommanderWindow())
-    }
-    OKCancelHelp(helpSubject = "simHub")
-    tkgrid(tklabel(top, text = "Enter name for data set: "), 
-        entryDsname, sticky = "e")
-    tkgrid(tklabel(top, text = "Neutral Model Parameters", 
-        fg = "blue"), sticky = "w")
-    tkgrid(tklabel(top, text = "Number of Species  "), nsVarSlider, sticky = "e")
-    tkgrid(tklabel(top, text = "Individuals per species  "), jiVarSlider, sticky = "e")
-    tkgrid(tklabel(top, text = "Cycles per Simulation "), cicloSlider, sticky = "e")
-    tkgrid(tklabel(top, text = "Number of dead per cycle  "), dEntry, sticky = "e")
-    tkgrid(tklabel(top, text = "Immigration  "), migBox, sticky = "e")
-    tkgrid(tklabel(top, text = "Immigration and Speciation   "), spBox, sticky = "s")
-    tkgrid(tklabel(top, text = "Show simulation frames "), animaBox, sticky = "s")
-
-    tkgrid.configure(entryDsname, sticky = "sw")
-    tkgrid.configure(nsVarSlider, sticky = "sw")
-    tkgrid.configure(jiVarSlider, sticky = "sw")
-    tkgrid.configure(cicloSlider, sticky = "sw")
-    tkgrid.configure(dEntry, sticky = "sw")
-    tkgrid.configure(migBox, sticky = "sw")
-    tkgrid.configure(spBox, sticky = "sw")
-    tkgrid.configure(animaBox, sticky = "sw")
-    tkgrid(buttonsFrame, columnspan = 2, sticky = "e")
-    dialogSuffix(rows = 9, columns = 2, focus = nsVarSlider)
+OKCancelHelp(helpSubject = "simHub", reset = dialogName)
+tkgrid(tklabel(top, text = "Enter name for data set: "), 
+       entryDsname, sticky = "e")
+tkgrid(tklabel(top, text = "Neutral Model Parameters", 
+               fg = "blue"), sticky = "w")
+tkgrid(tklabel(top, text = "Number of Species  "), nsVarSlider, sticky = "e")
+tkgrid(tklabel(top, text = "Individuals per species  "), jiVarSlider, sticky = "e")
+tkgrid(tklabel(top, text = "Cycles per Simulation "), cicloSlider, sticky = "e")
+tkgrid(tklabel(top, text = "Number of dead per cycle  "), dEntry, sticky = "e")
+tkgrid(tklabel(top, text = "Migration and Speciation", 
+               fg = "blue"), sticky = "w")
+tkgrid(labelRcmdr(top, text=gettextRcmdr("Local community only")), metaNoButton, sticky="e")
+tkgrid(labelRcmdr(top, text=gettextRcmdr("Immigration")), metaMigButton, sticky="e")
+tkgrid(labelRcmdr(top, text=gettextRcmdr("Immigration and Speciation")), metaSpButton, sticky="e")
+#tkgrid(tklabel(top, text = "Immigration  "), migBox, sticky = "e")
+#tkgrid(tklabel(top, text = "Immigration and Speciation   "), spBox, sticky = "s")
+tkgrid(tklabel(top, text = "Show simulation frames "), animaBox, sticky = "e")
+###
+tkgrid.configure(entryDsname, sticky = "w")
+tkgrid.configure(nsVarSlider, sticky = "w")
+tkgrid.configure(jiVarSlider, sticky = "w")
+tkgrid.configure(cicloSlider, sticky = "w")
+tkgrid.configure(dEntry, sticky = "w")
+tkgrid.configure(metaNoButton, sticky="w")
+tkgrid.configure(metaMigButton, sticky="w")
+tkgrid.configure(metaSpButton, sticky="w")
+#tkgrid.configure(migBox, sticky = "sw")
+#tkgrid.configure(spBox, sticky = "sw")
+tkgrid.configure(animaBox, sticky = "w")
+tkgrid(buttonsFrame, columnspan = 2, sticky = "e")
+dialogSuffix(rows = 10, columns = 2, focus = nsVarSlider)
 }
-
-##############################################
-#############################################
-hubDbox2=function () 
+############################################
+############################################
+hubDbox2=function() 
 {
-    initializeDialog(title = gettextRcmdr("Neutral Model Simulation"))
-    dsname <- tclVar("Do_Not_Save")
-    entryDsname <- tkentry(top, width = "20", textvariable = dsname)
-    nsVar <- tclVar(10)
-    nsVarSlider <- tkscale(top, from = 10, to = 1000, showvalue = TRUE, 
-        variable = nsVar, resolution = 10, orient = "horizontal") 
-    jiVar <- tclVar(10)
-    jiVarSlider <- tkscale(top, from = 1, to = 100, showvalue = TRUE, 
-        variable = jiVar, resolution = 1, orient = "horizontal")
-    dVar <- tclVar("1")    
-    dEntry <- tkentry(top, width = "2", textvariable = dVar)    
-    cicloVar <- tclVar(1000)
-    cicloSlider <- tkscale(top, from = 1e3, to = 1e5, showvalue = TRUE, 
-        variable = cicloVar, resolution = 1000, orient = "horizontal")
-    mig1Var <- tclVar("1e-4")
-    mig1Slider <- tkentry(top, width = "10", textvariable = mig1Var)
-#    mig1Var <- tclVar(0)
-#    mig1Slider <- tkscale(top, from = 0, to = 1, showvalue = TRUE, 
-#        variable = mig1Var, resolution = 1e-9, orient = "horizontal")
-    animaVar <- tclVar("1")
-    animaBox <- tkcheckbutton(top, variable = animaVar)
-    onOK <- function() {
-#        closeDialog()
+dialogName<-"hubDbox2" 
+defaults <- list(dsname="Do_Not_Save", nsVar=10, jiVar= 10, dVar=1, cicloVar= 1000, mig1Var= 1e-4, animaVar=1)
+initial <- getDialog(dialogName, default= defaults)
+initializeDialog(title = gettextRcmdr("Neutral Model Simulation"))
+###
+dsname <- tclVar(initial$dsname)
+nsVar <- tclVar(initial$nsVar)
+jiVar <- tclVar(initial$jiVar)
+dVar <- tclVar(initial$dVar)    
+cicloVar <- tclVar(initial$cicloVar)
+mig1Var <- tclVar(initial$mig1Var)
+animaVar <- tclVar(initial$animaVar)
+###
+entryDsname <- tkentry(top, width = "20", textvariable = dsname)
+nsVarSlider <- tkscale(top, from = 10, to = 1000, showvalue = TRUE, 
+                       variable = nsVar, resolution = 10, orient = "horizontal") 
+jiVarSlider <- tkscale(top, from = 1, to = 100, showvalue = TRUE, 
+                       variable = jiVar, resolution = 1, orient = "horizontal")
+dEntry <- tkentry(top, width = "2", textvariable = dVar)    
+cicloSlider <- tkscale(top, from = 1e3, to = 1e5, showvalue = TRUE, 
+                       variable = cicloVar, resolution = 1000, orient = "horizontal")
+mig1Slider <- tkentry(top, width = "10", textvariable = mig1Var)
+animaBox <- tkcheckbutton(top, variable = animaVar)
+onOK <- function()
+    {
+        closeDialog()
         S<- as.numeric(tclvalue(nsVar))
         ji<- as.numeric(tclvalue(jiVar))
         D<- as.numeric(tclvalue(dVar))
@@ -550,18 +562,19 @@ hubDbox2=function ()
         migra<-as.numeric(tclvalue(mig1Var))
         dsnameValue <- trim.blanks(tclvalue(dsname))
 ##        simHub1=function(S= 100, j=10, D=1, ciclo=1e4){
-        if (dsnameValue == "Do_Not_Save" | dsnameValue == "") {
-            command <- paste("simHub2(S = ", S, ", j = ", 
-                ji,  ", D = ", D, ", cycles = ", ciclos, ", m = ",migra ,", anima = ",animaVF ,")", sep = "")
-        }
-        else {
-            command <- paste(dsnameValue, "<-simHub2(S = ", S, ", j = ", 
-                ji,  ", D = ", D,", cycles = ", ciclos, ", m = ",migra, ", anima = ",animaVF , ")", sep = "")
-        }
+        if (dsnameValue == "Do_Not_Save" || dsnameValue == "")
+            {
+                command <- paste("simHub2(S = ", S, ", j = ", ji,  ", D = ", D, ", cycles = ", ciclos, ", m = ",migra ,", anima = ",animaVF ,")", sep = "")
+            }
+        else
+            {
+                command <- paste(dsnameValue, "<-simHub2(S = ", S, ", j = ", ji,  ", D = ", D,", cycles = ", ciclos, ", m = ",migra, ", anima = ",animaVF , ")", sep = "")
+            }
         doItAndPrint(command)
         tkfocus(CommanderWindow())
+        putDialog(dialogName, values = list(dsname=dsnameValue,  nsVar= as.numeric(tclvalue(nsVar)),  jiVar = as.numeric(tclvalue(jiVar)),  dVar = as.numeric(tclvalue(dVar)), cicloVar = as.numeric(tclvalue(cicloVar)), animaVar = as.logical(as.numeric(tclvalue(animaVar))), mig1Var = as.numeric(tclvalue(mig1Var))),resettable = FALSE)
     }
-    OKCancelHelp(helpSubject = "simHub")
+    OKCancelHelp(helpSubject = "simHub", apply=dialogName, reset =dialogName)
     tkgrid(tklabel(top, text = "Enter name for data set: "), 
         entryDsname, sticky = "e")
     tkgrid(tklabel(top, text = "Neutral Model Parameters", 
@@ -571,58 +584,55 @@ hubDbox2=function ()
     tkgrid(tklabel(top, text = "Number of dead per cycle  "), dEntry, sticky = "e")
     tkgrid(tklabel(top, text = "Cycles per Simulation "), cicloSlider, sticky = "e")
     tkgrid(tklabel(top, text = "Immigration rate  "), mig1Slider, sticky = "e")
-    tkgrid(tklabel(top, text = "Show simulation frames "), animaBox, sticky = "s")
-    tkgrid.configure(entryDsname, sticky = "sw")
-    tkgrid.configure(nsVarSlider, sticky = "sw")
-    tkgrid.configure(jiVarSlider, sticky = "sw")
-    tkgrid.configure(dEntry, sticky = "sw")
-    tkgrid.configure(mig1Slider, sticky = "sw")
-    tkgrid.configure(cicloSlider, sticky = "sw")
-    tkgrid.configure(animaBox, sticky = "sw")
+    tkgrid(tklabel(top, text = "Show simulation frames "), animaBox, sticky = "e")
+    tkgrid.configure(entryDsname, sticky = "w")
+    tkgrid.configure(nsVarSlider, sticky = "w")
+    tkgrid.configure(jiVarSlider, sticky = "w")
+    tkgrid.configure(dEntry, sticky = "w")
+    tkgrid.configure(mig1Slider, sticky = "w")
+    tkgrid.configure(cicloSlider, sticky = "w")
+    tkgrid.configure(animaBox, sticky = "w")
     tkgrid(buttonsFrame, columnspan = 2, sticky = "e")
-    dialogSuffix(rows = 9, columns = 2, focus = mig1Slider)
+    dialogSuffix(rows = 10, columns = 2, focus = mig1Slider)
 }
-
-
 ##############################################
 #############################################
 #simHub3=function(Sm=200, jm=20, S= 100, j=10, D=1, ciclo=1e4, m=0.01, nu=0.001, anima=TRUE)
 hubDbox3=function() 
 {
-    initializeDialog(title = gettextRcmdr("Neutral Model Simulation"))
-    dsname <- tclVar("Do_Not_Save")
-    entryDsname <- tkentry(top, width = "20", textvariable = dsname)
-    nsVar <- tclVar(10)
-    nsVarSlider <- tkscale(top, from = 10, to = 1000, showvalue = TRUE, 
-        variable = nsVar, resolution = 10, orient = "horizontal") 
-    jiVar <- tclVar(10)
-    jiVarSlider <- tkscale(top, from = 1, to = 100, showvalue = TRUE, 
-        variable = jiVar, resolution = 1, orient = "horizontal")
-    ## Metacomunity    
-    SmVar <- tclVar(10)
-    SmSlider <- tkscale(top, from = 10, to = 1000, showvalue = TRUE, 
-        variable = SmVar, resolution = 10, orient = "horizontal") 
-    jmVar <- tclVar(10)
-    jmSlider <- tkscale(top, from = 1, to = 100, showvalue = TRUE, 
-        variable = jmVar, resolution = 1, orient = "horizontal")
-
-    dVar <- tclVar("1")    
-    dEntry <- tkentry(top, width = "2", textvariable = dVar)    
-    cicloVar <- tclVar(1000)
-    cicloSlider <- tkscale(top, from = 1e3, to = 1e5, showvalue = TRUE, 
-        variable = cicloVar, resolution = 1000, orient = "horizontal")
-    mig1Var <- tclVar("1e-4")
-    mig1Slider <- tkentry(top, width = "10", textvariable = mig1Var)
-    #tkscale(top, from = 0, to = 1, showvalue = TRUE, 
-        #variable = mig1Var, resolution = 1e-9, orient = "horizontal")
-    nuVar <- tclVar("1e-4")
-    nuSlider <- tkentry(top, width = "10", textvariable = nuVar)
-    #tkscale(top, from = 0, to = 1, showvalue = TRUE, 
-        #variable = nuVar, resolution = 1e-9, orient = "horizontal")
-    animaVar <- tclVar("1")
-    animaBox <- tkcheckbutton(top, variable = animaVar)
-    onOK <- function() {
-#        closeDialog()
+dialogName<-"hubDbox3" 
+defaults <- list(dsname="Do_Not_Save", nsVar=10, jiVar= 10, SmVar=10, jmVar=10, dVar=1, cicloVar= 1000, mig1Var= 1e-4, nuVar= 1e-4, animaVar=1)
+initial <- getDialog(dialogName, default= defaults)
+initializeDialog(title = gettextRcmdr("Neutral Model Simulation"))
+dsname <- tclVar(initial$dsname)
+nsVar <- tclVar(initial$nsVar)
+jiVar <- tclVar(initial$jiVar)
+SmVar <- tclVar(initial$SmVar)
+jmVar <- tclVar(initial$jmVar)
+dVar <- tclVar(initial$dVar)    
+cicloVar <- tclVar(initial$cicloVar)
+mig1Var <- tclVar(initial$mig1Var)
+nuVar <- tclVar(initial$nuVar)
+animaVar <- tclVar(initial$animaVar)
+###
+entryDsname <- tkentry(top, width = "20", textvariable = dsname)
+nsVarSlider <- tkscale(top, from = 10, to = 1000, showvalue = TRUE, 
+                       variable = nsVar, resolution = 10, orient = "horizontal") 
+jiVarSlider <- tkscale(top, from = 1, to = 100, showvalue = TRUE, 
+                       variable = jiVar, resolution = 1, orient = "horizontal")
+SmSlider <- tkscale(top, from = 10, to = 1000, showvalue = TRUE, 
+                    variable = SmVar, resolution = 10, orient = "horizontal") 
+jmSlider <- tkscale(top, from = 1, to = 100, showvalue = TRUE, 
+                    variable = jmVar, resolution = 1, orient = "horizontal")
+dEntry <- tkentry(top, width = "2", textvariable = dVar)    
+cicloSlider <- tkscale(top, from = 1e3, to = 1e5, showvalue = TRUE, 
+                       variable = cicloVar, resolution = 1000, orient = "horizontal")
+mig1Slider <- tkentry(top, width = "10", textvariable = mig1Var)
+nuSlider <- tkentry(top, width = "10", textvariable = nuVar)
+animaBox <- tkcheckbutton(top, variable = animaVar)
+onOK <- function()
+    {
+        closeDialog()
         S<- as.numeric(tclvalue(nsVar))
         Sm<-as.numeric(tclvalue(SmVar))
         ji<- as.numeric(tclvalue(jiVar))
@@ -634,18 +644,19 @@ hubDbox3=function()
         nu<-as.numeric(tclvalue(nuVar))
         dsnameValue <- trim.blanks(tclvalue(dsname))
 ##        simHub1=function(S= 100, j=10, D=1, ciclo=1e4){
-        if (dsnameValue == "Do_Not_Save" | dsnameValue == "") {
-            command <- paste("simHub3(Sm = ", Sm,  ", jm = ", jm,",S = ", S, ", j = ", 
-                ji,  ", D = ", D, ", cycles = ", ciclos, ", m = ", migra ,", nu = ", nu ,", anima = ",animaVF ,")", sep = "")
-        }
-        else {
-            command <- paste(dsnameValue, "<-simHub3(Sm = ", Sm,  ", jm = ", jm,",S = ", S, ", j = ", 
-                ji,  ", D = ", D,", cycles = ", ciclos, ", m = ",migra,", nu = ", nu , ", anima = ",animaVF , ")", sep = "")
-        }
+        if (dsnameValue == "Do_Not_Save" | dsnameValue == "")
+            {
+                command <- paste("simHub3(Sm = ", Sm,  ", jm = ", jm,",S = ", S, ", j = ", ji,  ", D = ", D, ", cycles = ", ciclos, ", m = ", migra ,", nu = ", nu ,", anima = ",animaVF ,")", sep = "")
+            }
+        else
+            {
+                command <- paste(dsnameValue, "<-simHub3(Sm = ", Sm,  ", jm = ", jm,",S = ", S, ", j = ", ji,  ", D = ", D,", cycles = ", ciclos, ", m = ",migra,", nu = ", nu , ", anima = ",animaVF , ")", sep = "")
+            }
         doItAndPrint(command)
         tkfocus(CommanderWindow())
+        putDialog(dialogName, values = list(dsname=dsnameValue,  nsVar= as.numeric(tclvalue(nsVar)), SmVar = as.numeric(tclvalue(SmVar)), jiVar = as.numeric(tclvalue(jiVar)), jmVar = as.numeric(tclvalue(jmVar)), dVar = as.numeric(tclvalue(dVar)), cicloVar = as.numeric(tclvalue(cicloVar)), animaVar = as.logical(as.numeric(tclvalue(animaVar))), mig1Var = as.numeric(tclvalue(mig1Var)),  nuVar = as.numeric(tclvalue(nuVar))),resettable = FALSE)
     }
-    OKCancelHelp(helpSubject = "simHub")
+    OKCancelHelp(helpSubject = "simHub", apply=dialogName, reset="hubDbox")
     tkgrid(tklabel(top, text = "Enter name for data set: "), 
         entryDsname, sticky = "e")
     tkgrid(tklabel(top, text = "Regional Communnity Parameters", 
@@ -660,17 +671,17 @@ hubDbox3=function()
     tkgrid(tklabel(top, text = "Individuals per species (local)  "), jiVarSlider, sticky = "e")
     tkgrid(tklabel(top, text = "Number of dead per cycle  "), dEntry, sticky = "e")
     tkgrid(tklabel(top, text = "Cycles per Simulation "), cicloSlider, sticky = "e")
-    tkgrid(tklabel(top, text = "Show simulation frames "), animaBox, sticky = "s")
-    tkgrid.configure(entryDsname, sticky = "sw")
-    tkgrid.configure(SmSlider, sticky = "sw")
-    tkgrid.configure(jmSlider, sticky = "sw")
-    tkgrid.configure(mig1Slider, sticky = "sw")
-    tkgrid.configure(nuSlider, sticky = "sw")
-    tkgrid.configure(nsVarSlider, sticky = "sw")
-    tkgrid.configure(jiVarSlider, sticky = "sw")
-    tkgrid.configure(dEntry, sticky = "sw")
-    tkgrid.configure(cicloSlider, sticky = "sw")
-    tkgrid.configure(animaBox, sticky = "sw")
+    tkgrid(tklabel(top, text = "Show simulation frames "), animaBox, sticky = "e")
+    tkgrid.configure(entryDsname, sticky = "w")
+    tkgrid.configure(SmSlider, sticky = "w")
+    tkgrid.configure(jmSlider, sticky = "w")
+    tkgrid.configure(mig1Slider, sticky = "w")
+    tkgrid.configure(nuSlider, sticky = "w")
+    tkgrid.configure(nsVarSlider, sticky = "w")
+    tkgrid.configure(jiVarSlider, sticky = "w")
+    tkgrid.configure(dEntry, sticky = "w")
+    tkgrid.configure(cicloSlider, sticky = "w")
+    tkgrid.configure(animaBox, sticky = "w")
     tkgrid(buttonsFrame, columnspan = 2, sticky = "e")
     dialogSuffix(rows = 10, columns = 2, focus = nuSlider)
 }

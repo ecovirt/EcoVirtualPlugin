@@ -9,3 +9,6 @@ import(
   Rcmdr,
   EcoVirtual
 )
+importFrom("grDevices", "dev.new")
+importFrom("graphics", "mtext", "par", "plot")
+importFrom("stats", "na.omit")
