@@ -257,120 +257,121 @@ tkgrid(labelRcmdr(top, text=gettextRcmdr("Enter Transitions Probabilities: "), f
 ##########################################
 regnichoDbox<-function () 
 {
+dialogName<-"regnichoDbox" 
+defaults <- list(dsname="Do_Not_Save", tmaxVar=100, clVar= 20, lnVar=20, c1Var=0.7, c2Var= 1.1, ecVar=0.05,dstVar=0.05, pErVar=0.20, pScVar=0.1, pMxVar=0.10, pRsVar=0.10, animaVar=1)
+initial <- getDialog(dialogName, default= defaults)
 initializeDialog(title = gettextRcmdr("Niche Regeneration"))
-#### Salva dados
-dsname <- tclVar("Do_Not_Save")
+#### 
+dsname <- tclVar(initial$dsname)
+tmaxVar <- tclVar(initial$tmaxVar)
+clVar <- tclVar(initial$clVar)
+lnVar <- tclVar(initial$lnVar)
+c1Var <- tclVar(initial$c1Var)
+c2Var <- tclVar(initial$c2Var)
+ecVar <- tclVar(initial$ecVar)
+dstVar <- tclVar(initial$dstVar)
+pErVar <- tclVar(initial$pErVar)
+pScVar <- tclVar(initial$pScVar)
+pMxVar <- tclVar(initial$pMxVar)
+pRsVar <- tclVar(initial$pRsVar)
+animaVar <- tclVar(initial$animaVar)
+####
 entryDsname <- tkentry(top, width="20", textvariable=dsname)
-####
-####
-tmaxVar <- tclVar("100")
 tmaxEntry <- tkentry(top, width = "4", textvariable = tmaxVar)
-clVar <- tclVar("20")
-lnVar <- tclVar("20")
 clEntry <- tkentry(top, width = "4", textvariable = clVar)
 lnEntry <- tkentry(top, width = "4", textvariable = lnVar)
-######
-c1Var <- tclVar("0.7")
 c1Entry <- tkentry(top, width = "4", textvariable = c1Var)
-c2Var <- tclVar("1.1")
 c2Entry <- tkentry(top, width = "4", textvariable = c2Var)
-ecVar <- tclVar("0.05")
 ecEntry=tkscale(top, from=0, to=10, showvalue=TRUE, variable=ecVar, resolution=0.01, orient="horizontal")
-dstVar <- tclVar("0.05")
 dstEntry=tkscale(top, from=0, to=1, showvalue=TRUE, variable=dstVar, resolution=0.01, orient="horizontal")
-pErVar <- tclVar("0.20")
 pErEntry <-tkscale(top, from=0, to=1, showvalue=TRUE, variable=pErVar, resolution=0.01, orient="horizontal")
-pScVar <- tclVar("0.10")
 pScEntry <- tkscale(top, from=0, to=1, showvalue=TRUE, variable=pScVar, resolution=0.01, orient="horizontal")
-pMxVar <- tclVar("0.10")
 pMxEntry <- tkscale(top, from=0, to=1, showvalue=TRUE, variable=pMxVar, resolution=0.01, orient="horizontal")
-pRsVar <- tclVar("0.10")
 pRsEntry <- tkscale(top, from=0, to=1, showvalue=TRUE, variable=pScVar, resolution=0.01, orient="horizontal")
-	onOK <- function() 
-	{
+animaBox <- tkcheckbutton(top, variable = animaVar)
+onOK <- function() 
+    {
         closeDialog()
         tmax=as.numeric(tclvalue(tmaxVar))
         cl=as.numeric(tclvalue(clVar))
         ln=as.numeric(tclvalue(lnVar))
         npatch=cl*ln
-			if (sum(is.na(c(tmax,npatch)))>0 || tmax <= 0 || npatch <= 0) 
-          {
-            errorCondition("Number of simulations, columns and rows must be positive integers")
-            return()
-          }
+        if (sum(is.na(c(tmax,npatch)))>0 || tmax <= 0 || npatch <= 0) 
+            {
+                errorCondition("Number of simulations, columns and rows must be positive integers")
+                return()
+            }
         c1 <- as.numeric(tclvalue(c1Var))
         c2 <- as.numeric(tclvalue(c2Var))
         ec=as.numeric(tclvalue(ecVar))
         dst=as.numeric(tclvalue(dstVar))
-			if (sum(is.na(c(c1,c2)))>0 || c1 <= 0 || c2 <= 0) 
-          {
-            errorCondition(message = "Colonization rate for both species must be positive ")
-            return()
-          }
+        if (sum(is.na(c(c1,c2)))>0 || c1 <= 0 || c2 <= 0) 
+            {
+                errorCondition(message = "Colonization rate for both species must be positive ")
+                return()
+            }
         pEr <- as.numeric(tclvalue(pErVar))
         pSc <- as.numeric(tclvalue(pScVar))
         pMx <- as.numeric(tclvalue(pMxVar))
         pRs <- as.numeric(tclvalue(pRsVar))
         ptot<- pEr+pSc+pMx+pRs
         if (ptot > 1) 
-        {
-            errorCondition(message = "Proportion of patches occupied should sum less than one\n VALUES ADJUSTED BY TOTAL LESS 10% LEFT EMPTY")
-        pEr=(pEr/ptot)*0.9 
-        pSc=(pSc/ptot)*0.9 
-        pMx=(pMx/ptot)*0.9 
-        pRs=(pRs/ptot)*0.9
-        }
+            {
+                errorCondition(message = "Proportion of patches occupied should sum less than one\n VALUES ADJUSTED BY TOTAL LESS 10% LEFT EMPTY")
+                pEr=(pEr/ptot)*0.9 
+                pSc=(pSc/ptot)*0.9 
+                pMx=(pMx/ptot)*0.9 
+                pRs=(pRs/ptot)*0.9
+            }
+        animaVF <- as.logical(as.numeric(tclvalue(animaVar)))
  ############ Data name
-   dsnameValue <- trim.blanks(tclvalue(dsname))
+        dsnameValue <- trim.blanks(tclvalue(dsname))
         if (dsnameValue == "Do_Not_Save" | dsnameValue=="") 
-        {
-        	command <- paste("regNicho(tmax= ",tmax, ", rw= ",ln, ", cl = ", cl,", c1 = ", c1,", c2 = ", c2,", ec = ", ec,", dst = ", dst,", er = ", pEr,", sc =", pSc,", mx =", pMx,", rs =", pRs,")", sep = "")
-        }
+            {
+        	command <- paste("regNicho(tmax= ",tmax, ", rw= ",ln, ", cl = ", cl,", c1 = ", c1,", c2 = ", c2,", ec = ", ec,", dst = ", dst,", er = ", pEr,", sc =", pSc,", mx =", pMx,", rs =", pRs,", anima =", animaVF,")", sep = "")
+            }
         else  
-		  {
-		  command <- paste(dsnameValue, " <- regNicho(tmax= ",tmax, ", rw= ",ln, ", cl = ", cl,", c1 = ", c1,", c2 = ", c2,", ec = ", ec,", dst = ", dst,", er = ", pEr,", sc =", pSc,", mx =", pMx,", rs =", pRs,")", sep = "")
-		  }
-#test1=regNicho(tmax=50, ln=100, cl=100, c1=0.2, c2=0.8, ec=0.5, m=0.04,  Er=0.08, Sc=0.02, Mx=0, Rs=0)
+            {
+                command <- paste(dsnameValue, " <- regNicho(tmax= ",tmax, ", rw= ",ln, ", cl = ", cl,", c1 = ", c1,", c2 = ", c2,", ec = ", ec,", dst = ", dst,", er = ", pEr,", sc =", pSc,", mx =", pMx,", rs =", pRs,", anima =", animaVF,")", sep = "")
+            }
 ########
-	doItAndPrint(command)
-	tkfocus(CommanderWindow())
-	}
-OKCancelHelp(helpSubject = "regNicho")
+        doItAndPrint(command)
+        tkfocus(CommanderWindow())
+        putDialog(dialogName, values = list(dsname=dsnameValue, tmaxVar= round(as.numeric(tclvalue(tmaxVar))), clVar= round(as.numeric(tclvalue(clVar))), lnVar= round(as.numeric(tclvalue(lnVar))), c1Var= as.numeric(tclvalue(c1Var)), c2Var= as.numeric(tclvalue(c2Var)), ecVar=as.numeric(tclvalue(ecVar)), dstVar=as.numeric(tclvalue(dstVar)), pErVar=as.numeric(tclvalue(pErVar)), pScVar=as.numeric(tclvalue(pScVar)), pMxVar=as.numeric(tclvalue(pMxVar)), pRsVar=as.numeric(tclvalue(pRsVar)), animaVar=as.logical(as.numeric(tclvalue(animaVar)))),resettable = FALSE)
+    }
+        
+OKCancelHelp(helpSubject = "regNicho", apply= dialogName, reset= dialogName)
 tkgrid(tklabel(top, text="Enter name for data set:"), entryDsname, sticky="e")
-##
 tkgrid(tklabel(top, text="Simulation Arena Conditions :", fg="blue"), sticky="w")
 tkgrid(tklabel(top, text = "Maximum time"), tmaxEntry, sticky = "e")
 tkgrid(tklabel(top, text = "Columns"), clEntry, sticky = "e")
 tkgrid(tklabel(top, text = "Rows"), lnEntry, sticky = "e")
-#
 tkgrid(tklabel(top, text="Initial Stages Proportions :", fg="blue"), sticky="w")
 tkgrid(tklabel(top, text = "Early Stage (only sp2) "), pErEntry, sticky = "se")
 tkgrid(tklabel(top, text = "Susceptible (only sp1)  "), pScEntry, sticky = "se")
 tkgrid(tklabel(top, text = "Mixed (sp1 and sp2)  "), pMxEntry, sticky = "se")
 tkgrid(tklabel(top, text = "Resistant (sp1)"), pRsEntry, sticky = "se")
-#
 tkgrid(tklabel(top, text="Colonization rates :", fg="blue"), sticky="w")
 tkgrid(tklabel(top, text = "Better competitor (sp1) "), c1Entry, sticky = "e")
 tkgrid(tklabel(top, text = "Inferior competitor (sp2)  "), c2Entry, sticky = "e")
 tkgrid(tklabel(top, text="General parameters:", fg="blue"), sticky="w")
 tkgrid(tklabel(top, text = "Competitive exclusion:   "), ecEntry, sticky = "se")
 tkgrid(tklabel(top, text = "Disturbance (mortality):  "), dstEntry, sticky = "se")
-#
+tkgrid(tklabel(top, text = "Show simulation frames"), animaBox, sticky = "e")
 tkgrid(buttonsFrame, sticky = "w", columnspan = 2)
 tkgrid.configure(entryDsname, sticky = "w")
 tkgrid.configure(tmaxEntry, sticky = "w")
 tkgrid.configure(lnEntry, sticky = "w")
 tkgrid.configure(clEntry, sticky = "w")
-#
 tkgrid.configure(pErEntry, sticky = "w")
 tkgrid.configure(pScEntry, sticky = "w")
 tkgrid.configure(pMxEntry, sticky = "w")
 tkgrid.configure(pRsEntry, sticky = "w")
-#
 tkgrid.configure(c1Entry, sticky = "w")
 tkgrid.configure(c2Entry, sticky = "w")
 tkgrid.configure(ecEntry, sticky = "w")
 tkgrid.configure(dstEntry, sticky = "w")
+tkgrid.configure(animaBox, sticky = "w")        
 dialogSuffix(rows = 13, columns = 2, focus = tmaxEntry)
 }
 ######################
