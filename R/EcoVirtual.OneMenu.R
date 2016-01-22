@@ -42,7 +42,7 @@
 estDemDb <-function () 
 {
 dialogName<-"estDemDb" ### 
-defaults <- list(dsname="Do_Not_Save", no=10, b= 0.2,d=0.2, tmax=10, npop=20) # lista de argumentos padrão
+defaults <- list(dsname="Do_Not_Save", no=10, b= 0.2,d=0.2, tmax=10, npop=20, nmax=10000, barpr= 0) # lista de argumentos padrão
 initial <- getDialog(dialogName, default= defaults)
 initializeDialog(title = gettextRcmdr("Demographic Stochasticity"))
 #### Salva dados
@@ -59,6 +59,10 @@ tmaxVar <- tclVar(initial$tmax)
 tmaxEntry <- tkentry(top, width = "4", textvariable = tmaxVar)
 npopVar <-tclVar(initial$npop)
 npopEntry <- tkentry(top, width = "3", textvariable = npopVar)
+nmaxVar <-tclVar(initial$nmax)
+nmaxEntry <- tkentry(top, width = "5", textvariable = nmaxVar)
+barprVar <- tclVar(initial$barpr)
+barprEntry <- tkcheckbutton(top, variable = barprVar)
 	onOK <- function() 
 	{
         closeDialog()
@@ -77,20 +81,22 @@ npopEntry <- tkentry(top, width = "3", textvariable = npopVar)
         b=as.numeric(tclvalue(bVar))
         d=as.numeric(tclvalue(dVar))
         npop=as.numeric(tclvalue(npopVar))
+        nmax=as.numeric(tclvalue(nmaxVar))
+        barpr <- as.logical(as.numeric(tclvalue(barprVar)))
 ############ Data name
 ##estDem(tmax=10, n=0.2, m=0.2, N0=10, nsim=20, ciclo=5000)
    dsnameValue <- trim.blanks(tclvalue(dsname))
         if (dsnameValue == "Do_Not_Save" | dsnameValue=="") 
         {
-        	command <- paste("estDem(tmax= ",tmax, ", b = ", b,", d = ", d,", N0 =", N0, ", nsim = ", npop, ")", sep = "")
+        	command <- paste("estDem(tmax= ",tmax, ", b = ", b,", d = ", d,", N0 =", N0, ", nsim = ", npop,", nmax =", nmax,", barpr =", barpr, ")", sep = "")
         }
         else  
 		  {
-		  command <- paste(dsnameValue, " <- estDem(tmax= ",tmax, ", b = ", b,", d = ", d,", N0 =", N0, ", nsim = ", npop, ")", sep = "")
+		  command <- paste(dsnameValue, " <- estDem(tmax= ",tmax, ", b = ", b,", d = ", d,", N0 =", N0, ", nsim = ", npop,", nmax =", nmax, ", barpr =", barpr, ")", sep = "")
 		  }
 	doItAndPrint(command)
 	tkfocus(CommanderWindow())
-        putDialog(dialogName, values = list(dsname=dsnameValue, no=as.numeric(tclvalue(noVar)), b=as.numeric(tclvalue(bVar)), d=as.numeric(tclvalue(dVar)), tmax=as.numeric(tclvalue(tmaxVar)), npop=as.numeric(tclvalue(npopVar))), resettable = FALSE)
+        putDialog(dialogName, values = list(dsname=dsnameValue, no=as.numeric(tclvalue(noVar)), b=as.numeric(tclvalue(bVar)), d=as.numeric(tclvalue(dVar)), tmax=as.numeric(tclvalue(tmaxVar)), npop=as.numeric(tclvalue(npopVar)), nmax=as.numeric(tclvalue(nmaxVar)), barpr=  as.logical(as.numeric(tclvalue(barprVar))) ), resettable = FALSE)
 	}
 OKCancelHelp(helpSubject = "dynPop", reset=dialogName, apply=dialogName)
 tkgrid(tklabel(top, text="Enter name for data set: "), entryDsname, sticky="e")
@@ -101,6 +107,10 @@ tkgrid(tklabel(top, text="Population parameters :", fg="blue"), sticky="w")
 tkgrid(tklabel(top, text = "Initial size  "), noEntry, sticky = "e")
 tkgrid(tklabel(top, text = "Birth rate  "), bEntry, sticky = "se")
 tkgrid(tklabel(top, text = "Death rate  "), dEntry, sticky = "e")
+
+tkgrid(tklabel(top, text="Restrictions for long simulations:", fg="blue"), sticky="w")
+tkgrid(tklabel(top, text = "Maximum population size  "), nmaxEntry, sticky = "e")
+tkgrid(tklabel(top, text = "Show progress bar for each simulation"), barprEntry, sticky = "e")
 tkgrid(buttonsFrame, sticky = "w", columnspan = 2)
 #tkgrid(tklabel(top, text="Enter name for data set:"), entryDsname, sticky="e")
 tkgrid.configure(entryDsname, sticky = "w")
@@ -109,7 +119,10 @@ tkgrid.configure(npopEntry, sticky = "w")
 tkgrid.configure(noEntry, sticky = "w")
 tkgrid.configure(bEntry, sticky = "w")
 tkgrid.configure(dEntry, sticky = "w")
-dialogSuffix(rows = 6, columns = 2, focus = tmaxEntry)
+###
+tkgrid.configure(nmaxEntry, sticky = "w")
+tkgrid.configure(barprEntry, sticky = "w")
+dialogSuffix(rows = 9, columns = 2, focus = tmaxEntry)
 }
 #########################################################
 #########################################################
@@ -180,7 +193,7 @@ dialogSuffix(rows = 6, columns = 2, focus = tmaxEntry)
 estEnvDb <-function () 
 {
 dialogName<-"estEnvDb" ### 
-defaults <- list(dsname="Do_Not_Save", noVar=10, lambVar= 1.05, varrVar= 1.05,tmaxVar=10, npopVar=20, extVar=0) # lista de argumentos padrão
+defaults <- list(dsname="Do_Not_Save", noVar=10, lambVar= 1.05, varrVar= .05,tmaxVar=10, npopVar=20, extVar=0) # lista de argumentos padrão
 initial <- getDialog(dialogName, default= defaults)
 initializeDialog(title = gettextRcmdr("Environmental Sthocasticity"))
 #### Salva dados
