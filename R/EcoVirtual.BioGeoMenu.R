@@ -255,15 +255,11 @@ bioGeoIslDbox= function ()
 	.dist<-paste("c(", paste(dist, collapse = ","), ")", sep = "")
 	dsnameValue <- trim.blanks(tclvalue(dsname))
         if (dsnameValue == "Do_Not_Save" | dsnameValue == "") {
-            command <- paste("bioGeoIsl(area=",.size, ",dist  =", .dist,", P = ", 
-                PVar, ", b.e = ", bVar, ", d.i = ", dVar, ",f.i =", 
-                fVar, ",h.e= ", hVar, ")", sep = "")
+            command <- paste("bioGeoIsl(area=",.size, ",dist  =", .dist, ", weight.A  =", peso.AVar,", P = ", PVar, ", b.e = ", bVar, ", d.i = ", dVar, ",f.i =", fVar, ",h.e= ", hVar, ")", sep = "")
         }
         else {
             command <- paste(dsnameValue, "<- bioGeoIsl(area=", 
-                .size, ", dist  = ", .dist, ", P = ", PVar, ", b.e = ", 
-                bVar, ", d.i = ", dVar, ",f.i =", fVar, ",h.e= ", hVar, 
-                ")", sep = "")
+                .size, ", dist  = ", .dist, ", weight.A  =", peso.AVar, ", P = ", PVar, ", b.e = ", bVar, ", d.i = ", dVar, ",f.i =", fVar, ",h.e= ", hVar, ")", sep = "")
         }
         doItAndPrint(command)
         tkfocus(CommanderWindow())
