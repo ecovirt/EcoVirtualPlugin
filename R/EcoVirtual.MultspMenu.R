@@ -77,7 +77,7 @@ sucmatrixDbox<- function()
 	    s.make.row <- paste(s.make.row, ", ", "ttkentry(s.tableFrame, width='5', textvariable=", s.varname, ")", sep="")
             for (j in 2:ncols)
             {
-                s.varname <- paste(".stab.", i, ".", j, sep="")
+                s.varname <- paste(".stab.1.", j, sep="")
                 assign(s.varname, tclVar(""), envir=env)
                 s.make.row <- paste(s.make.row, ", ", "ttkentry(s.tableFrame, width='5', textvariable=",
                 s.varname, ")", sep="")
