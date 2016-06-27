@@ -16,8 +16,8 @@ and graphical functions.
 \tabular{ll}{
 Package: \tab RcmdrPluginEcoVirtual\cr
 Type: \tab Package\cr
-Version: \tab 0.1\cr
-Date: \tab 2014-08-15\cr
+Version: \tab 1.0\cr
+Date: \tab 2016-06-24\cr
 License: \tab  GPL (>= 2)\cr
 LazyLoad: \tab yes\cr
 }

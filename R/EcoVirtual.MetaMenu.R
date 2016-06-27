@@ -3,8 +3,8 @@
 intCol <-function () 
 {
 dialogName<-"intCol" 
-defaults <- list(dsname="Do_Not_Save", tfVar=100, clVar= 20, lnVar=20, fiVar=0.4, iVar=0.1, peVar=0.05, animaVar= 1)
-initial <- getDialog(dialogName, default= defaults)
+def <- list(dsname="Do_Not_Save", tfVar=100, clVar= 20, lnVar=20, fiVar=0.4, iVar=0.1, peVar=0.05, animaVar= 1)
+initial <- getDialog(dialogName, defaults= def)
 initializeDialog(title = gettextRcmdr("Internal Colonization"))
 #### dados de entrada
 dsname <- tclVar(initial$dsname)
@@ -99,8 +99,8 @@ dialogSuffix(rows = 9, columns = 2, focus = tfEntry)
 propRain <-function() 
 {
 dialogName<-"propRain" 
-defaults <- list(dsname="Do_Not_Save", tfVar=100, clVar= 20, lnVar=20, fiVar=0.4, piVar=0.1, peVar=0.05, animaVar=1)
-initial <- getDialog(dialogName, default= defaults)
+def <- list(dsname="Do_Not_Save", tfVar=100, clVar= 20, lnVar=20, fiVar=0.4, piVar=0.1, peVar=0.05, animaVar=1)
+initial <- getDialog(dialogName, defaults= def)
 initializeDialog(title = gettextRcmdr("Propagulus Rain"))
 ####
 dsname <- tclVar(initial$dsname)
@@ -187,8 +187,8 @@ dialogSuffix(rows = 8, columns = 2, focus = tfEntry)
 resEff <-function () 
 {
 dialogName<-"resEff" 
-defaults <- list(dsname="Do_Not_Save", tfVar=100, clVar= 20, lnVar=20, fiVar=0.4, piVar=0.1, eVar = 0.05, animaVar=1)
-initial <- getDialog(dialogName, default= defaults)    
+def <- list(dsname="Do_Not_Save", tfVar=100, clVar= 20, lnVar=20, fiVar=0.4, piVar=0.1, eVar = 0.05, animaVar=1)
+initial <- getDialog(dialogName, defaults= def)    
 initializeDialog(title = gettextRcmdr("Rescue Effect"))
 ####
 dsname <- tclVar(initial$dsname)
@@ -274,8 +274,8 @@ dialogSuffix(rows = 11, columns = 2, focus = tfEntry)
 resEffcol <-function () 
 {
 dialogName<-"resEffcol" 
-defaults <- list(dsname="Do_Not_Save", tfVar=100, clVar= 20, lnVar=20, fiVar=0.25, iVar=0.1, eVar = 0.05, animaVar=1)
-initial <- getDialog(dialogName, default= defaults)  
+def <- list(dsname="Do_Not_Save", tfVar=100, clVar= 20, lnVar=20, fiVar=0.25, iVar=0.1, eVar = 0.05, animaVar=1)
+initial <- getDialog(dialogName, defaults= def)  
 initializeDialog(title = gettextRcmdr("Rescue and Internal Colonization"))
 ####
 dsname <- tclVar(initial$dsname)
@@ -375,8 +375,8 @@ dialogSuffix(rows = 11, columns = 2, focus = tfEntry)
 metacompDb <-function () 
 {
 dialogName<-"metacompDb" 
-defaults <- list(dsname="Do_Not_Save", tmaxVar=100, clVar= 20, lnVar=20, fi1Var=0.25,fi2Var= 0.25, i1Var=0.1, i2Var=0.1, peVar = 0.05, distrVar=0.00, animaVar=1)
-initial <- getDialog(dialogName, default= defaults)  
+def <- list(dsname="Do_Not_Save", tmaxVar=100, clVar= 20, lnVar=20, fi1Var=0.25,fi2Var= 0.25, i1Var=0.1, i2Var=0.1, peVar = 0.05, distrVar=0.00, animaVar=1)
+initial <- getDialog(dialogName, defaults= def)  
 initializeDialog(title = gettextRcmdr("Meta Competition"))
 ####  Dados de entrada
 dsname <- tclVar(initial$dsname)

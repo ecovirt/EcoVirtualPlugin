@@ -258,8 +258,8 @@ tkgrid(labelRcmdr(top, text=gettextRcmdr("Enter Transitions Probabilities: "), f
 regnichoDbox<-function () 
 {
 dialogName<-"regnichoDbox" 
-defaults <- list(dsname="Do_Not_Save", tmaxVar=100, clVar= 20, lnVar=20, c1Var=0.7, c2Var= 1.1, ecVar=0.05,dstVar=0.05, pErVar=0.20, pScVar=0.1, pMxVar=0.10, pRsVar=0.10, animaVar=1)
-initial <- getDialog(dialogName, default= defaults)
+def <- list(dsname="Do_Not_Save", tmaxVar=100, clVar= 20, lnVar=20, c1Var=0.7, c2Var= 1.1, ecVar=0.05,dstVar=0.05, pErVar=0.20, pScVar=0.1, pMxVar=0.10, pRsVar=0.10, animaVar=1)
+initial <- getDialog(dialogName, defaults= def)
 initializeDialog(title = gettextRcmdr("Niche Regeneration"))
 #### 
 dsname <- tclVar(initial$dsname)

@@ -42,8 +42,8 @@
 estDemDb <-function () 
 {
 dialogName<-"estDemDb" ### 
-defaults <- list(dsname="Do_Not_Save", no=10, b= 0.2,d=0.2, tmax=10, npop=20, nmax=10000, barpr= 0) # lista de argumentos padrão
-initial <- getDialog(dialogName, default= defaults)
+def <- list(dsname="Do_Not_Save", no=10, b= 0.2,d=0.2, tmax=10, npop=20, nmax=10000, barpr= 0) # lista de argumentos padrão
+initial <- getDialog(dialogName, defaults= def)
 initializeDialog(title = gettextRcmdr("Demographic Stochasticity"))
 #### Salva dados
 dsname <- tclVar(initial$dsname)
@@ -129,8 +129,8 @@ dialogSuffix(rows = 9, columns = 2, focus = tmaxEntry)
 popExpDb<-function()
 {
 dialogName<-"popExpDb" ### inserido
-defaults <- list(dsname="Do_Not_Save", noVar=10, lambVar= 1.05,tmaxVar=10,inttVar=1) # inserido
-initial <- getDialog(dialogName, default= defaults)
+def <- list(dsname="Do_Not_Save", noVar=10, lambVar= 1.05,tmaxVar=10,inttVar=1) # inserido
+initial <- getDialog(dialogName, defaults= def)
 initializeDialog(title = gettextRcmdr("Exponential Growth"))
 #### Salva dados
 dsname <- tclVar(initial$dsname)
@@ -193,8 +193,8 @@ dialogSuffix(rows = 6, columns = 2, focus = tmaxEntry)
 estEnvDb <-function () 
 {
 dialogName<-"estEnvDb" ### 
-defaults <- list(dsname="Do_Not_Save", noVar=10, lambVar= 1.05, varrVar= .05,tmaxVar=10, npopVar=20, extVar=0) # lista de argumentos padrão
-initial <- getDialog(dialogName, default= defaults)
+def <- list(dsname="Do_Not_Save", noVar=10, lambVar= 1.05, varrVar= .05,tmaxVar=10, npopVar=20, extVar=0) # lista de argumentos padrão
+initial <- getDialog(dialogName, defaults= def)
 initializeDialog(title = gettextRcmdr("Environmental Sthocasticity"))
 #### Salva dados
 dsname <- tclVar("Do_Not_Save")
@@ -270,8 +270,8 @@ dialogSuffix(rows = 6, columns = 2, focus = tmaxEntry)
 popLogDb<-function () 
 {
 dialogName<-"popLogDb" 
-defaults <- list(dsname="Do_Not_Save", noVar=10, rVar= 0.05, kVar=100, tmaxVar=100, extVar=0)
-initial <- getDialog(dialogName, default= defaults)
+def <- list(dsname="Do_Not_Save", noVar=10, rVar= 0.05, kVar=100, tmaxVar=100, extVar=0)
+initial <- getDialog(dialogName, defaults= def)
 initializeDialog(title = gettextRcmdr("Logistic Growth"))
 #### Salva dados
 dsname <- tclVar(initial$dsname)
@@ -345,8 +345,8 @@ dialogSuffix(rows = 6, columns = 2, focus = tmaxEntry)
 logBifDb<-function () 
 {
 dialogName<-"logBifDb" 
-defaults <- list(dsname="Do_Not_Save", noVar=10, rdminVar= 1, rdmaxVar=3, nrdVar=500, kVar=20, tmaxVar=200)
-initial <- getDialog(dialogName, default= defaults)
+def <- list(dsname="Do_Not_Save", noVar=10, rdminVar= 1, rdmaxVar=3, nrdVar=500, kVar=20, tmaxVar=200)
+initial <- getDialog(dialogName, defaults= def)
 initializeDialog(title = gettextRcmdr("Logistic Bifurcation"))
 #### Salva dados
 dsname <- tclVar(initial$dsname)
@@ -431,8 +431,8 @@ dialogSuffix(rows = 7, columns = 2, focus = tmaxEntry)
 compDb<-function () 
 {
 dialogName<-"compDb" ### 
-defaults <- list(dsname="Do_Not_Save", n01Var=10, n02Var=10, r1Var= 0.05, r2Var= 0.05, k1Var= 100, k2Var= 100, alfaVar= 1.2, betaVar= 0.5, tmaxVar=100) # lista de argumentos padrão
-initial <- getDialog(dialogName, default= defaults)
+def <- list(dsname="Do_Not_Save", n01Var=10, n02Var=10, r1Var= 0.05, r2Var= 0.05, k1Var= 100, k2Var= 100, alfaVar= 1.2, betaVar= 0.5, tmaxVar=100) # lista de argumentos padrão
+initial <- getDialog(dialogName, defaults= def)
 initializeDialog(title = gettextRcmdr("Competition LV Model"))
 #### Salva dados
 dsname <- tclVar(initial$dsname)
