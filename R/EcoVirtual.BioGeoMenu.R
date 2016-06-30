@@ -35,7 +35,7 @@ rqEntry <- tkscale(top, from=10, to=10000, showvalue=TRUE, variable=rqVar, resol
 fsp1Entry <-tkscale(top, from=0, to=1, showvalue=TRUE, variable=fsp1Var, resolution=0.01, orient="horizontal",command=set.gr.abund)
 cantoVar <- tclVar("1")
 cantoBox <- tkcheckbutton(top, variable = cantoVar)
-################ passando as variáveis
+################
 onOK <- function() 
 	{
 	command="dev.off(dev.cur()); dev.new()"
@@ -104,8 +104,8 @@ dialogSuffix(rows = 10, columns = 2, focus = tmaxEntry)
 ColExtDbox<-function () 
 {
 dialogName<-"ColExtDbox" 
-defaults <- list(ColVar="crs", ExtVar="fix")
-initial <- getDialog(dialogName, default= defaults)    
+def <- list(ColVar="crs", ExtVar="fix")
+initial <- getDialog(dialogName, defaults= def)    
 #animaColExt(minimo=0.01, maximo=1, interv=0.01, Ext="crs", Col="dcr")
 initializeDialog(title = gettextRcmdr("Colonization/Extinction Balance"))
 #### 
@@ -307,8 +307,8 @@ gr.abund=function(rq, fsp1, add=FALSE,...)
 randWalkDbox=function () 
 {
 dialogName<-"randWalkDbox" 
-defaults <- list(dsname="Do_Not_Save", nsVar=10, stVar= 1, midVar=20, cantoVar=0, tfVar=1e5)
-initial <- getDialog(dialogName, default= defaults)
+def <- list(dsname="Do_Not_Save", nsVar=10, stVar= 1, midVar=20, cantoVar=0, tfVar=1e5)
+initial <- getDialog(dialogName, defaults= def)
 initializeDialog(title = gettextRcmdr("Random Walk Simulation"))
 dsname <- tclVar(initial$dsname)
 entryDsname <- tkentry(top, width = "20", textvariable = dsname)
@@ -372,8 +372,8 @@ onOK <- function()
 extGameDbox=function() 
 {
 dialogName<-"extGameDbox" 
-defaults <- list(dsname="Do_Not_Save", mVar=20, apVar= 1, mtVar=1)
-initial <- getDialog(dialogName, default= defaults)
+def <- list(dsname="Do_Not_Save", mVar=20, apVar= 1, mtVar=1)
+initial <- getDialog(dialogName, defaults= def)
 initializeDialog(title = gettextRcmdr("Zero Sum Game"))
 dsname <- tclVar(initial$dsname)
 entryDsname <- tkentry(top, width = "20", textvariable = dsname)
@@ -425,8 +425,8 @@ onOK <- function()
 hubDbox=function () 
 {
 dialogName<-"hubDbox" 
-defaults <- list(dsname="Do_Not_Save", nsVar=10, jiVar=10, dVar=1, cicloVar= 1000,  metaVar= "no", animaVar=1)
-initial <- getDialog(dialogName, default= defaults)
+def <- list(dsname="Do_Not_Save", nsVar=10, jiVar=10, dVar=1, cicloVar= 1000,  metaVar= "no", animaVar=1)
+initial <- getDialog(dialogName, defaults= def)
 initializeDialog(title = gettextRcmdr("Neutral Model Simulation"))
 ###
 dsname <- tclVar(initial$dsname)
@@ -525,8 +525,8 @@ dialogSuffix(rows = 10, columns = 2, focus = nsVarSlider)
 hubDbox2=function() 
 {
 dialogName<-"hubDbox2" 
-defaults <- list(dsname="Do_Not_Save", nsVar=10, jiVar= 10, dVar=1, cicloVar= 1000, mig1Var= 1e-4, animaVar=1)
-initial <- getDialog(dialogName, default= defaults)
+def <- list(dsname="Do_Not_Save", nsVar=10, jiVar= 10, dVar=1, cicloVar= 1000, mig1Var= 1e-4, animaVar=1)
+initial <- getDialog(dialogName, defaults= def)
 initializeDialog(title = gettextRcmdr("Neutral Model Simulation"))
 ###
 dsname <- tclVar(initial$dsname)
@@ -597,8 +597,8 @@ onOK <- function()
 hubDbox3=function() 
 {
 dialogName<-"hubDbox3" 
-defaults <- list(dsname="Do_Not_Save", nsVar=10, jiVar= 10, SmVar=10, jmVar=10, dVar=1, cicloVar= 1000, mig1Var= 1e-4, nuVar= 1e-4, animaVar=1)
-initial <- getDialog(dialogName, default= defaults)
+def <- list(dsname="Do_Not_Save", nsVar=10, jiVar= 10, SmVar=10, jmVar=10, dVar=1, cicloVar= 1000, mig1Var= 1e-4, nuVar= 1e-4, animaVar=1)
+initial <- getDialog(dialogName, defaults= def)
 initializeDialog(title = gettextRcmdr("Neutral Model Simulation"))
 dsname <- tclVar(initial$dsname)
 nsVar <- tclVar(initial$nsVar)

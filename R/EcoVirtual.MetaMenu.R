@@ -3,8 +3,8 @@
 intCol <-function () 
 {
 dialogName<-"intCol" 
-defaults <- list(dsname="Do_Not_Save", tfVar=100, clVar= 20, lnVar=20, fiVar=0.4, iVar=0.1, peVar=0.05, animaVar= 1)
-initial <- getDialog(dialogName, default= defaults)
+def <- list(dsname="Do_Not_Save", tfVar=100, clVar= 20, lnVar=20, fiVar=0.4, iVar=0.1, peVar=0.05, animaVar= 1)
+initial <- getDialog(dialogName, defaults= def)
 initializeDialog(title = gettextRcmdr("Internal Colonization"))
 #### dados de entrada
 dsname <- tclVar(initial$dsname)
@@ -21,7 +21,7 @@ tfEntry <- tkentry(top, width = "4", textvariable = tfVar)
 clEntry <- tkentry(top, width = "4", textvariable = clVar)
 lnEntry <- tkentry(top, width = "4", textvariable = lnVar)
 fiVarSlider <- tkscale(top, from=0, to=1, showvalue=TRUE, variable=fiVar, resolution=0.01, orient="horizontal")
-iEntry <- tkentry(top, width = "6", textvariable = iVar)
+iEntry <- tkscale(top, from=0, to=1, showvalue=TRUE, variable=iVar, resolution=0.01, orient="horizontal")
 peEntry <- tkscale(top, from=0, to=1, showvalue=TRUE, variable=peVar, resolution=0.01, orient="horizontal")
 animaBox <- tkcheckbutton(top, variable = animaVar)
 ##################
@@ -99,8 +99,8 @@ dialogSuffix(rows = 9, columns = 2, focus = tfEntry)
 propRain <-function() 
 {
 dialogName<-"propRain" 
-defaults <- list(dsname="Do_Not_Save", tfVar=100, clVar= 20, lnVar=20, fiVar=0.4, piVar=0.1, peVar=0.05, animaVar=1)
-initial <- getDialog(dialogName, default= defaults)
+def <- list(dsname="Do_Not_Save", tfVar=100, clVar= 20, lnVar=20, fiVar=0.4, piVar=0.1, peVar=0.05, animaVar=1)
+initial <- getDialog(dialogName, defaults= def)
 initializeDialog(title = gettextRcmdr("Propagulus Rain"))
 ####
 dsname <- tclVar(initial$dsname)
@@ -187,8 +187,8 @@ dialogSuffix(rows = 8, columns = 2, focus = tfEntry)
 resEff <-function () 
 {
 dialogName<-"resEff" 
-defaults <- list(dsname="Do_Not_Save", tfVar=100, clVar= 20, lnVar=20, fiVar=0.4, piVar=0.1, eVar = 0.05, animaVar=1)
-initial <- getDialog(dialogName, default= defaults)    
+def <- list(dsname="Do_Not_Save", tfVar=100, clVar= 20, lnVar=20, fiVar=0.4, piVar=0.1, eVar = 0.05, animaVar=1)
+initial <- getDialog(dialogName, defaults= def)    
 initializeDialog(title = gettextRcmdr("Rescue Effect"))
 ####
 dsname <- tclVar(initial$dsname)
@@ -274,8 +274,8 @@ dialogSuffix(rows = 11, columns = 2, focus = tfEntry)
 resEffcol <-function () 
 {
 dialogName<-"resEffcol" 
-defaults <- list(dsname="Do_Not_Save", tfVar=100, clVar= 20, lnVar=20, fiVar=0.25, iVar=0.1, eVar = 0.05, animaVar=1)
-initial <- getDialog(dialogName, default= defaults)  
+def <- list(dsname="Do_Not_Save", tfVar=100, clVar= 20, lnVar=20, fiVar=0.25, iVar=0.1, eVar = 0.05, animaVar=1)
+initial <- getDialog(dialogName, defaults= def)  
 initializeDialog(title = gettextRcmdr("Rescue and Internal Colonization"))
 ####
 dsname <- tclVar(initial$dsname)
@@ -286,6 +286,8 @@ fiVar <- tclVar(initial$fiVar)
 iVar <- tclVar(initial$iVar) 
 eVar <- tclVar(initial$eVar) 
 animaVar <- tclVar(initial$animaVar)
+###
+
 ###
 entryDsname <- tkentry(top, width="20", textvariable=dsname)
 tfEntry <- tkentry(top, width = "4", textvariable = tfVar)
@@ -318,15 +320,15 @@ onOK <- function()
                 return()
             }
         e <- as.numeric(tclvalue(eVar))
-        if (e<0 || e > 1000) 
+        if (e<0 || e > 1) 
         {
-            errorCondition(message = "Extinction coefficient must be positive ")
+            errorCondition(message = "Extinction coefficient must be positive between 0 to 1")
             return()
         }
         i <- as.numeric(tclvalue(iVar))
-        if (i<0 || i > 1000) 
+        if (i<0 || i > 1) 
         {
-            errorCondition(message = "Colonization conefficient must be positive")
+            errorCondition(message = "Colonization coefficient must be positive between 0 to 1")
             return()
         }
         fi <- as.numeric(tclvalue(fiVar))
@@ -338,13 +340,13 @@ onOK <- function()
         	command <- paste("metaCiEr(tmax = ",tf, ", cl = ", cl,", f0 = ", fi,", rw =", ln,", ci = ", i,", ce = ", e, ", anima =", animaVF, ")", sep = "")
         }
         else  
-		  {
-		  command <- paste(dsnameValue,"<-metaCiEr(tmax = ",tf, ", cl = ", cl,", f0 = ", fi,", rw =", ln,", ci = ", i,", ce = ", e,  ", anima = ", animaVF,")", sep = "")
-		  }
+        {
+            command <- paste(dsnameValue,"<-metaCiEr(tmax = ",tf, ", cl = ", cl,", f0 = ", fi,", rw =", ln,", ci = ", i,", ce = ", e,  ", anima = ", animaVF,")", sep = "")
+        }
 ########
-	doItAndPrint(command)
+        putDialog(dialogName, values = list(dsname=dsnameValue, tfVar= round(as.numeric(tclvalue(tfVar))), clVar= round(as.numeric(tclvalue(clVar))), lnVar= round(as.numeric(tclvalue(lnVar))), fiVar= as.numeric(tclvalue(fiVar)), iVar=as.numeric(tclvalue(iVar)), eVar=as.numeric(tclvalue(eVar)), animaVar=as.logical(as.numeric(tclvalue(animaVar)))),resettable = FALSE)
+        doItAndPrint(command)
 	tkfocus(CommanderWindow())
-        putDialog(dialogName, values = list(dsname=dsnameValue, tfVar= round(as.numeric(tclvalue(tfVar))), clVar= round(as.numeric(tclvalue(clVar))), lnVar= round(as.numeric(tclvalue(lnVar))), fiVar= as.numeric(tclvalue(fiVar)), iVar=as.numeric(tclvalue(piVar)), eVar=as.numeric(tclvalue(eVar)), animaVar=as.logical(as.numeric(tclvalue(animaVar)))),resettable = FALSE)
     }
 OKCancelHelp(helpSubject = "metapopulation", apply= dialogName, reset= dialogName)
 tkgrid(tklabel(top, text="Enter data set name:"), entryDsname, sticky="e")
@@ -373,8 +375,8 @@ dialogSuffix(rows = 11, columns = 2, focus = tfEntry)
 metacompDb <-function () 
 {
 dialogName<-"metacompDb" 
-defaults <- list(dsname="Do_Not_Save", tmaxVar=100, clVar= 20, lnVar=20, fi1Var=0.25,fi2Var= 0.25, i1Var=0.1, i2Var=0.1, peVar = 0.05, distrVar=0.00, animaVar=1)
-initial <- getDialog(dialogName, default= defaults)  
+def <- list(dsname="Do_Not_Save", tmaxVar=100, clVar= 20, lnVar=20, fi1Var=0.25,fi2Var= 0.25, i1Var=0.1, i2Var=0.1, peVar = 0.05, distrVar=0.00, animaVar=1)
+initial <- getDialog(dialogName, defaults= def)  
 initializeDialog(title = gettextRcmdr("Meta Competition"))
 ####  Dados de entrada
 dsname <- tclVar(initial$dsname)
