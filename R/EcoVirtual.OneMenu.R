@@ -42,7 +42,7 @@
 estDemDb <-function () 
 {
 dialogName<-"estDemDb" ### 
-def <- list(dsname="Do_Not_Save", no=10, b= 0.2,d=0.2, tmax=10, npop=20, nmax=10000, barpr= 0) # lista de argumentos padrão
+def <- list(dsname="Do_Not_Save", no=10, b= 0.2,d=0.2, tmax=10, npop=20, nmax=10000, barpr= 0) # lista de argumentos padrao
 initial <- getDialog(dialogName, defaults= def)
 initializeDialog(title = gettextRcmdr("Demographic Stochasticity"))
 #### Salva dados
@@ -193,7 +193,7 @@ dialogSuffix(rows = 6, columns = 2, focus = tmaxEntry)
 estEnvDb <-function () 
 {
 dialogName<-"estEnvDb" ### 
-def <- list(dsname="Do_Not_Save", noVar=10, lambVar= 1.05, varrVar= .05,tmaxVar=10, npopVar=20, extVar=0) # lista de argumentos padrão
+def <- list(dsname="Do_Not_Save", noVar=10, lambVar= 1.05, varrVar= .05,tmaxVar=10, npopVar=20, extVar=0) # lista de argumentos padrao
 initial <- getDialog(dialogName, defaults= def)
 initializeDialog(title = gettextRcmdr("Environmental Sthocasticity"))
 #### Salva dados
@@ -431,7 +431,7 @@ dialogSuffix(rows = 7, columns = 2, focus = tmaxEntry)
 compDb<-function () 
 {
 dialogName<-"compDb" ### 
-def <- list(dsname="Do_Not_Save", n01Var=10, n02Var=10, r1Var= 0.05, r2Var= 0.05, k1Var= 100, k2Var= 100, alfaVar= 1.2, betaVar= 0.5, tmaxVar=100) # lista de argumentos padrão
+def <- list(dsname="Do_Not_Save", n01Var=10, n02Var=10, r1Var= 0.05, r2Var= 0.05, k1Var= 100, k2Var= 100, alfaVar= 1.2, betaVar= 0.5, tmaxVar=100) # lista de argumentos padrao
 initial <- getDialog(dialogName, defaults= def)
 initializeDialog(title = gettextRcmdr("Competition LV Model"))
 #### Salva dados

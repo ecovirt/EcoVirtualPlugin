@@ -35,7 +35,7 @@ rqEntry <- tkscale(top, from=10, to=10000, showvalue=TRUE, variable=rqVar, resol
 fsp1Entry <-tkscale(top, from=0, to=1, showvalue=TRUE, variable=fsp1Var, resolution=0.01, orient="horizontal",command=set.gr.abund)
 cantoVar <- tclVar("1")
 cantoBox <- tkcheckbutton(top, variable = cantoVar)
-################ passando as variáveis
+################
 onOK <- function() 
 	{
 	command="dev.off(dev.cur()); dev.new()"

@@ -6,7 +6,7 @@ Date: 2016-06-24
 Author:Alexandre Adalardo de Oliveira and Paulo Inacio Prado <ecovirtualpackage@gmail.com>
 Maintainer: Alexandre Adalardo de Oliveira <ecovirtualpackage@gmail.com>
 Depends: Rcmdr, EcoVirtual
-Description:This package provides an Rcmdr "plug-in" for the EcoVirtual package and was designed primarily for teaching ecological models using simulations.
+Description: A Rcmdr "plug-in" for the EcoVirtual package, designed primarily for teaching ecological models using simulations.
 License: GPL (>= 2)
 URL: http://ecovirtual.ib.usp.br
 LazyLoad: yes
